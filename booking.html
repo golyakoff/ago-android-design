@@ -110,11 +110,12 @@
             <div><span class="dw">Пт</span><span class="dd">2</span><span class="dot"></span></div>
             <div><span class="dw">Сб</span><span class="dd">3</span></div>
           </div>
-          <!-- `26-112`: месяц+год под днями, тем же приглушённым стилем, что подписи строк; без разделителя,
-               год у каждого месяца, лишнее обрезается многоточием; едет в той же ленте, что и дни. -->
-          <div style="display:flex; gap:7px; padding:0 16px 12px; font-size:12.5px; color:var(--ink-soft)">
-            <span style="flex:0 0 calc(50% - 3.5px); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Сентябрь 2026</span>
-            <span style="flex:1 1 0; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Октябрь 2026</span>
+          <!-- `26-127`: месяц+год — липкий, сжимающийся заголовок над лентой (тем же приглушённым стилем, что
+               подписи строк). В ПОКОЕ текущий месяц закреплён у левого края во всю ширину, следующий стоит на
+               своём месте под своими днями. При прокрутке следующий наезжает и сжимает текущий (кадр справа). -->
+          <div style="position:relative; height:17px; margin:0 16px 12px; font-size:12.5px; color:var(--ink-soft); overflow:hidden">
+            <span style="position:absolute; left:0; top:0; white-space:nowrap; max-width:159px; overflow:hidden; text-overflow:ellipsis">Сентябрь 2026</span>
+            <span style="position:absolute; left:159px; top:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">Октябрь 2026</span>
           </div>
           <div class="scroll">
             <div class="slabel" style="padding-top:2px">Ирина Соколова · 4 записи</div>
@@ -151,8 +152,58 @@
           <span class="route">/calendar/bookings &middot; вкладка «Утверждённые» → «Утверждены»</span>
           <p>Консоль показывает сетку неделя &times; мастер &mdash; единственный layout в продукте, который принципиально широкий. Android меняет оси местами: лента дат, затем этот день, сгруппированный по мастеру. Вопрос, на который он отвечает («что на четверг»), не меняется.</p>
           <p><strong>Строка клиента &mdash; это имя.</strong> Оно на первом плане, услуга и длительность &mdash; подписью под ним. Имя всегда берётся как есть и не проверяется (никаких «недействительно»). Когда имени нет &mdash; маскированный телефон и пометка «Без имени», <strong>но никогда не шестнадцатеричный код</strong> (сбор имени при записи &mdash; отдельная задача; телефон обязателен всегда).</p>
-          <p><strong>Месяц и год под лентой дней.</strong> Когда неделя пересекает границу месяца, под числами стоит «Сентябрь 2026 / Октябрь 2026» &mdash; тем же приглушённым шрифтом, что и подписи строк, без разделителя, год у каждого месяца, лишнее обрезается многоточием; подписи едут вместе с днями.</p>
+          <p><strong>Месяц и год &mdash; липкий, сжимающийся заголовок.</strong> Текущий месяц закреплён у левого края, пока его дни в ленте, тем же приглушённым шрифтом, что и подписи строк, год у каждого месяца. Когда следующий месяц выезжает справа и начинает наезжать на закреплённую подпись, та <strong>сжимается</strong> (обрезается многоточием), пока следующий не перехватит место и сам не станет закреплённым &mdash; и так в обе стороны прокрутки. Кадр справа ловит момент передачи: «Сентябрь» ужат почти в ничто, «Октябрь» вот-вот встанет к краю.</p>
           <p><strong>Два значка на строке &mdash; чат и телефон</strong> (слева направо), Material-глифы, оба всегда. Чат ведёт в диалог-источник записи (один на запись), телефон &mdash; к контакту. Тап по всей строке открывает детальную запись (следующий экран).</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div class="on">Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <!-- `26-127`: тот же экран, прокрученный в момент передачи. Первый чип (30 сен) наполовину ушёл за
+               левый край (отрицательный margin + overflow:hidden ленты имитируют прокрутку), «Октябрь» подъехал
+               к краю и сжал «Сентябрь» почти в ничто. -->
+          <div class="dstrip">
+            <div style="margin-left:-28px"><span class="dw">Вт</span><span class="dd">30</span><span class="dot"></span></div>
+            <div class="on"><span class="dw">Ср</span><span class="dd">1</span><span class="dot"></span></div>
+            <div><span class="dw">Чт</span><span class="dd">2</span><span class="dot"></span></div>
+            <div><span class="dw">Пт</span><span class="dd">3</span></div>
+            <div><span class="dw">Сб</span><span class="dd">4</span><span class="dot"></span></div>
+            <div><span class="dw">Вс</span><span class="dd">5</span></div>
+            <div><span class="dw">Пн</span><span class="dd">6</span></div>
+          </div>
+          <div style="position:relative; height:17px; margin:0 16px 12px; font-size:12.5px; color:var(--ink-soft); overflow:hidden">
+            <!-- закреплён у края, но сжат подъехавшим «Октябрём» до многоточия -->
+            <span style="position:absolute; left:0; top:0; white-space:nowrap; max-width:24px; overflow:hidden; text-overflow:ellipsis">Сентябрь 2026</span>
+            <!-- следующий месяц у самого края — на грани перехвата -->
+            <span style="position:absolute; left:25px; top:0; white-space:nowrap">Октябрь 2026</span>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:2px">Ирина Соколова · 2 записи</div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">09:30</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Елена Волкова</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">11:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Наталья Зайцева</div><div class="rsnip">Окрашивание · 120 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/calendar/bookings &middot; лента прокручена к границе месяца</span>
+          <p><strong>Момент передачи.</strong> Тот же экран «Утверждены», прокрученный так, что дни сентября почти ушли за левый край. «Сентябрь 2026» всё ещё закреплён у края &mdash; но подъехавший справа «Октябрь 2026» сжал его до «Се&hellip;». Ещё чуть &mdash; и «Октябрь» встанет к краю и сам станет закреплённым; прокрутка назад повторит всё в обратную сторону. Поведение чисто геометрическое (первый видимый чип + его смещение), поэтому одинаково воспроизводится в обе стороны.</p>
         </div>
       </div>
       <div class="slot">
