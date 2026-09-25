@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Граф переходов между всеми экранами, шапка и меню аккаунта, широкий экран (планшет).">
+<title>Общее — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html" aria-current="page">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      </nav>
+    </div>
+    <p class="top-src">Источник: <span class="mono">ago-root</span> 26-00/26-112/26-126 &middot; разнесено по разделам в <span class="mono">26-130</span>, вместо одного артефакта на ~200 КБ.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">00 &middot; общее</p>
+  <h1>Общее &mdash; граф переходов, шапка, широкий экран</h1>
+  <p class="lede">Всё, что не принадлежит одному разделу приложения: сначала полный граф переходов
+    между всеми экранами, затем один узнаваемый угол шапки на каждом верхнеуровневом экране, затем
+    точка перелома, где широкий экран возвращает форму консоли.</p>
+
+  <div class="brief">
+    <div><span class="n">54</span><span class="k">маршрута консоли изучено, один за другим, по <span class="mono">App.tsx</span> и <span class="mono">consoleNav.ts</span></span></div>
+    <div><span class="n ok">49</span><span class="k">входят в объём Android &mdash; 19 как есть, 29 с редизайном, 1 как механизм</span></div>
+    <div><span class="n cut">5</span><span class="k">исключены &mdash; только экраны владельца платформы. Пересчёт расписания мастера вернулся в объём</span></div>
+    <div><span class="n">6</span><span class="k">экранов без аналога в консоли, включая конфигурацию записей</span></div>
+  </div>
+  <div class="blockers">
+    <h3>Push &mdash; это не оговорка к приложению, это то, ради чего оно существует</h3>
+    <p>В <span class="mono">Ago.Chat.*</span> нет ни FCM, ни таблицы токенов устройств, ни APNs. Консоль оповещает через Notification API браузера при открытой странице. При буквальном портировании приложение будет уведомлять только на переднем плане &mdash; <strong>хуже, чем десктопная консоль</strong>, и ровно наоборот тому единственному, в чём нативное приложение незаменимо.</p>
+    <p>Без push всё остальное здесь делает приложение <em>удобнее</em> консоли, но не делает его <em>нужным</em>. Это изменение бэкенда, оно проектируется отдельной задачей &mdash; но экраны здесь нарисованы для мира, в котором push уже есть.</p>
+    <p style="opacity:.75">Две настоящие оговорки, которые остались оговорками: у Keycloak один публичный клиент и API проверяет одну аудиторию (лечится в <span class="mono">ago-deploy</span>); описания API в формате OpenAPI нет нигде (типы для передачи данных пишутся руками &mdash; ровно так же, как это уже делают консоль и виджет).</p>
+  </div>
+
+  <section>
+    <div class="shead">
+      <span class="num">00</span>
+      <h2>Граф переходов: откуда куда можно попасть</h2>
+      <p>Каждый экран приложения &mdash; узел, каждое настоящее действие навигации &mdash; подписанная стрелка. Это первое, что стоит проверить: если форма здесь неверна, всё дальше можно не читать. Пять полос: до сессии, затем четыре раздела нижней навигации, затем «Ещё».</p>
+    </div>
+    <div class="graphwrap">
+<pre class="mermaid">
+flowchart TD
+  classDef out fill:#f6f5f1,stroke:#c8c3b6,color:#57546f;
+  classDef entry fill:#ecebff,stroke:#4b3aff,color:#3324c9;
+  classDef hub fill:#fff4e0,stroke:#7a4d00,color:#7a4d00;
+
+  Launch(["Запуск"]):::entry --> HasSession{"Есть сессия?"}
+  HasSession -- "нет" --> SignIn["Вход"]
+  HasSession -- "да" --> Router
+  SignIn -- "Войти" --> KC["Keycloak"]:::out
+  SignIn -- "Создать аккаунт" --> Onboard["Регистрация сайта"]
+  SignIn -- "Соглашение" --> Policy["Документ политики"]
+  KC --> Router{"Маршрутизация после входа"}
+  Router -- "есть место оператора" --> ConvList
+  Router -- "несколько тенантов" --> SitePick["Выбор сайта"]
+  SitePick --> ConvList
+  Router -- "только владелец платформы" --> OwnerStop["Владелец платформы: только веб"]
+  Router -- "ни то ни другое" --> Onboard
+  OwnerStop -. "Открыть в браузере" .-> KCWeb["Веб-консоль"]:::out
+  Onboard --> ConvList
+
+  InviteLink(["App Link приглашения"]):::entry -. "открыт по ссылке" .-> Invite["Приглашение"]
+  Invite -- "Принять" --> Redeem["Ввод кода приглашения"]
+  Redeem --> Router
+  PolicyLink(["Ссылка на политику"]):::entry -. "без сессии" .-> Policy
+
+  PushMsg(["Push: новое сообщение"]):::entry -. "тап" .-> Thread
+  PushBook(["Push: запись ждёт решения"]):::entry -. "тап" .-> BookingCard
+  ConvLink(["App Link диалога"]):::entry -. "тап" .-> Thread
+
+  subgraph D["1 · Диалоги"]
+    direction TB
+    ConvList["Список диалогов · Мои / Ожидают / Все (site:configure)"]
+    Thread["Тред"]
+    Sheet["Шторка посетителя"]
+    Notes["Заметки команды"]
+    Contacts["Контактные данные"]
+    History["Прошлые диалоги"]
+    Ident["Связанные каналы"]
+    TagSheet["Шторка меток"]
+    Canned["Готовые ответы"]
+    CloseSheet["Итог закрытия"]
+    Search["Поиск по диалогам"]
+    Restricted["Ограниченные посетители"]
+  end
+
+  ConvList -- "тап по строке" --> Thread
+  ConvList -- "чип фильтра" --> TagSheet
+  ConvList -- "лупа" --> Search
+  ConvList -- "⋮ · site:configure" --> Restricted
+  Search -- "тап по находке" --> Thread
+  Thread -- "назад" --> ConvList
+  Thread -- "чип посетителя" --> Sheet
+  Thread -. "скрепка · если разрешены вложения" .-> Picker["Системный выбор файла"]:::out
+  Thread -- "/ в начале строки" --> Canned
+  Thread -- "⋮ Закрыть" --> CloseSheet
+  CloseSheet -- "итог выбран" --> ConvList
+  Sheet -- "Заметки" --> Notes
+  Sheet -- "Контакты" --> Contacts
+  Sheet -- "Прошлые" --> History
+  Sheet -- "Каналы" --> Ident
+  Sheet -- "метка" --> TagSheet
+  History -- "тап" --> Thread
+  Contacts -- "Показать · под аудитом" --> Contacts
+
+  subgraph Z["2 · Записи"]
+    direction TB
+    Pending["Ожидают"]
+    Confirmed["Утверждены"]
+    Clients["Клиенты"]
+    BookingCard["Карточка записи"]
+    ClientCard["Карточка клиента"]
+    Merge["Объединение клиентов"]
+    Cfg["Конфигурация записей"]:::hub
+    Cal["Календари"]
+    Services["Услуги"]
+    Workers["Мастера"]
+    WorkerCard["Карточка мастера"]
+    Schedule["График мастера"]
+    Slots["Слоты мастера"]
+    Recut1["Пересчёт · шаг 1: дата"]
+    Recut2["Пересчёт · шаг 2: решения"]
+    Recut3["Пересчёт · шаг 3: подтверждение"]
+    Exceptions["Исключения: выходной и короткий день"]
+    Origins["Разрешённые источники"]
+    MergeLog["Журнал объединений"]
+  end
+
+  Pending -- "сегмент" --> Confirmed
+  Confirmed -- "сегмент" --> Clients
+  Clients -- "сегмент" --> Pending
+  Pending -- "тап" --> BookingCard
+  Pending -- "Подтвердить / Отклонить" --> Pending
+  Confirmed -- "лента дат" --> Confirmed
+  Confirmed -- "тап" --> BookingCard
+  Clients -- "тап" --> ClientCard
+  ClientCard -- "Объединить" --> Merge
+  Merge -- "необратимо, после подтверждения" --> Clients
+  BookingCard -- "Показать телефон · под аудитом" --> BookingCard
+
+  Pending -- "⋮ Конфигурация" --> Cfg
+  Cfg -- "Не хватает · Исправить" --> Cal
+  Cfg -- "Не хватает · Исправить" --> Workers
+  Cfg -- "Не хватает · Исправить" --> Services
+  Cfg -- "Не хватает · Исправить" --> Schedule
+  Cfg -- "Посмотреть слоты" --> Slots
+  Cfg --> Exceptions
+  Cfg --> Origins
+  Cfg --> MergeLog
+  Workers -- "тап" --> WorkerCard
+  Workers -- "добавить" --> WorkerCard
+  WorkerCard -- "Когда работает" --> Schedule
+  WorkerCard -- "Что получилось" --> Slots
+  WorkerCard -- "Что делает" --> Services
+  Schedule -- "сохранить" --> WorkerCard
+  Schedule -- "Пересчитать уже нарезанное" --> Recut1
+  Slots -- "Пересчитать" --> Recut1
+  Recut1 -- "Показать, что изменится" --> Recut2
+  Recut2 -- "все решения приняты" --> Recut3
+  Recut3 -- "выполнено" --> Slots
+
+  subgraph T["3 · Команда"]
+    direction TB
+    TeamChat["Общение"]
+    People["Люди"]
+    InviteSheet["Приглашение оператора"]
+  end
+
+  TeamChat -- "сегмент · site:manage_operators" --> People
+  People -- "Пригласить" --> InviteSheet
+  InviteSheet -. "Поделиться" .-> Share["Системная шторка Поделиться"]:::out
+
+  subgraph A["4 · Аналитика"]
+    direction TB
+    MyNumbers["Мои показатели"]
+    SiteStats["По сайту"]
+    Conversion["Конверсия"]
+    TagStats["По меткам"]
+    Funnel["Воронка записи"]
+    Reveals["Показы телефонов"]
+  end
+
+  MyNumbers -- "⋮ · site:configure" --> SiteStats
+  MyNumbers -- "⋮ · site:configure" --> Conversion
+  MyNumbers -- "⋮ · site:configure" --> TagStats
+  MyNumbers -- "⋮ · site:configure" --> Funnel
+  MyNumbers -- "⋮ · calendar:configure" --> Reveals
+
+  subgraph M["5 · Ещё"]
+    direction TB
+    More["Ещё"]
+    Install["Установка виджета"]
+    WidgetCfg["Виджет на сайте"]
+    ChMax["MAX"]
+    ChTg["Telegram"]
+    ChVk["VK"]
+    ChMail["Почта"]
+    CannedCfg["Готовые ответы"]
+    AiSug["ИИ-подсказки"]
+    AutoReply["Автоответ вне смены"]
+    Faq["База знаний"]
+    TagsCfg["Метки"]
+    Products["Продукты"]
+    Billing["Оплата"]
+    Docs["Документы"]
+    AiCfg["ИИ и данные"]
+    Storage["Хранилище"]
+    Export["Выгрузка"]
+    Settings["Настройки"]
+    Theme["Тема"]
+    Notif["Уведомления"]
+    SiteSwitch["Текущий сайт"]
+    DeleteAcc["Удалить аккаунт"]
+  end
+
+  More --> Install
+  More --> WidgetCfg
+  More --> ChMax
+  More --> ChTg
+  More --> ChVk
+  More --> ChMail
+  More --> CannedCfg
+  More --> AiSug
+  More --> AutoReply
+  More --> Faq
+  More --> TagsCfg
+  More --> Products
+  More --> Billing
+  More --> Docs
+  More --> AiCfg
+  More --> Storage
+  More --> Export
+  More --> Settings
+  Settings --> Theme
+  Settings --> Notif
+  Settings --> SiteSwitch
+  Settings --> DeleteAcc
+  Settings -- "Выход" --> SignIn
+  SiteSwitch -- "другой сайт" --> ConvList
+  Billing -. "Оформить оплату" .-> Checkout["Оплата в веб-консоли"]:::out
+  Export -. "Скачать архив" .-> Dl["Системный загрузчик"]:::out
+  Storage -- "долгое нажатие" --> Storage
+
+  ConvList <-- "нижняя навигация" --> Pending
+  Pending <-- "нижняя навигация" --> TeamChat
+  TeamChat <-- "нижняя навигация" --> MyNumbers
+  MyNumbers <-- "нижняя навигация" --> More
+</pre>
+    </div>
+    <div class="graphlegend">
+      <span><i></i> обычный переход внутри приложения</span>
+      <span><i class="dot"></i> вход снаружи: deep link или тап по уведомлению</span>
+      <span><i class="dash"></i> уходит из приложения: Custom Tab, системный выбор файла, «Поделиться»</span>
+    </div>
+    <div class="note">
+      <h3>Две вещи, которые граф утверждает и которые легко пропустить</h3>
+      <p><strong>«Конфигурация записей» &mdash; единственный новый узел этой итерации</strong>, и это единственный экран в приложении, вся работа которого &mdash; назвать порядок. Всё, что под ним, было достижимо и в консоли; недостижимой была фраза «вот эти шесть вещей, вот в таком порядке».</p>
+      <p><strong>Из раздела «Записи» больше ничто не уходит в браузер.</strong> Пересчёт расписания мастера был единственной стрелкой во всём документе, открывавшей консоль; теперь это три шага внутри приложения.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">08</span>
+      <h2>Аккаунт и шапка &mdash; один узнаваемый угол на каждом верхнеуровневом экране</h2>
+      <p>Раньше правый угол шапки был разным на каждом экране: где-то зелёный кружок присутствия и «&#8942;», где-то только кружок, где-то вообще ничего. Теперь один и тот же элемент &mdash; инициалы оператора с индикатором присутствия внахлёст, со свечением &mdash; на всех пяти вкладках нижней навигации, и он же единственная дверь к «Настройки» и «Выйти». Экраны, куда попадают вглубь (тред, сами «Настройки»), используют другой, более простой вид шапки &mdash; стрелка назад и заголовок, без аватара: тот же принцип, что уже действует в шапке треда.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Диалоги</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-search"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="scrim"></div>
+          <div class="popover">
+            <div class="pop-head">
+              <div class="avatar-chip" style="cursor:default">АГ<span class="presence"></span></div>
+              <div><div class="pop-name">Мария Петрова</div><div class="pop-email">m.petrova@example.com</div></div>
+            </div>
+            <div class="pop-div"></div>
+            <div class="pop-item"><svg class="i sm"><use href="#i-sliders"/></svg>Настройки<svg class="i sm chev"><use href="#i-chev"/></svg></div>
+            <div class="pop-div"></div>
+            <div class="pop-item"><svg class="i sm"><use href="#i-logout"/></svg>Выйти</div>
+          </div>
+          <div data-bnav="dialogs"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">меню профиля &middot; в духе GitHub &mdash; без лишних органов управления внутри</span>
+          <p>Один пункт навигации &mdash; «Настройки» &mdash; и «Выйти». Ни тема, ни язык не показаны прямо здесь: оба уже есть строками на экране «Настройки» рядом, и дублировать их в двух местах значит рано или поздно рассинхронизировать интерфейс с самим собой.</p>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="display:block">
+      <strong>Экран «Настройки»</strong>, куда ведёт пункт меню выше, живёт на
+      <a href="settings.html">странице «Настройки»</a> &mdash; тема, язык интерфейса и текущий сайт.
+    </p>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">07</span>
+      <h2>Широкий экран возвращает форму консоли</h2>
+      <p>Одна точка перелома, тот же код. Планшет &mdash; приятное дополнение, а не цель: усилий сюда вложено ровно столько, чтобы показать, что перелом существует.</p>
+    </div>
+    <div class="wall">
+      <div class="slot wide">
+        <div class="phone tab"><div class="screen">
+          <div class="status" style="height:22px; flex-basis:22px"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="panes">
+            <div class="rail">
+              <div class="on"><span class="ind"><svg class="i"><use href="#i-chat"/></svg></span><span>Диалоги</span></div>
+              <div><span class="ind"><svg class="i"><use href="#i-cal"/></svg></span><span>Записи</span></div>
+              <div><span class="ind"><svg class="i"><use href="#i-team"/></svg></span><span>Команда</span></div>
+              <div><span class="ind"><svg class="i"><use href="#i-chart"/></svg></span><span>Аналитика</span></div>
+              <div><span class="ind"><svg class="i"><use href="#i-dots"/></svg></span><span>Ещё</span></div>
+            </div>
+            <div class="pane list">
+              <div class="panehead">Мои · 3</div>
+              <div class="row" style="background:var(--brand-tint)">
+                <div class="av pair">🦊<span class="av-food">🍊</span></div>
+                <div class="rmain"><div class="rtop"><span class="rname"><span class="ename">Лиса · Апельсин</span></span><span class="rtime">2 мин</span></div><div class="rsnip">Оплата не прошла</div></div>
+                <div class="badge">2</div>
+              </div>
+              <div class="row"><div class="av pair mint">🐳<span class="av-food">🍕</span></div><div class="rmain"><div class="rtop"><span class="rname">Ирина С.</span><span class="rtime">14 мин</span></div><div class="rsnip">Спасибо!</div></div></div>
+              <div class="row"><div class="av pair warm">🦉<span class="av-food">🍓</span></div><div class="rmain"><div class="rtop"><span class="rname"><span class="ename">Сова · Клубника</span></span><span class="rtime">1 ч</span></div><div class="rsnip">Перенести на пятницу?</div></div><div class="badge">1</div></div>
+            </div>
+            <div class="pane detail">
+              <div class="panehead">Лиса · Апельсин · виджет</div>
+              <div class="thread" style="padding-top:12px">
+                <div class="bub in">Здравствуйте! Оплата не прошла, а деньги списались.<span class="t">09:38</span></div>
+                <div class="bub out">Добрый день! Сейчас посмотрю по заказу.<span class="t">09:39 ✓✓</span></div>
+                <div class="bub in">Спасибо<span class="t">09:40</span></div>
+              </div>
+              <div class="composer">
+                <div class="iconbtn"><svg class="i"><use href="#i-clip"/></svg></div>
+                <div class="field">Сообщение…</div>
+                <div class="iconbtn tinted"><svg class="i"><use href="#i-send"/></svg></div>
+              </div>
+            </div>
+            <div class="pane ctx">
+              <div class="panehead">Контекст</div>
+              <div class="chips" style="padding:12px 14px 10px">
+                <div class="chip on">Оплата</div>
+                <div class="chip on">Срочно</div>
+              </div>
+              <div class="kv"><span class="k"><span class="wg">⚠️</span> Телефон</span><span class="v linkish">Показать</span></div>
+              <div class="kv"><span class="k"><svg class="i sm" style="color:var(--success)"><use href="#i-check"/></svg> Почта</span><span class="v linkish">Показать</span></div>
+              <div class="kv"><span class="k">Заметки</span><span class="v">2</span></div>
+              <div class="kv"><span class="k">Каналы</span><span class="v">TG</span></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag asis">Портируется как есть, структурно</span>
+          <span class="route">ListDetailPaneScaffold &middot; те же три зоны, что и в консоли</span>
+          <p class="wide-p">Это утверждение стоит проверять тщательнее всего: если экран телефона построен как &laquo;два экрана и шторка&raquo;, а не как уменьшенная сетка, то широкий layout &mdash; это точка перелома, а не вторая реализация. Это же причина, почему контекст посетителя &mdash; шторка, а не отдельный маршрут: маршруту некуда превращаться в панель.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <h3>Что возвращается на планшете</h3>
+      <p>На планшете возвращается собственная форма консоли: list-detail-каркас с контекстом посетителя как третьей панелью, а нижняя панель становится боковой навигационной. Тот же код, одна точка перелома &mdash; последний кадр на этой странице. <strong>Планшет &mdash; приятное дополнение, а не цель</strong>: телефон основной инструмент, и ни один этап плана не завязан на широкий экран.</p>
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+(function(){
+  // Renders the transition graph. Only common.html carries this - it is the only page with a
+  // `pre.mermaid` block, and a script this page-specific has no business living in the shared
+  // tokens.js that every other page also loads.
+  if (typeof mermaid === 'undefined') { return; }
+  var pending = document.querySelectorAll('pre.mermaid:not([data-processed])');
+  if (pending.length === 0) { return; }
+  try {
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'loose',
+      theme: 'base',
+      fontFamily: 'Manrope, system-ui, sans-serif',
+      themeVariables: {
+        background: '#ffffff',
+        primaryColor: '#f1efe9',
+        primaryTextColor: '#14141f',
+        primaryBorderColor: '#c8c3b6',
+        lineColor: '#6b6780',
+        secondaryColor: '#ecebff',
+        tertiaryColor: '#ffffff',
+        clusterBkg: '#fbfaf7',
+        clusterBorder: '#c8c3b6',
+        edgeLabelBackground: '#ffffff',
+        fontSize: '13px'
+      },
+      flowchart: { curve: 'basis', nodeSpacing: 34, rankSpacing: 46, useMaxWidth: false }
+    });
+    mermaid.run({ nodes: pending });
+  } catch (e) { /* the block stays readable as source */ }
+})();
+</script>
+</body>
+</html>

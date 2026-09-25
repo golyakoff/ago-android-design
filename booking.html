@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ожидают/Утверждены/Клиенты, детальная запись (26-112), и весь флоу конфигурации записей.">
+<title>Записи — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html" aria-current="page">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      </nav>
+    </div>
+    <p class="top-src">Источник: <span class="mono">ago-root</span> 26-00/26-112/26-126 &middot; разнесено по разделам в <span class="mono">26-130</span>, вместо одного артефакта на ~200 КБ.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">04&ndash;05 &middot; записи</p>
+  <section>
+    <div class="shead">
+      <span class="num">04</span>
+      <h2>Записи &mdash; вторая причина носить его с собой</h2>
+      <p>Всё подтверждается автоматически, если кто-то не наложит вето до дедлайна. Это единственное место в продукте, где отсутствие за столом имеет цену &mdash; и где телефон её снимает. Вкладки переименованы: <strong>Ожидают</strong> и <strong>Утверждены</strong>.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div class="on">Ожидают <span class="ct">2</span></div>
+            <div>Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <div class="scroll">
+            <div class="card">
+              <div class="ctitle">Стрижка · 60 мин</div>
+              <div class="cmeta">Завтра, 12:30 · мастер Ирина Соколова</div>
+              <div class="cmeta" style="margin-top:6px">Клиент <span class="mono">+7 9•• ••• •• 47</span> <span class="linkish">Показать</span></div>
+              <div class="rmeta"><span class="pill warn">Подтвердится через 3 ч</span><span class="pill mono">cal a0f3c952</span></div>
+              <div class="cactions">
+                <div class="btn fill">Подтвердить</div>
+                <div class="btn out">Отклонить</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="ctitle">Окрашивание · 180 мин</div>
+              <div class="cmeta">Чт 24 апреля, 10:00 · мастер Пётр Ким</div>
+              <div class="cmeta" style="margin-top:6px">Клиент <span class="mono">+7 9•• ••• •• 08</span> <span class="linkish">Показать</span></div>
+              <div class="rmeta"><span class="pill warn">Подтвердится через 26 ч</span><span class="pill mono">cal a0f3c952</span><span class="pill">Из чата</span></div>
+              <div class="cactions">
+                <div class="btn fill">Подтвердить</div>
+                <div class="btn out">Отклонить</div>
+              </div>
+            </div>
+            <div class="card flat" style="text-align:center">
+              <div class="cmeta">Одна очередь на все календари. Здесь нет «моих» записей.</div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Исправлено по замечанию</span>
+          <span class="route">/calendar/waiting &middot; вкладка «В ожидании» → «Ожидают»</span>
+          <p>Строки таблицы становятся карточками, где вето &mdash; под рукой. Показывается при <span class="mono">calendar:configure</span> <em>или</em> любом из <span class="mono">booking:confirm/reject/cancel</span> &mdash; тот же расширенный гейт, что <span class="mono">23-57</span> дал консоли.</p>
+          <p><span class="flag">Настоящий пробел, найденный при рисовании этого экрана.</span> <span class="mono">PendingBooking</span> несёт <span class="mono">workerId</span>, <span class="mono">serviceId</span>, <span class="mono">calendarId</span> &mdash; и ни одного имени. А <span class="mono">ConfirmedBooking</span> несёт и <span class="mono">workerDisplayName</span>, и <span class="mono">serviceName</span>, и <span class="mono">customerDisplayName</span>. То есть на экране, где у человека секунды на решение, слов нет вообще, а на экране, где решать нечего, есть все. Карточки здесь нарисованы с именами, потому что так и должно быть &mdash; но для этого ответу очереди нужно вырасти на три поля, и это отдельная задача, а не выдумка на клиенте. Пока этого нет, честный вид карточки &mdash; строка <span class="mono pill">cal a0f3c952</span> вместо названия.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div class="on">Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <div class="dstrip">
+            <div><span class="dw">Пн</span><span class="dd">28</span></div>
+            <div class="on"><span class="dw">Вт</span><span class="dd">29</span><span class="dot"></span></div>
+            <div><span class="dw">Ср</span><span class="dd">30</span><span class="dot"></span></div>
+            <div><span class="dw">Чт</span><span class="dd">1</span></div>
+            <div><span class="dw">Пт</span><span class="dd">2</span><span class="dot"></span></div>
+            <div><span class="dw">Сб</span><span class="dd">3</span></div>
+          </div>
+          <!-- `26-112`: месяц+год под днями, тем же приглушённым стилем, что подписи строк; без разделителя,
+               год у каждого месяца, лишнее обрезается многоточием; едет в той же ленте, что и дни. -->
+          <div style="display:flex; gap:7px; padding:0 16px 12px; font-size:12.5px; color:var(--ink-soft)">
+            <span style="flex:0 0 calc(50% - 3.5px); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Сентябрь 2026</span>
+            <span style="flex:1 1 0; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Октябрь 2026</span>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:2px">Ирина Соколова · 4 записи</div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">10:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Анна Ковалёва</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">11:15</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Мария Орлова</div><div class="rsnip">Окрашивание · 120 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">13:30</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname" style="color:var(--ink-soft)">+7 ··· ·· 67</div><div class="rsnip">Без имени · Стрижка · 45 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">15:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Ольга Титова</div><div class="rsnip">Укладка · 40 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="slabel">Пётр Ким · 1 запись</div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">12:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Дмитрий Соловьёв</div><div class="rsnip">Мужская стрижка · 30 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Исправлено по замечанию</span>
+          <span class="route">/calendar/bookings &middot; вкладка «Утверждённые» → «Утверждены»</span>
+          <p>Консоль показывает сетку неделя &times; мастер &mdash; единственный layout в продукте, который принципиально широкий. Android меняет оси местами: лента дат, затем этот день, сгруппированный по мастеру. Вопрос, на который он отвечает («что на четверг»), не меняется.</p>
+          <p><strong>Строка клиента &mdash; это имя.</strong> Оно на первом плане, услуга и длительность &mdash; подписью под ним. Имя всегда берётся как есть и не проверяется (никаких «недействительно»). Когда имени нет &mdash; маскированный телефон и пометка «Без имени», <strong>но никогда не шестнадцатеричный код</strong> (сбор имени при записи &mdash; отдельная задача <span class="mono">26-112</span>; телефон обязателен всегда).</p>
+          <p><strong>Месяц и год под лентой дней.</strong> Когда неделя пересекает границу месяца, под числами стоит «Сентябрь 2026 / Октябрь 2026» &mdash; тем же приглушённым шрифтом, что и подписи строк, без разделителя, год у каждого месяца, лишнее обрезается многоточием; подписи едут вместе с днями.</p>
+          <p><strong>Два значка на строке &mdash; чат и телефон</strong> (слева направо), Material-глифы, оба всегда. Чат ведёт в диалог-источник записи (один на запись), телефон &mdash; к контакту. Тап по всей строке открывает детальную запись (следующий экран).</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Запись</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card">
+              <div class="ctitle" style="font-size:18px">Анна Ковалёва</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:4px">
+                <span class="cmeta">Вторник, 29 сентября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">10:00&ndash;11:00</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); margin-top:12px; font-size:13px"><span style="color:var(--ink-soft)">Услуга</span><span style="font-weight:600">Стрижка · 60 мин</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Мастер</span><span style="font-weight:600">Ирина Соколова</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px; align-items:center"><span style="color:var(--ink-soft)">Телефон</span><span style="display:flex; align-items:center; gap:10px"><span class="mono">+7 ··· ·· 67</span><span class="linkish">Показать</span></span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Подтверждён по SMS</span><span style="font-weight:600">да</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Источник</span><span style="font-weight:600">Виджет на сайте</span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn fill">Перейти к диалогу</div>
+                <div class="btn out">Закрыть</div>
+              </div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag">Новое &middot; 26-112</span>
+          <span class="route">строка записи &rarr; детальная запись &rarr; диалог</span>
+          <p>Тап по строке открывает запись. Дата слева, время справа &mdash; двумя выключками в одну строку, без точки между ними. «Мастер» &mdash; отдельной строкой, как «Услуга». «Источник» &mdash; простым текстом (Виджет на сайте / Telegram / Макс), без стилизованных плашек.</p>
+          <p><strong>Телефон &mdash; за «Показать»</strong> (аудируемое раскрытие, как в треде диалога, <span class="mono">26-53</span>). <strong>«Перейти к диалогу»</strong> ведёт в тот самый диалог, где создана запись &mdash; связь бронь&harr;диалог в обе стороны: из чипа записи в диалоге &mdash; сюда, отсюда &mdash; в диалог (новые поля <span class="mono">origin_conversation_id</span> на брони и <span class="mono">result_booking_id</span> на задаче чата, отдельные задачи 26-112).</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar" style="position:relative">
+            <div class="ttl">Записи</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+            <div class="popover" style="top:52px">
+              <div class="pop-item"><svg class="i sm"><use href="#i-sliders"/></svg><span>Услуги</span></div>
+              <div class="pop-div"></div>
+              <div class="pop-item"><svg class="i sm"><use href="#i-cal"/></svg><span>Часы</span></div>
+            </div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div class="on">Ожидают <span class="ct">2</span></div>
+            <div>Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <div class="scroll">
+            <div class="card flat" style="text-align:center">
+              <div class="cmeta">Всё подтверждается автоматически.</div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Найдено на реальном устройстве, исправлено</span>
+          <span class="route">Записи &middot; сегменты &rarr; сегменты + <span class="mono">⋮</span></span>
+          <p><strong>Сегментов не может быть больше трёх.</strong> <span class="mono">26-96</span> (Услуги) и <span class="mono">26-97</span> (Часы) сначала легли четвёртым и пятым сегментом — на реальном телефоне подписи стали переноситься и обрезаться, ряд физически не резиновый. Правило на будущее: <strong>операционное остаётся в сегментах, настроечное уходит за ⋮.</strong></p>
+          <p>Разделитель простой &mdash; спроси не «часто ли этим пользуются», а «есть ли что-то срочное прямо сейчас». Ожидают/Утверждены/Клиенты &mdash; живые люди и решения с дедлайном. Услуги и Часы &mdash; словари: их читают чаще, чем правят, и ничего не «горит», если зайти туда на день позже.</p>
+          <p>Открывает то же самое: пункт меню ведёт на уже существующий экран (Услуги/Часы) без изменений внутри него &mdash; переезжает только точка входа. Тот же приём годится для любой вкладки, которая начинает разъезжаться: прежде чем резать текст или уменьшать шрифт, спроси, не пора ли часть сегментов сделать пунктами <span class="mono">⋮</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">05</span>
+      <h2>Конфигурация записей &mdash; флоу, которого в консоли нет</h2>
+      <p>Шесть фактов решают, может ли незнакомец записаться. Сервер считает все шесть одним запросом (<span class="mono">GET /booking-readiness</span>) &mdash; и это <em>цепочка зависимостей</em>: каждый следующий пункт бессмысленен, пока не выполнен предыдущий. Консоль разносит эти шесть по пяти маршрутам и показывает сам список как пассивную панель на двух из них. Здесь цепочка &mdash; это и есть навигация.</p>
+    </div>
+    <div class="note warn">
+      <h3>Что именно сломано в консоли, и это проверяемо</h3>
+      <ul>
+        <li><strong>«Расписание» называет две разные вещи.</strong> Пункт меню «Расписание» &mdash; это <span class="mono">/calendar/schedule</span>, исключения: выходной и короткий день. Кнопка «Расписание» в карточке мастера &mdash; это генерирующий шаблон: недельный или цикл, длина слота, перерыв, горизонт. Одно слово, две несвязанные поверхности &mdash; и у второй, той самой, которая и производит слоты, вообще нет собственного адреса.</li>
+        <li><strong>«Когда работает мастер» отвечается на двух экранах.</strong> Рабочие часы &mdash; форма на <span class="mono">/calendar/setup</span>. Шаблон графика &mdash; секция карточки на <span class="mono">/calendar/masters</span>. Оба обязательны (пункты 4 и 5 цепочки), и ни один не упоминает другой.</li>
+        <li><strong>Причина и следствие в трёх экранах друг от друга.</strong> Шаблон правится в карточке, его результат виден только в <span class="mono">/masters/:id/slots</span>, а починка уже нарезанных дней &mdash; четвёртый экран, <span class="mono">/recut</span>. На экране, где правят, не видно, что получилось.</li>
+        <li><strong>Услугу нельзя исправить.</strong> <span class="mono">calendarApi.ts</span> экспортирует <span class="mono">createService</span> и ничего больше для этого типа: услуга с неверной длительностью не правится нигде в продукте. Названо здесь, а не обойдено.</li>
+      </ul>
+    </div>
+    <div class="wall" style="margin-top:30px">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Конфигурация записей</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:2px">
+              <div class="rtop" style="margin-bottom:8px">
+                <span class="ctitle" style="flex:1">Основной календарь</span>
+                <span class="pill bad">Нельзя записаться</span>
+              </div>
+              <div class="chk"><span class="num2">1</span><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>Календарь опубликован</b></span></div>
+              <div class="chk"><span class="num2">2</span><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>На календаре есть активный мастер</b><span>Ирина Соколова, Пётр Ким</span></span></div>
+              <div class="chk"><span class="num2">3</span><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>Мастер оказывает услугу</b><span>4 услуги у Ирины, 2 у Петра</span></span></div>
+              <div class="chk miss"><span class="num2">4</span><span class="mark miss"><svg class="i sm"><use href="#i-alert"/></svg></span><span class="ctext"><b>Заданы рабочие часы или цикл</b><span>У Петра Кима не заданы &mdash; без этого график нечего материализовать</span><span class="linkish" style="display:inline-block; margin-top:6px">Исправить →</span></span></div>
+              <div class="chk"><span class="num2">5</span><span class="mark idle"><svg class="i sm"><use href="#i-chev"/></svg></span><span class="ctext"><b>График сохранён</b><span>Ждёт пункта 4</span></span></div>
+              <div class="chk"><span class="num2">6</span><span class="mark idle"><svg class="i sm"><use href="#i-chev"/></svg></span><span class="ctext"><b>Слоты сгенерированы в горизонте</b><span>Ждёт пункта 5</span></span></div>
+            </div>
+            <div class="slabel">Справочники</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Календари</div><div class="rsnip">1 · опубликован</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Мастера</div><div class="rsnip">2 активных</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Услуги</div><div class="rsnip">6 · правка пока не поддержана сервером</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="slabel">Остальное</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Исключения: выходной и короткий день</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Разрешённые источники страницы</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новый экран</span>
+          <span class="route">GET /booking-readiness &middot; собирает /calendar/setup, /masters, /services, /schedule</span>
+          <p>Заголовок экрана &mdash; это буквально вопрос, который задаёт себе тенант, и он уже есть в консоли как строка: «Может ли клиент записаться прямо сейчас?». Разница в том, что здесь это экран, а не панель на другом экране.</p>
+          <p>Выполненные пункты свёрнуты в одну строку, первый невыполненный развёрнут и несёт ссылку прямо в то место, где он чинится. Ничего не пересчитывается на клиенте: шесть фактов считает сервер, иначе получилась бы вторая, спорящая копия той же конъюнкции.</p>
+          <p>Справочники доступны и плоским списком ниже &mdash; для того, кто пришёл переименовать услугу, а не выяснять, почему никто не записывается. Цепочка &mdash; это ответ на вопрос «почему не работает», а не мастер-визард, через который надо проходить.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Пётр Ким<span class="sub">мастер · <span class="mono">1e5b7d44</span></span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:8px">1 · Кто</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Ким Пётр Андреевич</div><div class="rsnip">Отображается как «Пётр Ким» · активен</div></div><span class="sw on"><i></i></span></div>
+            <div class="slabel">2 · Где</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Основной календарь</div><div class="rsnip">Europe/Moscow · у мастера ровно один календарь</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="slabel">3 · Что делает</div>
+            <div class="chips" style="padding-bottom:4px"><div class="chip on">Мужская стрижка</div><div class="chip on">Бритьё</div><div class="chip">+ услуга</div></div>
+            <div class="slabel">4 · Когда работает</div>
+            <div class="card dangerband" style="margin-bottom:8px">
+              <div class="ctitle" style="color:var(--danger)">Рабочие часы не заданы</div>
+              <div class="cmeta">Пока их нет, графику нечего нарезать &mdash; и записаться к этому мастеру нельзя.</div>
+              <div class="cactions"><div class="btn fill">Задать часы</div></div>
+            </div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">График мастера</div><div class="rsnip">Не сохранён · недельный или цикл, длина слота, горизонт</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="slabel">5 · Что получилось</div>
+            <div class="card flat" style="text-align:center">
+              <div class="cmeta">Слотов нет: ни часов, ни графика. Появятся здесь сразу после сохранения.</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag redesign">Редизайн</span>
+          <span class="route">/calendar/masters &middot; + рабочие часы, переехавшие с /calendar/setup</span>
+          <p>Пять пронумерованных секций в том порядке, в котором человек на них отвечает. Главная правка против консоли &mdash; четвёртая: <strong>рабочие часы и шаблон графика живут здесь вместе</strong>. В консоли первое &mdash; форма на экране настройки, второе &mdash; секция этой карточки, и разъезд этих двух половин и есть та причина, по которой пункты 4 и 5 цепочки ощущаются как один и тот же вопрос, заданный дважды.</p>
+          <p>Пятая секция отвечает на «а что получилось» прямо здесь, а не через два экрана.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">График мастера<span class="sub">Ирина Соколова</span></div>
+          </div>
+          <div class="scroll">
+            <div class="formrow">
+              <label>Шаблон</label>
+              <div class="inp">Недельный (обычная неделя) <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+              <div class="hint">«2 через 2» и «сутки через трое» &mdash; это шаблон «Цикл», а не недельный.</div>
+            </div>
+            <div class="formrow">
+              <label>Длина слота, минуты</label>
+              <div class="inp">30</div>
+            </div>
+            <div class="formrow">
+              <label>Перерыв между слотами, минуты</label>
+              <div class="inp">10</div>
+            </div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname" style="font-weight:600; font-size:13.5px">Перерывы внутри длинной записи считаются рабочим временем</div></div><span class="sw on"><i></i></span></div>
+            <div class="card flat">
+              <div class="cmeta">При таких числах: услуга <b>70 мин</b> займёт <b>2 слота</b>.</div>
+            </div>
+            <div class="formrow">
+              <label>Горизонт, дней вперёд</label>
+              <div class="inp">30</div>
+              <div class="hint">Ограничено 180 днями.</div>
+            </div>
+            <div class="slabel">Что получится</div>
+            <div class="card">
+              <div class="cmeta">Горизонт покрывает <b>30 дней</b>, из них рабочих <b>22</b>.</div>
+              <div class="cmeta" style="margin-top:4px">Около <b>16 слотов</b> в рабочий день, всего <b>≈352</b>.</div>
+              <div class="cactions"><div class="btn out">Смотреть слоты</div></div>
+            </div>
+            <div class="card warnband">
+              <div class="cmeta">Дни, нарезанные по старому шаблону, сами не изменятся. <span class="linkish">Пересчитать расписание →</span> &mdash; там видно, что будет удалено, прежде чем это произойдёт.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить график</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новый экран</span>
+          <span class="route">WorkerScheduleSection &mdash; секция карточки в консоли, без своего адреса</span>
+          <p>Консоль уже считает арифметическую фразу («услуга 70 мин займёт N слотов», зеркало серверного <span class="mono">ComputeSlotsNeeded</span>) &mdash; она сохранена дословно. Добавлены две цифры, которые тенант на самом деле хочет видеть: сколько дней покрывает горизонт и сколько слотов выходит в день. Читаются после сохранения, на этом же экране, со ссылкой прямо в нарезанные слоты.</p>
+          <p>Слово «Расписание» здесь не используется вообще: этот экран &mdash; <strong>График мастера</strong>, а экран выходных и коротких дней &mdash; <strong>Исключения</strong>. Двусмысленности, которую они заменяют, в консоли ровно столько, что её хватило, чтобы заполнять всё «как-то».</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Пересчёт расписания<span class="sub">Шаг 2 из 3 · решение по каждой записи</span></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div></div></div>
+          <div class="scroll">
+            <div class="card flat" style="margin-bottom:12px">
+              <div class="cmeta">С 24 апреля будет перенарезано <b>18 дней</b>. В них попали <b>7 записей</b> &mdash; по каждой нужно решение.</div>
+            </div>
+            <div class="card">
+              <div class="ctitle">Чт 24 апр, 10:00 · Стрижка</div>
+              <div class="cmeta">Сова · Клубника <span class="mono">7c4e18f0</span> · <span class="mono">+7 9•• ••• •• 47</span> <span class="linkish">Показать</span></div>
+              <div class="cactions"><div class="btn warnout">Отменить</div><div class="btn out">Оставить</div></div>
+            </div>
+            <div class="card">
+              <div class="ctitle">Чт 24 апр, 14:00 · Окрашивание</div>
+              <div class="cmeta">Анна К. · <span class="mono">+7 9•• ••• •• 08</span> <span class="linkish">Показать</span></div>
+              <div class="cactions"><div class="btn warnout">Отменить</div><div class="btn fill" style="background:var(--success); color:#fff">Оставлена</div></div>
+            </div>
+            <div class="card">
+              <div class="ctitle">Пт 25 апр, 11:00 · Укладка</div>
+              <div class="cmeta">Коала · Авокадо <span class="mono">d6081bba</span> · <span class="mono">+7 9•• ••• •• 31</span> <span class="linkish">Показать</span></div>
+              <div class="cactions"><div class="btn warnout">Отменить</div><div class="btn out">Оставить</div></div>
+            </div>
+          </div>
+          <div class="stickybar">
+            <div class="counterline"><span class="left">Решено 4 из 7</span><span style="color:var(--danger)">3 без решения</span></div>
+            <div class="btn off wide">Далее</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Возвращён в объём</span>
+          <span class="route">/calendar/masters/:workerId/recut &middot; шаг 2</span>
+          <p>В прошлой версии этот экран был <strong>исключён</strong> &mdash; как слишком разрушительный для маленького экрана. Замечание автора: «это типовая операция для тенанта, который рулит расписанием, его нельзя исключать». Это верно: тот, кто меняет график смен, должен починить уже нарезанные дни в тот же день, а не из десктопного браузера.</p>
+          <p>Карточка на запись, а не строка: смысл этого шага в том, что каждая запись &mdash; это чей-то визит. Кнопки «применить ко всем» здесь нет намеренно.</p>
+          <p><strong>Шаг нельзя оставить наполовину.</strong> Счётчик «решено 4 из 7» закреплён внизу, и «Далее» не активна, пока хоть одна запись без решения. Консоль полагается на то, что оператор прокрутит таблицу и заметит; телефон так не может, поэтому счёт назван вслух.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Пересчёт расписания<span class="sub">Шаг 3 из 3 · подтверждение</span></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div class="on"></div></div>
+          <div class="scroll">
+            <div class="card dangerband">
+              <div class="ctitle" style="color:var(--danger)">Это действие нельзя отменить</div>
+              <div class="cmeta">Слоты с 24 апреля будут удалены и нарезаны заново по текущему графику. Отменённые записи получат отмену; клиентам уйдут уведомления по обычным правилам.</div>
+            </div>
+            <div class="card">
+              <div class="slabel" style="padding:0 0 8px">Что произойдёт</div>
+              <div class="kv" style="border-top:none; padding:8px 0"><span class="k">Дней перенарезано</span><span class="v">18</span></div>
+              <div class="kv" style="padding:8px 0"><span class="k">Слотов удалено</span><span class="v">214</span></div>
+              <div class="kv" style="padding:8px 0"><span class="k">Слотов будет создано</span><span class="v">252</span></div>
+              <div class="kv" style="padding:8px 0"><span class="k" style="color:var(--danger)">Записей отменено</span><span class="v" style="color:var(--danger)">3</span></div>
+              <div class="kv" style="padding:8px 0"><span class="k">Записей сохранено</span><span class="v">4</span></div>
+            </div>
+            <div class="card flat">
+              <div class="slabel" style="padding:0 0 6px">Будут отменены</div>
+              <div class="cmeta">Чт 24 апр, 10:00 · Стрижка · Сова · Клубника <span class="mono">7c4e18f0</span></div>
+              <div class="cmeta">Пт 25 апр, 11:00 · Укладка · Коала · Авокадо <span class="mono">d6081bba</span></div>
+              <div class="cmeta">Сб 26 апр, 09:30 · Бритьё · Сергей В.</div>
+            </div>
+          </div>
+          <div class="stickybar">
+            <div class="btn dangerfill wide">Пересчитать и отменить 3 записи</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Возвращён в объём</span>
+          <span class="route">/calendar/masters/:workerId/recut &middot; шаг 3</span>
+          <p>Отменённые записи перечислены поимённо, а не сосчитаны &mdash; число «3» ничего не стоит, три конкретных визита стоят. Подтверждающая кнопка называет своё последствие в собственном тексте и остаётся единственной кнопкой опасного тона во всём флоу.</p>
+          <p>Диалога нет: подтверждение &mdash; вторая панель, а не модалка. Это собственная форма подтверждения, уже принятая в консоли (удаление мастера, стирание диалога), и она же здесь.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

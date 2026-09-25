@@ -1,0 +1,592 @@
+/* AGO Android Design - shared shell styles for all six section pages.
+ *
+ * `26-130` moves the source of truth for the Android mockup out of a single ~200 KB Artifact
+ * (`ago-root` 26-00/26-112/26-126) into this repository, split by section instead of by ticket,
+ * mirroring `ago-brandbook`'s static-bundle pattern: no build step, no framework, one shared
+ * stylesheet every page pulls in with a plain `<link>`.
+ *
+ * Unlike `ago-brandbook` - which deliberately keeps its own chrome palette separate from the
+ * product tokens it displays as data - this site's whole subject *is* the product, so its own
+ * chrome uses the product's real tokens directly (`ago-console/src/design/tokens.css`, the same
+ * values the artifact already carried). A second, invented palette here would be an extra fact to
+ * keep in sync with the product for no reader benefit.
+ *
+ * Everything below down to the `/* ---- AGO Android Design: site chrome ---- */` marker is the
+ * artifact's own CSS, copied verbatim (phone frame, Material chrome, tokens, dark mode) - the
+ * component styling is not this repository's to redesign, only to host. The site-chrome rules
+ * after that marker (top nav, table of contents, per-page intro) are new: this page's own furniture
+ * around the mockups, in the same spirit as `ago-brandbook`'s `.topbar`/`.pagenav`.
+ */
+
+:root{
+  /* Взято из ago-console/src/design/tokens.css - собственная палитра продукта, не новая. */
+  --ink:#14141f; --ink-soft:#57546f; --ink-faint:#6b6780;
+  --paper:#fbfaf7; --surface:#ffffff; --sunken:#f1efe9; --raised:#fdfcfa;
+  --line:#e5e2da; --line-strong:#c8c3b6;
+  --brand:#4b3aff; --brand-deep:#3324c9; --brand-tint:#ecebff; --lavender:#d9d6ff;
+  --success:#12684a; --success-tint:#e6f6ee;
+  --danger:#9f1d17; --danger-tint:#fdecea; --on-danger:#ffffff;
+  --warning:#7a4d00; --warning-tint:#fff4e0;
+  --frame:#2a2738; --frame-edge:#4a4560;
+  --shadow:0 1px 2px rgba(20,20,31,.06), 0 12px 32px rgba(20,20,31,.10);
+  --shadow-sm:0 1px 2px rgba(20,20,31,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f5f4ef; --ink-soft:#b0b0bf; --ink-faint:#9191a1;
+    --paper:#13121c; --surface:#22202f; --sunken:#0e0d14; --raised:#1c1b28;
+    --line:#323040; --line-strong:#514c68;
+    --brand:#6052ff; --brand-deep:#c3beff; --brand-tint:#1d1a38; --lavender:#413a72;
+    --success:#7fe0af; --success-tint:#0f2b22;
+    --danger:#ff8a80; --danger-tint:#3a1613; --on-danger:#3a1613;
+    --warning:#ffb74d; --warning-tint:#3a2a10;
+    --frame:#000000; --frame-edge:#3a3650;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 34px rgba(0,0,0,.45);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f5f4ef; --ink-soft:#b0b0bf; --ink-faint:#9191a1;
+  --paper:#13121c; --surface:#22202f; --sunken:#0e0d14; --raised:#1c1b28;
+  --line:#323040; --line-strong:#514c68;
+  --brand:#6052ff; --brand-deep:#c3beff; --brand-tint:#1d1a38; --lavender:#413a72;
+  --success:#7fe0af; --success-tint:#0f2b22;
+  --danger:#ff8a80; --danger-tint:#3a1613; --on-danger:#3a1613;
+  --warning:#ffb74d; --warning-tint:#3a2a10;
+  --frame:#000000; --frame-edge:#3a3650;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 34px rgba(0,0,0,.45);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1180px; margin:0 auto; padding:56px 28px 96px}
+
+/* ---------- типографика страницы ---------- */
+.eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--brand-deep); margin:0 0 14px;
+}
+h1{
+  font-family:"Unbounded","Manrope",system-ui,sans-serif; font-weight:700;
+  font-size:clamp(30px,4.4vw,46px); line-height:1.08; letter-spacing:-.02em;
+  margin:0 0 18px; text-wrap:balance; max-width:20ch;
+}
+.lede{font-size:17px; color:var(--ink-soft); max-width:64ch; margin:0 0 8px}
+.lede strong{color:var(--ink); font-weight:600}
+h2{
+  font-family:"Unbounded","Manrope",system-ui,sans-serif; font-weight:500;
+  font-size:21px; letter-spacing:-.01em; margin:0; text-wrap:balance;
+}
+h3{font-size:15px; font-weight:700; margin:0 0 6px; letter-spacing:-.005em}
+p{margin:0 0 12px}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace; font-size:.86em}
+a{color:var(--brand-deep)}
+
+/* ---------- переключатель темы ---------- */
+.themebtn{
+  position:fixed; top:18px; right:18px; z-index:60; width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+  display:grid; place-items:center; cursor:pointer; box-shadow:var(--shadow-sm);
+}
+.themebtn svg{width:20px; height:20px}
+
+/* ---------- сводка вверху ---------- */
+.brief{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:0;
+  border:1px solid var(--line); border-radius:14px; overflow:hidden;
+  background:var(--surface); margin:36px 0 12px;
+}
+.brief > div{padding:18px 20px; border-right:1px solid var(--line)}
+.brief > div:last-child{border-right:none}
+.brief .n{
+  font-family:"Unbounded","Manrope",sans-serif; font-weight:700; font-size:30px;
+  line-height:1; letter-spacing:-.02em; font-variant-numeric:tabular-nums; display:block; margin-bottom:6px;
+}
+.brief .k{font-size:12.5px; color:var(--ink-soft); line-height:1.35}
+.brief .n.ok{color:var(--brand)}
+.brief .n.cut{color:var(--danger)}
+
+.blockers{
+  border-left:3px solid var(--warning); background:var(--warning-tint);
+  padding:16px 20px; border-radius:0 10px 10px 0; margin:22px 0 0; max-width:74ch;
+}
+.blockers h3{color:var(--warning)}
+.blockers p{margin:8px 0 0; font-size:14px}
+.blockers ol{margin:8px 0 0; padding-left:20px; color:var(--ink); font-size:14px}
+.blockers li{margin-bottom:5px}
+.blockers li:last-child{margin-bottom:0}
+
+/* ---------- ритм секций ---------- */
+section{margin-top:68px}
+.shead{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:28px}
+.shead .num{
+  font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-faint);
+  letter-spacing:.08em; padding-top:3px;
+}
+.shead p{margin:6px 0 0; color:var(--ink-soft); font-size:14.5px; flex-basis:100%; max-width:70ch}
+
+/* ---------- граф переходов ---------- */
+.graphwrap{
+  border:1px solid var(--line-strong); border-radius:14px; background:#ffffff;
+  padding:18px; overflow-x:auto;
+}
+.graphwrap pre.mermaid:not([data-processed]){
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; color:#57546f; white-space:pre;
+}
+.graphwrap pre.mermaid{margin:0; background:transparent; min-width:900px}
+.graphlegend{display:flex; gap:18px; flex-wrap:wrap; margin-top:14px; font-size:13px; color:var(--ink-soft)}
+.graphlegend span{display:flex; align-items:center; gap:7px}
+.graphlegend i{width:26px; height:0; border-top:2px solid var(--ink-faint); display:block}
+.graphlegend i.dash{border-top-style:dashed}
+.graphlegend i.dot{border-top-style:dotted}
+
+.wall{display:flex; flex-wrap:wrap; gap:38px 34px; align-items:flex-start}
+.slot{width:360px; flex:0 0 auto}
+.slot.wide{width:100%; max-width:820px}
+.cap{margin-top:16px}
+.cap .route{
+  font-family:"JetBrains Mono",monospace; font-size:11.5px; color:var(--ink-faint);
+  display:block; margin-bottom:5px; word-break:break-all;
+}
+.cap p{font-size:13.5px; color:var(--ink-soft); margin:0; max-width:44ch}
+.cap p + p{margin-top:8px}
+.cap .wide-p{max-width:68ch}
+.cap .flag{color:var(--warning); font-weight:600}
+.tag{
+  display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  padding:2px 7px; border-radius:4px; margin-bottom:8px;
+}
+.tag.redesign{background:var(--brand-tint); color:var(--brand-deep)}
+.tag.asis{background:var(--sunken); color:var(--ink-soft)}
+.tag.newscreen{background:var(--success-tint); color:var(--success)}
+.tag.fixed{background:var(--warning-tint); color:var(--warning)}
+
+/* ---------- рамка устройства ---------- */
+.phone{
+  width:360px; height:740px; background:var(--frame); border-radius:34px; padding:9px;
+  box-shadow:var(--shadow); position:relative;
+}
+.phone.tab{width:100%; max-width:820px; height:560px; border-radius:22px; padding:8px}
+.screen{
+  width:100%; height:100%; background:var(--paper); border-radius:26px; overflow:hidden;
+  display:flex; flex-direction:column; position:relative; border:1px solid var(--frame-edge);
+}
+.phone.tab .screen{border-radius:15px}
+.status{
+  height:26px; flex:0 0 26px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 16px; font-size:11px; font-weight:600; color:var(--ink); background:var(--paper);
+  font-variant-numeric:tabular-nums;
+}
+.status .ic{display:flex; gap:4px; align-items:center; opacity:.75}
+.gesture{
+  height:18px; flex:0 0 18px; display:flex; align-items:center; justify-content:center; background:var(--paper);
+}
+.gesture i{display:block; width:108px; height:4px; border-radius:2px; background:var(--ink); opacity:.28}
+
+/* ---------- материальный chrome приложения ---------- */
+.appbar{
+  flex:0 0 auto; min-height:56px; display:flex; align-items:center; gap:12px; padding:8px 8px 8px 14px;
+  background:var(--paper);
+}
+.appbar.ctx{background:var(--brand-tint)}
+.appbar .ttl{font-size:19px; font-weight:700; letter-spacing:-.01em; flex:1; min-width:0}
+.appbar .ttl.sm{font-size:17px}
+.appbar .sub{display:block; font-size:11.5px; font-weight:500; color:var(--ink-soft); letter-spacing:0}
+.iconbtn{
+  width:38px; height:38px; border-radius:50%; display:grid; place-items:center; flex:0 0 38px; color:var(--ink);
+}
+.iconbtn.tinted{background:var(--brand); color:#fff}
+svg.i{width:21px; height:21px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+svg.i.sm{width:17px; height:17px}
+svg.i.lg{width:26px; height:26px}
+
+.scroll{flex:1; overflow:hidden; background:var(--paper)}
+.pad{padding:0 16px}
+
+/* сегментированная кнопка (M3) */
+.seg{display:flex; margin:4px 16px 12px; border:1px solid var(--line-strong); border-radius:20px; overflow:hidden; height:38px}
+.seg div{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:6px; font-size:13.5px; font-weight:600;
+  color:var(--ink-soft);
+}
+.seg div.on{background:var(--brand-tint); color:var(--brand-deep)}
+.seg div + div{border-left:1px solid var(--line-strong)}
+.seg .ct{font-size:11.5px; font-weight:700; opacity:.85; font-variant-numeric:tabular-nums}
+
+/* `26-77`: единая правая часть шапки на верхнеуровневых экранах - инициалы вместо «ещё», статус
+   внахлёст снизу-справа со свечением, вместо отдельного зелёного кружка рядом. */
+.avatar-chip{
+  width:38px; height:38px; border-radius:50%; flex:0 0 38px; position:relative; cursor:pointer;
+  display:grid; place-items:center; background:linear-gradient(135deg,var(--brand),var(--brand-deep));
+  color:#fff; font-size:13px; font-weight:700; letter-spacing:.01em;
+}
+.avatar-chip .presence{
+  position:absolute; right:-2px; bottom:-2px; width:13px; height:13px; border-radius:50%;
+  background:var(--success); border:2px solid var(--paper);
+  box-shadow:0 0 0 3px rgba(34,197,94,.32), 0 0 7px 2px rgba(34,197,94,.55);
+}
+.avatar-chip .presence.off{
+  background:var(--danger); box-shadow:0 0 0 3px rgba(239,68,68,.28), 0 0 7px 2px rgba(239,68,68,.5);
+}
+
+/* меню аккаунта - лаконичное, в духе GitHub: шапка профиля, один пункт «Настройки», «Выйти». */
+.popover{
+  position:absolute; top:54px; right:10px; width:222px; background:var(--surface);
+  border:1px solid var(--line); border-radius:14px; box-shadow:0 10px 30px rgba(12,12,20,.28);
+  overflow:hidden; z-index:3;
+}
+.pop-head{display:flex; align-items:center; gap:10px; padding:12px 14px 11px}
+.pop-name{font-size:13px; font-weight:700; letter-spacing:-.01em}
+.pop-email{font-size:11px; color:var(--ink-soft)}
+.pop-div{height:1px; background:var(--line); margin:0}
+.pop-item{display:flex; align-items:center; gap:10px; padding:11px 14px; font-size:13.5px; font-weight:600; color:var(--ink)}
+.pop-item svg{color:var(--ink-soft); flex:0 0 auto}
+.pop-item .chev{margin-left:auto; width:16px; height:16px; color:var(--ink-faint)}
+.pop-item.danger{color:var(--danger)}
+.pop-item.danger svg{color:var(--danger)}
+
+/* чипы */
+.chips{display:flex; gap:8px; padding:0 16px 12px; overflow:hidden}
+.chip{
+  flex:0 0 auto; height:30px; padding:0 12px; border-radius:8px; border:1px solid var(--line-strong);
+  display:flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--ink-soft);
+  background:var(--paper); white-space:nowrap;
+}
+.chip.on{background:var(--brand-tint); border-color:var(--brand-tint); color:var(--brand-deep)}
+
+/* строки списка */
+.row{display:flex; gap:13px; padding:12px 16px; align-items:flex-start}
+.row + .row{border-top:1px solid var(--line)}
+.av{
+  width:40px; height:40px; flex:0 0 40px; border-radius:50%; background:var(--brand-tint);
+  display:grid; place-items:center; font-size:17px; color:var(--brand-deep); font-weight:700;
+  position:relative;
+}
+/* 25-207: badge composition, not a side-by-side pair - the creature alone, centered, larger than the
+   old squeezed-pair glyph; the food badge floats over the bottom-right edge with no background of its
+   own. Author's own explicit final sizes, settled live after two earlier percentage-based passes. */
+.av.pair{font-size:28px; line-height:1; display:flex; align-items:center; justify-content:center}
+.av-food{position:absolute; right:-4px; bottom:-4px; font-size:16px; line-height:1}
+.av.mint{background:var(--success-tint); color:var(--success)}
+.av.warm{background:var(--warning-tint); color:var(--warning)}
+.rmain{flex:1; min-width:0}
+.rtop{display:flex; align-items:baseline; gap:8px}
+.rname{font-size:14.5px; font-weight:700; letter-spacing:-.01em; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.rname .code{font-family:"JetBrains Mono",monospace; font-size:13px; font-weight:500; color:var(--ink-soft)}
+.rtime{font-size:11.5px; color:var(--ink-faint); flex:0 0 auto; font-variant-numeric:tabular-nums}
+/* время начала диалога - живёт в первой строке, у имени: тот же вес и цвет, что у имени, потому
+   что это факт про весь диалог целиком, а не про конкретные слова. */
+.rtime-strong{font-size:13px; font-weight:700; color:var(--ink); flex:0 0 auto; font-variant-numeric:tabular-nums}
+/* вторая строка: сниппет + время последнего сообщения рядом, оба обычным весом - обе части
+   описывают одно и то же событие (последние слова и когда они сказаны), поэтому и выглядят как
+   одно целое, а не как заголовок с довеском. */
+.rmid{display:flex; align-items:baseline; gap:8px; margin-top:1px}
+.rmid .rsnip{margin-top:0}
+.rsnip{
+  font-size:13px; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  margin-top:1px; flex:1; min-width:0;
+}
+.rmeta{display:flex; gap:6px; align-items:center; margin-top:6px; flex-wrap:wrap}
+.pill{
+  font-size:10.5px; font-weight:700; letter-spacing:.04em; padding:2px 7px; border-radius:5px;
+  background:var(--sunken); color:var(--ink-soft); white-space:nowrap;
+}
+.pill.brand{background:var(--brand); color:#fff}
+.pill.ok{background:var(--success-tint); color:var(--success)}
+.pill.warn{background:var(--warning-tint); color:var(--warning)}
+.pill.bad{background:var(--danger-tint); color:var(--danger)}
+.pill.mono{font-family:"JetBrains Mono",monospace; letter-spacing:0; font-weight:500}
+.badge{
+  min-width:20px; height:20px; padding:0 6px; border-radius:10px; background:var(--brand); color:#fff;
+  font-size:11.5px; font-weight:700; display:grid; place-items:center; flex:0 0 auto;
+  font-variant-numeric:tabular-nums;
+}
+
+/* `26-90`: третья строка вкладки «Все» - статус слева, число сообщений справа. Та же `.rmeta`,
+   только разнесённая по краям: слева состояние диалога (требует внимания или нет), справа
+   нейтральный факт о его длине. Ничего нового рисовать не понадобилось. */
+.rmeta.split{justify-content:space-between; flex-wrap:nowrap; gap:10px}
+.rmeta.split .pill{overflow:hidden; text-overflow:ellipsis; min-width:0}
+/* «Сообщений: N» - все сообщения диалога, а не непрочитанные: поэтому тот же размер и цвет, что у
+   времени во второй строке, а не `.badge`, который в этом продукте означает «непрочитанное». */
+.rcount{font-size:11.5px; color:var(--ink-faint); flex:0 0 auto; font-variant-numeric:tabular-nums}
+
+/* `26-90`: свайп влево открывает удаление. Действие лежит под строкой, строка уезжает поверх него -
+   поэтому у строки появляется собственный фон `--paper`, которого у неё в обычном списке нет. */
+.swipe{position:relative; overflow:hidden}
+.swipe + .swipe{border-top:1px solid var(--line)}
+.swipe .row{background:var(--paper); position:relative}
+.swipe .row.swiped{transform:translateX(-80px)}
+.swipe-del{
+  position:absolute; top:0; right:0; bottom:0; width:80px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:5px;
+  background:var(--danger); color:var(--on-danger);
+}
+.swipe-del span{font-size:10.5px; font-weight:700; line-height:1.2; letter-spacing:.03em; text-align:center}
+
+/* ленивая подгрузка: признак того, что список не посчитан заранее, а тянется по мере прокрутки */
+.loadmore{
+  padding:16px 16px 20px; text-align:center; font-size:11.5px; color:var(--ink-faint);
+  border-top:1px solid var(--line);
+}
+
+/* `26-90`: панель фильтра по статусам - тот же `.popover`, что и меню профиля, только привязанный
+   не к аватару в шапке, а к чипу под переключателем вкладок. */
+.popover.filters{top:170px; left:16px; right:auto; width:206px}
+.pop-item .cbox{margin-top:0}
+.pop-item .cbox.on svg{color:#fff}
+
+/* карточки */
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px;
+  margin:0 16px 10px;
+}
+.card.flat{background:var(--sunken); border-color:transparent}
+.card.warnband{background:var(--warning-tint); border-color:transparent; border-left:3px solid var(--warning)}
+.card.dangerband{background:var(--danger-tint); border-color:transparent; border-left:3px solid var(--danger)}
+.ctitle{font-size:14.5px; font-weight:700; letter-spacing:-.01em; margin-bottom:2px}
+.cmeta{font-size:12.5px; color:var(--ink-soft)}
+.cmeta.mono{font-family:"JetBrains Mono",monospace}
+.cactions{display:flex; gap:8px; margin-top:12px}
+.btn{
+  flex:1; height:38px; border-radius:19px; display:flex; align-items:center; justify-content:center; gap:6px;
+  font-size:13.5px; font-weight:700; border:1px solid transparent;
+}
+.btn.fill{background:var(--brand); color:#fff}
+.btn.out{border-color:var(--line-strong); color:var(--ink)}
+.btn.warnout{border-color:var(--danger); color:var(--danger)}
+.btn.dangerfill{background:var(--danger); color:var(--on-danger)}
+.btn.off{background:var(--sunken); color:var(--ink-faint)}
+.btn.wide{width:100%; flex:none}
+
+/* подпись раздела внутри экрана */
+.slabel{
+  font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
+  padding:16px 16px 7px;
+}
+
+/* нижняя навигация */
+.bnav{
+  flex:0 0 auto; height:74px; display:flex; background:var(--raised); border-top:1px solid var(--line);
+  padding-top:8px;
+}
+.bnav div{flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; color:var(--ink-soft); position:relative}
+.bnav .ind{
+  width:56px; height:30px; border-radius:15px; display:grid; place-items:center; position:relative;
+}
+.bnav div.on{color:var(--brand-deep)}
+.bnav div.on .ind{background:var(--brand-tint)}
+.bnav span{font-size:11px; font-weight:600}
+.bnav .nb{
+  position:absolute; top:1px; right:9px; min-width:16px; height:16px; padding:0 4px; border-radius:8px;
+  background:var(--danger); color:var(--on-danger); font-size:10px; font-weight:700; display:grid; place-items:center;
+}
+
+/* тред */
+.thread{flex:1; padding:14px 14px 0; display:flex; flex-direction:column; gap:9px; overflow:hidden}
+.bub{max-width:76%; padding:9px 12px; border-radius:16px; font-size:13.5px; line-height:1.45}
+.bub.in{background:var(--sunken); border-bottom-left-radius:5px; align-self:flex-start; color:var(--ink)}
+.bub.out{background:var(--brand); color:#fff; border-bottom-right-radius:5px; align-self:flex-end}
+.bub .t{display:block; font-size:10.5px; margin-top:5px; opacity:.72; font-variant-numeric:tabular-nums}
+.sysnote{
+  align-self:center; font-size:11.5px; color:var(--ink-faint); background:var(--sunken);
+  padding:4px 11px; border-radius:11px; text-align:center;
+}
+.composer{
+  flex:0 0 auto; display:flex; align-items:center; gap:9px; padding:9px 12px; border-top:1px solid var(--line);
+  background:var(--raised);
+}
+.field{
+  flex:1; height:40px; border-radius:20px; background:var(--sunken); display:flex; align-items:center;
+  padding:0 14px; font-size:13.5px; color:var(--ink-faint);
+}
+
+/* нижняя шторка */
+.scrim{position:absolute; inset:0; background:rgba(12,12,20,.42)}
+.sheet{
+  position:absolute; left:0; right:0; bottom:0; background:var(--surface);
+  border-radius:24px 24px 0 0; box-shadow:0 -6px 28px rgba(12,12,20,.24); overflow:hidden;
+}
+.handle{height:22px; display:grid; place-items:center}
+.handle i{display:block; width:34px; height:4px; border-radius:2px; background:var(--line-strong)}
+.sh-head{display:flex; align-items:center; gap:11px; padding:2px 16px 12px}
+.kv{display:flex; justify-content:space-between; gap:12px; padding:10px 16px; font-size:13.5px; border-top:1px solid var(--line)}
+.kv .k{color:var(--ink-soft); display:flex; align-items:center; gap:6px}
+.kv .v{font-weight:600; text-align:right; display:flex; align-items:center; gap:8px; justify-content:flex-end}
+.kv .v .mono{font-size:12.5px}
+.kv.bad{background:var(--danger-tint)}
+.kv.bad .k{color:var(--danger)}
+.linkish{color:var(--brand-deep); font-weight:700}
+.wg{font-size:13px; line-height:1}
+.subnote{font-size:11.5px; color:var(--ink-faint); padding:6px 16px 0}
+
+/* лента дат */
+.dstrip{display:flex; gap:7px; padding:2px 16px 14px; overflow:hidden}
+.dstrip div{
+  flex:0 0 auto; width:46px; height:60px; border-radius:14px; border:1px solid var(--line);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; background:var(--surface);
+}
+.dstrip div.on{background:var(--brand); border-color:var(--brand); color:#fff}
+.dstrip .dw{font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; opacity:.8}
+.dstrip .dd{font-size:18px; font-weight:700; font-variant-numeric:tabular-nums}
+.dstrip .dot{width:5px; height:5px; border-radius:50%; background:var(--brand)}
+.dstrip div.on .dot{background:#fff}
+
+/* индикатор квоты */
+.meter{height:9px; border-radius:5px; background:var(--sunken); overflow:hidden; margin:8px 0 7px}
+.meter i{display:block; height:100%; background:var(--brand); border-radius:5px}
+.meter i.hot{background:var(--warning)}
+
+/* чекбокс */
+.cbox{
+  width:20px; height:20px; flex:0 0 20px; border-radius:5px; border:2px solid var(--line-strong); margin-top:10px;
+}
+.cbox.on{background:var(--brand); border-color:var(--brand); display:grid; place-items:center; color:#fff}
+
+/* переключатель (M3 switch) */
+.sw{width:42px; height:24px; border-radius:12px; background:var(--line-strong); position:relative; flex:0 0 42px}
+.sw i{position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--surface); display:block}
+.sw.on{background:var(--brand)}
+.sw.on i{left:21px; background:#fff}
+.sw.dim{opacity:.45}
+
+/* цепочка готовности */
+.chk{display:flex; gap:11px; padding:10px 14px; align-items:flex-start}
+.chk + .chk{border-top:1px solid var(--line)}
+.chk .mark{
+  width:22px; height:22px; flex:0 0 22px; border-radius:50%; display:grid; place-items:center; margin-top:1px;
+  background:var(--success-tint); color:var(--success);
+}
+.chk .mark.miss{background:var(--danger-tint); color:var(--danger)}
+.chk .mark.idle{background:var(--sunken); color:var(--ink-faint)}
+.chk .ctext{flex:1; min-width:0}
+.chk .ctext b{font-size:13.5px; font-weight:700; display:block; letter-spacing:-.01em}
+.chk .ctext span{font-size:12px; color:var(--ink-soft)}
+.chk.miss{background:var(--danger-tint); margin:0 -14px; padding:12px 14px; border-radius:10px}
+.chk .num2{
+  font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ink-faint); flex:0 0 14px; padding-top:3px;
+}
+
+/* шаги */
+.steps{display:flex; gap:6px; padding:0 16px 12px}
+.steps div{
+  flex:1; height:4px; border-radius:2px; background:var(--line);
+}
+.steps div.on{background:var(--brand)}
+.stickybar{
+  flex:0 0 auto; padding:10px 16px 12px; border-top:1px solid var(--line); background:var(--raised);
+}
+.counterline{display:flex; justify-content:space-between; font-size:12.5px; font-weight:700; margin-bottom:9px}
+.counterline .left{color:var(--ink-soft)}
+
+/* поле формы */
+.formrow{padding:10px 16px}
+.formrow label{display:block; font-size:11.5px; font-weight:700; color:var(--ink-soft); margin-bottom:5px}
+.inp{
+  height:42px; border:1px solid var(--line-strong); border-radius:9px; display:flex; align-items:center;
+  justify-content:space-between; padding:0 12px; font-size:13.5px; background:var(--surface);
+}
+.inp .ph{color:var(--ink-faint)}
+.hint{font-size:11.5px; color:var(--ink-faint); margin-top:5px}
+.hint b{color:var(--ink-soft)}
+
+/* пустое/терминальное состояние */
+.terminal{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 34px; text-align:center; gap:14px}
+.terminal .glyph{width:64px; height:64px; border-radius:50%; background:var(--brand-tint); display:grid; place-items:center; color:var(--brand-deep)}
+.terminal h4{margin:0; font-size:17px; font-weight:700; letter-spacing:-.01em; text-wrap:balance}
+.terminal p{font-size:13px; color:var(--ink-soft); margin:0}
+
+/* вход */
+.signin{flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 28px; gap:10px}
+.wordmark{font-family:"Unbounded",sans-serif; font-weight:700; font-size:34px; letter-spacing:-.02em; color:var(--brand)}
+.signin .tag2{font-size:14px; color:var(--ink-soft); margin-bottom:22px}
+
+/* панели планшета */
+.panes{flex:1; display:flex; min-height:0}
+.pane{min-width:0; display:flex; flex-direction:column; background:var(--paper)}
+.pane.list{flex:0 0 274px; border-right:1px solid var(--line)}
+.pane.detail{flex:1; border-right:1px solid var(--line)}
+.pane.ctx{flex:0 0 250px; background:var(--surface)}
+.rail{
+  flex:0 0 78px; background:var(--raised); border-right:1px solid var(--line); display:flex; flex-direction:column;
+  align-items:center; padding-top:14px; gap:14px;
+}
+.rail div{display:flex; flex-direction:column; align-items:center; gap:3px; color:var(--ink-soft); position:relative}
+.rail div.on{color:var(--brand-deep)}
+.rail .ind{width:52px; height:30px; border-radius:15px; display:grid; place-items:center}
+.rail div.on .ind{background:var(--brand-tint)}
+.rail span{font-size:10.5px; font-weight:600}
+.panehead{padding:12px 14px 10px; font-size:14px; font-weight:700; border-bottom:1px solid var(--line)}
+
+.note{
+  margin-top:26px; border:1px solid var(--line); border-left:3px solid var(--brand); border-radius:0 10px 10px 0;
+  padding:14px 18px; background:var(--surface); max-width:74ch;
+}
+.note.warn{border-left-color:var(--warning)}
+.note h3{margin-bottom:4px}
+.note p{font-size:14px; color:var(--ink-soft); margin:0}
+.note p + p{margin-top:9px}
+.note ul{margin:8px 0 0; padding-left:20px; font-size:14px; color:var(--ink-soft)}
+.note li{margin-bottom:5px}
+
+footer{margin-top:76px; padding-top:22px; border-top:1px solid var(--line); color:var(--ink-faint); font-size:13px}
+footer p{max-width:70ch}
+
+@media (max-width:760px){
+  .page{padding:36px 18px 64px}
+  .brief > div{border-right:none; border-bottom:1px solid var(--line)}
+  .slot{width:100%; max-width:360px}
+}
+
+/* ---- AGO Android Design: site chrome ---- */
+
+header.top{padding:30px 0 26px; border-bottom:1px solid var(--line)}
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap}
+.wordmark2{
+  display:inline-flex; align-items:center; gap:10px; font-family:"Unbounded",sans-serif;
+  font-weight:700; font-size:20px; letter-spacing:-.01em; text-decoration:none; color:var(--ink);
+}
+.wordmark2 .g{
+  width:30px; height:30px; border-radius:8px; display:grid; place-items:center; color:#fff;
+  font-size:14px; background:linear-gradient(140deg,var(--brand),var(--brand-deep));
+}
+.pagenav{display:flex; gap:2px; flex-wrap:wrap; font-family:"Manrope",sans-serif}
+.pagenav a{
+  padding:7px 13px; border-radius:999px; font-size:13px; font-weight:700; color:var(--ink-soft);
+  text-decoration:none; transition:.15s;
+}
+.pagenav a:hover{color:var(--ink); background:var(--sunken)}
+.pagenav a[aria-current="page"]{color:var(--ink); background:var(--sunken); box-shadow:inset 0 0 0 1px var(--line)}
+.top-src{margin-top:12px; font-family:"JetBrains Mono",monospace; font-size:11.5px; color:var(--ink-faint)}
+
+/* index.html - table of contents */
+.toc-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:30px}
+.toc-card{
+  display:block; border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--surface);
+  text-decoration:none; color:inherit; transition:.15s;
+}
+.toc-card:hover{border-color:var(--line-strong); box-shadow:var(--shadow-sm)}
+.toc-card .toc-num{font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ink-faint); letter-spacing:.08em}
+.toc-card h3{font-family:"Unbounded","Manrope",sans-serif; font-weight:500; font-size:18px; margin:8px 0 6px; letter-spacing:-.01em}
+.toc-card p{font-size:13.5px; color:var(--ink-soft); margin:0}
+
+/* placeholder note used on team.html, where the source artifact has no drawn screens yet */
+.not-yet{
+  border:1px dashed var(--line-strong); border-radius:14px; padding:28px 30px; text-align:center;
+  color:var(--ink-soft); max-width:64ch;
+}
+.not-yet h3{color:var(--ink); margin-bottom:8px}
+.not-yet p{margin:0 0 8px; font-size:14px}
+.not-yet p:last-child{margin-bottom:0}
+
+@media (max-width:760px){
+  .page{padding:32px 18px 60px}
+}
+
+.topwrap{max-width:1180px; margin:0 auto; padding:0 28px}
+@media (max-width:760px){ .topwrap{padding:0 18px} }

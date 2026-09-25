@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Экран «Настройки» (тема, язык), и «Ещё» — каналы, автоматизация, хранилище.">
+<title>Настройки — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html" aria-current="page">Настройки</a>
+      </nav>
+    </div>
+    <p class="top-src">Источник: <span class="mono">ago-root</span> 26-00/26-112/26-126 &middot; разнесено по разделам в <span class="mono">26-130</span>, вместо одного артефакта на ~200 КБ.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">06, 08 &middot; настройки</p>
+  <section>
+    <div class="shead">
+      <span class="num">08</span>
+      <h2>Настройки</h2>
+      <p>Открывается из меню профиля в шапке (см. <a href="common.html">«Общее»</a>), не из «Ещё»
+        &mdash; тема, язык интерфейса приложения и текущий сайт, каждая настройка своей строкой.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Настройки</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Тема</div>
+            <div class="seg" style="margin:0 16px 20px">
+              <div class="on">Системная</div>
+              <div>Светлая</div>
+              <div>Тёмная</div>
+            </div>
+            <div class="slabel">Язык интерфейса</div>
+            <div class="seg" style="margin:0 16px 20px">
+              <div class="on">Русский</div>
+              <div>English</div>
+            </div>
+            <div class="slabel">Сайт</div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">reserve-me.ru</div><div class="rsnip">Мастерская «Клён» &middot; <span class="mono">a0f3c952</span></div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">/settings &middot; открывается из меню профиля, не из «Ещё»</span>
+          <p><span class="flag">«Язык интерфейса» &mdash; не то же самое, что язык виджета.</span> Этот переключатель &mdash; язык самого приложения оператора: подписи кнопок, названия экранов, системные сообщения. Язык виджета (в консоли, отдельная настройка сайта) &mdash; про то, на каком языке говорит виджет с посетителем, и про его собственные системные переводы (Календарь, загрузчик файлов). Два разных переключателя для двух разных аудиторий; в этом приложении есть только первый.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">06</span>
+      <h2>Ещё &mdash; три раздела консоли за одним пунктом</h2>
+      <p>Семь разделов боковой панели не помещаются в нижнюю панель, которую Material ограничивает пятью пунктами. Каналы, Автоматизация и Администрирование сворачиваются за один &mdash; это разделы, которые тенант настраивает один раз и редко пересматривает.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar"><div class="ttl">Ещё</div><div class="avatar-chip">АГ<span class="presence"></span></div></div>
+          <div class="scroll">
+            <div class="card flat" style="display:flex; align-items:center; gap:12px">
+              <div class="av">М</div>
+              <div class="rmain"><div class="rname">Мастерская «Клён»</div><div class="rsnip">Администратор · 2 сайта · <span class="mono">a0f3c952</span></div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="slabel">Каналы</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Установка виджета</div><div class="rsnip">Работает · последний запрос 4 мин назад</div></div><span class="pill ok">OK</span></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Виджет на сайте</div><div class="rsnip">Приём файлов от посетителей выключен</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Бот Telegram</div><div class="rsnip">Подключён</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сообщество VK</div><div class="rsnip">Не подключено</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="slabel">Автоматизация</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Готовые ответы</div><div class="rsnip">6 шаблонов</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Автоответ вне смены</div><div class="rsnip">Включён · 3 правила</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+          </div>
+          <div data-bnav="more"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag redesign">Редизайн</span>
+          <span class="route">/channels/* &nbsp;/automation/* &nbsp;/account/*</span>
+          <p>Список списков, один уровень вложенности &mdash; без вложенных вкладок, без второй нижней панели. Раздел, в котором ничего нет, вообще не рисуется &mdash; то же правило <span class="mono">buildSection</span>, которому уже следует боковая панель консоли, поэтому обычный оператор видит четыре пункта в нижней панели, а не пять серых.</p>
+          <p>Строка «Виджет на сайте» подписана состоянием, от которого зависит скрепка в треде: приём файлов по умолчанию на этом сайте выключен.</p>
+          <p><span class="flag">Настройки здесь больше нет.</span> Раньше этот раздел держал единственную настоящую строку &mdash; «Настройки», добавленную сюда как явно названное временное решение, пока не появилось её собственное место. Теперь у неё есть собственное место &mdash; меню профиля справа в шапке (см. раздел «Аккаунт и шапка» ниже) &mdash; и раздел Ещё возвращается к тому, чем и должен быть: список того, что тенант настраивает редко, а не редко используемая свалка.</p>
+          <p><span class="flag">Администрирование &mdash; новый, честно пустой раздел, не нарисован на этом кадре.</span> Карточка тенанта плюс Каналы плюс Автоматизация уже занимают всю высоту устройства на этом конкретном экране (реальный список ниже прокручивается, кадр &mdash; нет) &mdash; третий раздел здесь описан текстом, а не втиснут поверх уже одобренного содержимого. Каждая его строка получает то же обращение, что уже применено к заглушке «Аналитика»: помечена «Скоро», раздел существует, потому что за ним стоит настоящий будущий экран, а не потому что выглядит полнее без него.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar ctx">
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+            <div class="ttl">Выбрано: 3<span class="sub">24,8 МБ будет удалено</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-trash"/></svg></div>
+          </div>
+          <div class="card" style="margin-top:12px">
+            <div class="ctitle">1,84 ГБ из 5 ГБ</div>
+            <div class="meter"><i style="width:37%"></i></div>
+            <div class="cmeta">412 файлов · 96 ни разу не скачаны</div>
+          </div>
+          <div class="chips">
+            <div class="chip on">Не скачивались</div>
+            <div class="chip">Дубликаты</div>
+            <div class="chip">Фильтры</div>
+          </div>
+          <div class="scroll">
+            <div class="row"><div class="cbox on"><svg class="i sm"><use href="#i-check"/></svg></div><div class="rmain"><div class="rtop"><span class="rname">image/png · 4,2 МБ</span><span class="rtime">18 апр</span></div><div class="rsnip">Диалог <span class="mono">7c4e18f0</span> · не скачивался</div></div></div>
+            <div class="row"><div class="cbox on"><svg class="i sm"><use href="#i-check"/></svg></div><div class="rmain"><div class="rtop"><span class="rname">application/pdf · 12,1 МБ</span><span class="rtime">17 апр</span></div><div class="rsnip">Диалог <span class="mono">b27d05a1</span> · не скачивался</div></div></div>
+            <div class="row"><div class="cbox on"><svg class="i sm"><use href="#i-check"/></svg></div><div class="rmain"><div class="rtop"><span class="rname">image/jpeg · 8,5 МБ</span><span class="rtime">17 апр</span></div><div class="rsnip">Диалог <span class="mono">b27d05a1</span> · дубликат</div></div></div>
+            <div class="row"><div class="cbox"></div><div class="rmain"><div class="rtop"><span class="rname">image/png · 1,1 МБ</span><span class="rtime">16 апр</span></div><div class="rsnip">Диалог <span class="mono">d6081bba</span></div></div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Исправлены идентификаторы</span>
+          <span class="route">/account/storage</span>
+          <p>Сортируемая таблица со столбцом чекбоксов становится множественным выбором по долгому нажатию под контекстной верхней панелью &mdash; стандартный паттерн Material, и он ближе к сути самого экрана. Полоса квоты остаётся первой; итог перед подтверждением остаётся. Столбца с именем файла нет, потому что в этом продукте его никогда и не сохраняли.</p>
+          <p>Ссылка на диалог &mdash; те же восемь шестнадцатеричных символов моноширинным, что и в консоли (<span class="mono">conversationId.slice(0, 8)</span>), а не «Диалог #4790».</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

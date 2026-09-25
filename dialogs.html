@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Список диалогов (Мои/Ожидают/Все), тред, шторка посетителя, экран уведомлений.">
+<title>Диалоги — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html" aria-current="page">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      </nav>
+    </div>
+    <p class="top-src">Источник: <span class="mono">ago-root</span> 26-00/26-112/26-126 &middot; разнесено по разделам в <span class="mono">26-130</span>, вместо одного артефакта на ~200 КБ.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">02&ndash;03 &middot; диалоги</p>
+  <section>
+    <div class="shead">
+      <span class="num">02</span>
+      <h2>Диалоги &mdash; причина носить его с собой</h2>
+      <p>Рабочая область консоли &mdash; это сетка из трёх зон: список, тред, панель посетителя. На телефоне это становится двумя экранами и шторкой &mdash; и шторка это именно шторка, потому что переход на отдельный маршрут размонтировал бы поле ввода и потерял черновик.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Диалоги</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-search"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg">
+            <div class="on">Мои <span class="ct">3</span></div>
+            <div>Ожидают <span class="ct">5</span></div>
+            <div>Все</div>
+          </div>
+          <div class="chips">
+            <div class="chip on">Оплата <svg class="i sm"><use href="#i-close"/></svg></div>
+            <div class="chip">Метки</div>
+            <div class="chip">Канал</div>
+          </div>
+          <div class="scroll">
+            <div class="row">
+              <div class="av pair">🦊<span class="av-food">🍊</span></div>
+              <div class="rmain">
+                <div class="rtop">
+                  <span class="rname"><span class="ename">Лиса · Апельсин</span></span>
+                  <span class="badge">2</span>
+                  <span class="rtime-strong">2 мин</span>
+                </div>
+                <div class="rmid">
+                  <div class="rsnip">Здравствуйте, оплата не прошла, что делать?</div>
+                  <span class="rtime">2 мин</span>
+                </div>
+                <div class="rmeta"><span class="pill brand">Новый</span><span class="pill">Оплата</span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av pair mint">🐳<span class="av-food">🍕</span></div>
+              <div class="rmain">
+                <div class="rtop">
+                  <span class="rname">Ирина С.</span>
+                  <span class="rtime-strong">14 мин</span>
+                </div>
+                <div class="rmid">
+                  <div class="rsnip">Спасибо, всё получилось!</div>
+                  <span class="rtime">14 мин</span>
+                </div>
+                <div class="rmeta"><span class="pill">Telegram</span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av pair warm">🦉<span class="av-food">🍓</span></div>
+              <div class="rmain">
+                <div class="rtop">
+                  <span class="rname"><span class="ename">Сова · Клубника</span></span>
+                  <span class="badge">1</span>
+                  <span class="rtime-strong">1 ч</span>
+                </div>
+                <!-- `26-30`: диалог начат час назад, но последнее сообщение - 2 минуты назад (посетитель
+                     написал повторно) - ровно тот случай, ради которого показываются оба времени. -->
+                <div class="rmid">
+                  <div class="rsnip">А можно перенести запись на пятницу?</div>
+                  <span class="rtime">2 мин</span>
+                </div>
+                <div class="rmeta"><span class="pill">Запись</span><span class="pill">VK</span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="av pair">🐨<span class="av-food">🥑</span></div>
+              <div class="rmain">
+                <div class="rtop">
+                  <span class="rname"><span class="ename">Коала · Авокадо</span></span>
+                  <span class="rtime-strong">3 ч</span>
+                </div>
+                <div class="rmid">
+                  <div class="rsnip">Понял, спасибо за помощь</div>
+                  <span class="rtime">3 ч</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-bnav="dialogs"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Исправлено по замечанию</span>
+          <span class="route">/ &nbsp;(левая панель WorkspaceLayout)</span>
+          <p>&laquo;Мои&raquo; и &laquo;Ожидают&raquo; остаются одним экраном за сегментированным переключателем &mdash; если развести их по отдельным пунктам навигации, взятие диалога из ожидания превратилось бы в акт навигации.</p>
+          <p><span class="flag">Порядок нижней навигации исправлен:</span> Диалоги, Записи, <strong>Команда</strong>, <strong>Аналитика</strong>, Ещё &mdash; по тому, как часто к разделу обращаются за смену, а не по порядку боковой панели консоли.</p>
+          <p><span class="flag">Идентификаторы теперь настоящей формы.</span> Пара эмодзи &mdash; настоящий механизм: существо + еда, назначается один раз и навсегда, набор и роли не меняются (<span class="mono">Ago.Chat.Domain.VisitorEmojiDictionary</span>). Никаких <span class="mono">#4821</span>: такого формата в продукте не существует.</p>
+          <p><span class="flag">Значок &mdash; бейдж, а не пара рядом.</span> Крупная иконка существа по центру, еда &mdash; маленьким бейджем поверх правого нижнего края, без кружка под собой &mdash; размеры подобраны вживую, несколько вариантов сравнены в отдельном артефакте.</p>
+          <p><span class="flag">Строка читается словами, а не парой символов.</span> Когда имя посетителя неизвестно, вместо голых эмодзи и хеша &mdash; локализованное название пары (<span class="mono">Лиса · Апельсин</span>), а сам код остаётся мелким и бледным следом &mdash; на случай редкого совпадения в списке, не для доказательства уникальности. Название хранится не в Domain (домен остаётся без перевода), а в собственной i18n-таблице консоли, ключ &mdash; сам эмодзи-глиф, скопированный побайтово из <span class="mono">VisitorEmojiDictionary.cs</span>, чтобы не разойтись из-за невидимого variation selector'а.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Диалоги</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-search"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg">
+            <div>Мои <span class="ct">3</span></div>
+            <div>Ожидают <span class="ct">5</span></div>
+            <div class="on">Все</div>
+          </div>
+          <div class="chips">
+            <div class="chip on">Статус <svg class="i sm" style="transform:rotate(90deg)"><use href="#i-chev"/></svg></div>
+          </div>
+          <div class="scroll">
+            <!-- строка в середине свайпа: удаление уже открыто, чтобы жест был виден на статичном кадре -->
+            <div class="swipe">
+              <div class="swipe-del"><svg class="i lg"><use href="#i-trash-forever"/></svg><span>Удалить<br>диалог</span></div>
+              <div class="row swiped">
+                <div class="av pair">🦊<span class="av-food">🍊</span></div>
+                <div class="rmain">
+                  <div class="rtop">
+                    <span class="rname"><span class="ename">Лиса · Апельсин</span></span>
+                    <span class="rtime-strong">2 мин</span>
+                  </div>
+                  <div class="rmid">
+                    <div class="rsnip">Здравствуйте, оплата не прошла, что делать?</div>
+                    <span class="rtime">2 мин</span>
+                  </div>
+                  <div class="rmeta split"><span class="pill warn">Не начат</span><span class="rcount">Сообщений: 1</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swipe">
+              <div class="row">
+                <div class="av pair mint">🐳<span class="av-food">🍕</span></div>
+                <div class="rmain">
+                  <div class="rtop">
+                    <span class="rname">Ирина С.</span>
+                    <span class="rtime-strong">14 мин</span>
+                  </div>
+                  <div class="rmid">
+                    <div class="rsnip">Спасибо, всё получилось!</div>
+                    <span class="rtime">6 мин</span>
+                  </div>
+                  <div class="rmeta split"><span class="pill ok">Назначен: Мария П.</span><span class="rcount">Сообщений: 9</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swipe">
+              <div class="row">
+                <div class="av pair warm">🦉<span class="av-food">🍓</span></div>
+                <div class="rmain">
+                  <div class="rtop">
+                    <span class="rname"><span class="ename">Сова · Клубника</span></span>
+                    <span class="rtime-strong">1 ч</span>
+                  </div>
+                  <div class="rmid">
+                    <div class="rsnip">А можно перенести запись на пятницу?</div>
+                    <span class="rtime">2 мин</span>
+                  </div>
+                  <div class="rmeta split"><span class="pill warn">Не начат</span><span class="rcount">Сообщений: 3</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swipe">
+              <div class="row">
+                <div class="av pair">🐨<span class="av-food">🥑</span></div>
+                <div class="rmain">
+                  <div class="rtop">
+                    <span class="rname"><span class="ename">Коала · Авокадо</span></span>
+                    <span class="rtime-strong">3 ч</span>
+                  </div>
+                  <div class="rmid">
+                    <div class="rsnip">Понял, спасибо за помощь</div>
+                    <span class="rtime">3 ч</span>
+                  </div>
+                  <div class="rmeta split"><span class="pill">Закрыт</span><span class="rcount">Сообщений: 12</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="loadmore">Подгружаются по мере прокрутки</div>
+          </div>
+          <div data-bnav="dialogs"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новая вкладка</span>
+          <span class="route">/ &nbsp;&middot; третья вкладка того же экрана, а не отдельный маршрут</span>
+          <p><span class="flag">«Все» &mdash; третий сегмент, а не пункт навигации и не экран за «⋮».</span> В консоли это отдельная страница администратора; на телефоне отдельный маршрут означал бы, что оператор уходит со своего списка, чтобы посмотреть чужой. Тот же экран, тот же переключатель, что уже разводит «Мои» и «Ожидают».</p>
+          <p><span class="flag">Вкладки просто нет у того, кому она не положена.</span> <span class="mono">GET /api/v1/conversations/all</span> закрыт правом <span class="mono">site:configure</span> &mdash; так решил <span class="mono">GetAllConversationsForSiteHandler</span>, и решил намеренно: <span class="mono">conversation:read</span> есть у каждого оператора и открывает только его собственную очередь. У оператора без <span class="mono">site:configure</span> переключатель остаётся о двух сегментах &mdash; не о трёх, из которых один серый.</p>
+          <p><span class="flag">Это список строк, а не таблица.</span> Первые две строки &mdash; ровно те же, что в «Моих»: имя и время с начала диалога сверху, последние слова и время последнего сообщения под ними. Третья строка &mdash; единственное, что здесь добавлено: слева состояние (<strong>Не начат</strong> &mdash; посетитель написал, никто не взял; <strong>Назначен: имя</strong>; <strong>Закрыт</strong>), справа <span class="mono">Сообщений: N</span> &mdash; длина диалога целиком, а не непрочитанное. Поэтому это бледный текст в весе времени, а не синий <span class="mono">.badge</span>, который в этом продукте всегда означает непрочитанное.</p>
+          <p><span class="flag">Чисел в фильтре и на вкладках нет намеренно.</span> Закрытых диалогов у живого сайта десятки тысяч; счётчик рядом со статусом или на самой вкладке &mdash; это <span class="mono">COUNT(*)</span> по всей истории на каждое открытие экрана ради цифры, которую никто не читает. Список ленивый: он тянется по мере прокрутки и нигде не знает своей полной длины.</p>
+          <p><span class="flag">Две из трёх строк сегодня нечем заполнить &mdash; и это честная часть кадра.</span> <span class="mono">GetAllConversationsForSiteHandler.ToSummary</span> собирает <span class="mono">ConversationSummaryDto</span> без <span class="mono">LastMessagePreview</span> и <span class="mono">LastMessageAt</span> (поля в контракте есть, этот список их не заполняет), а поля «сколько всего сообщений» нет вообще нигде. Вторая строка и <span class="mono">Сообщений: N</span> &mdash; это работа на стороне <span class="mono">ago-chat</span>, а не только рисование. Первая строка и статус доступны уже сейчас.</p>
+          <p><span class="flag">Свайп влево открывает удаление &mdash; и только у администратора.</span> Право &mdash; <span class="mono">conversation:erase</span>; оно входит в набор администратора, который выдают <span class="mono">RegisterSiteHandler</span> и <span class="mono">MintDemoTenantHandler</span> вместе с <span class="mono">site:erase</span> и <span class="mono">site:export</span>, и отдельно оператору не выдаётся никогда. У оператора без этого права строка не свайпается вовсе &mdash; то же правило «скрывать, а не гасить», что и со скрепкой в треде. Под строкой &mdash; сплошной <span class="mono">--danger</span>, иконка и подпись в две строки, без других слов.</p>
+          <p><span class="flag">Но «удалить» здесь &mdash; это заявка, а не удаление.</span> <span class="mono">POST /conversations/{id}/erase</span> отвечает <span class="mono">202 Accepted</span> (<span class="mono">RequestConversationErasureHandler</span>): стирание происходит потом, отдельным шагом. Значит строка не имеет права просто исчезнуть по свайпу &mdash; иначе она вернётся при следующей подгрузке и будет выглядеть как сбой. Правильное поведение (подтверждение, затем строка в состоянии «стирается») этот кадр ещё не рисует &mdash; это то, что надо решить до Kotlin, а не во время.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Диалоги</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-search"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg">
+            <div>Мои <span class="ct">3</span></div>
+            <div>Ожидают <span class="ct">5</span></div>
+            <div class="on">Все</div>
+          </div>
+          <div class="chips">
+            <div class="chip on">Статус <svg class="i sm" style="transform:rotate(-90deg)"><use href="#i-chev"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="swipe">
+              <div class="row">
+                <div class="av pair">🦊<span class="av-food">🍊</span></div>
+                <div class="rmain">
+                  <div class="rtop"><span class="rname"><span class="ename">Лиса · Апельсин</span></span><span class="rtime-strong">2 мин</span></div>
+                  <div class="rmid"><div class="rsnip">Здравствуйте, оплата не прошла, что делать?</div><span class="rtime">2 мин</span></div>
+                  <div class="rmeta split"><span class="pill warn">Не начат</span><span class="rcount">Сообщений: 1</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swipe">
+              <div class="row">
+                <div class="av pair mint">🐳<span class="av-food">🍕</span></div>
+                <div class="rmain">
+                  <div class="rtop"><span class="rname">Ирина С.</span><span class="rtime-strong">14 мин</span></div>
+                  <div class="rmid"><div class="rsnip">Спасибо, всё получилось!</div><span class="rtime">6 мин</span></div>
+                  <div class="rmeta split"><span class="pill ok">Назначен: Мария П.</span><span class="rcount">Сообщений: 9</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="swipe">
+              <div class="row">
+                <div class="av pair warm">🦉<span class="av-food">🍓</span></div>
+                <div class="rmain">
+                  <div class="rtop"><span class="rname"><span class="ename">Сова · Клубника</span></span><span class="rtime-strong">1 ч</span></div>
+                  <div class="rmid"><div class="rsnip">А можно перенести запись на пятницу?</div><span class="rtime">2 мин</span></div>
+                  <div class="rmeta split"><span class="pill warn">Не начат</span><span class="rcount">Сообщений: 3</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="loadmore">Подгружаются по мере прокрутки</div>
+          </div>
+          <div class="scrim"></div>
+          <div class="popover filters">
+            <div class="slabel" style="padding:12px 14px 6px">Показывать</div>
+            <div class="pop-item"><span class="cbox on"><svg class="i sm"><use href="#i-check"/></svg></span>Не начат</div>
+            <div class="pop-div"></div>
+            <div class="pop-item"><span class="cbox on"><svg class="i sm"><use href="#i-check"/></svg></span>Назначен</div>
+            <div class="pop-div"></div>
+            <div class="pop-item"><span class="cbox"></span>Закрыт</div>
+          </div>
+          <div data-bnav="dialogs"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">фильтр по статусам &middot; та же панель, что и меню профиля, привязанная к чипу</span>
+          <p><span class="flag">Состояние по умолчанию именно такое.</span> «Не начат» и «Назначен» включены, <strong>«Закрыт» выключен</strong>: закрытый диалог &mdash; это архив, и оператор должен попросить его показать, а не пролистывать мимо. На предыдущем кадре «Закрыт» включён вручную &mdash; поэтому там в списке есть закрытая строка, а здесь нет.</p>
+          <p>Три флажка, три слова, <strong>ни одной цифры</strong> &mdash; ни напротив статуса, ни на чипе, ни на вкладке «Все». Панель взята целиком у меню профиля (<span class="mono">.popover</span> и <span class="mono">.pop-item</span>), флажок &mdash; тот же <span class="mono">.cbox</span>, что на экране очистки хранилища. Новой формы здесь не появилось, появилось новое содержимое.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Лиса · Апельсин<span class="sub">Виджет &middot; в работе &middot; 2 мин</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="thread">
+            <div class="sysnote">Назначено вам · 09:38</div>
+            <div class="bub in">Здравствуйте! Оплата не прошла, а деньги списались.<span class="t">09:38</span></div>
+            <div class="bub in">Заказ 10482<span class="t">09:38</span></div>
+            <div class="bub out">Добрый день! Сейчас посмотрю по заказу, одну минуту.<span class="t">09:39 ✓✓</span></div>
+            <div class="bub in">Спасибо<span class="t">09:40</span></div>
+            <div class="bub out">Платёж завис у банка, деньги вернутся в течение суток. Оформил заказ вручную — подтверждение уже ушло вам на почту.<span class="t">09:41 ✓</span></div>
+          </div>
+          <div class="composer">
+            <div class="iconbtn"><svg class="i"><use href="#i-clip"/></svg></div>
+            <div class="field">Сообщение…</div>
+            <div class="iconbtn tinted"><svg class="i"><use href="#i-send"/></svg></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Исправлено по замечанию</span>
+          <span class="route">/conversations/:conversationId</span>
+          <p>Порядок &mdash; это назначаемый сервером <span class="mono">sequence</span>, никогда не часы, а вторая галочка &mdash; это <span class="mono">Message.DeliveredAt</span>, собственное подтверждение виджета, а не квитанция об отправке. Приход нового назначения никогда не переключает экран.</p>
+          <p><span class="flag">Скрепка на этом кадре нарисована, но она условная.</span> Консоль рисует «Прикрепить» всегда (<span class="mono">Composer.tsx</span>). Приложение рисует скрепку ровно тогда, когда у открытого диалога <span class="mono">hasAttachmentUploadGrant</span> истинно &mdash; это значение задаётся по умолчанию для сайта переключателем <span class="mono">allowAttachmentUploadsByDefault</span> на экране виджета и переключается для конкретного диалога из шторки посетителя тем, у кого есть <span class="mono">conversation:attachment_upload_grant</span>. Когда вложения не разрешены &mdash; скрепки нет вовсе, а не «серая»: то же правило «скрывать, а не гасить», которому уже следуют сам переключатель и кнопка закрытия диалога. <strong>Одно решение здесь моё, а не бэкенда:</strong> грант формально про загрузки <em>посетителя</em>, а скрепка &mdash; про оператора. Если их надо развести &mdash; это решается сейчас, одной строкой.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Лиса · Апельсин<span class="sub">Виджет &middot; в работе &middot; 2 мин</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="thread" style="opacity:.5">
+            <div class="sysnote">Назначено вам · 09:38</div>
+            <div class="bub in">Здравствуйте! Оплата не прошла, а деньги списались.<span class="t">09:38</span></div>
+          </div>
+          <div class="scrim"></div>
+          <div class="sheet">
+            <div class="handle"><i></i></div>
+            <div class="sh-head">
+              <div class="av pair">🦊<span class="av-food">🍊</span></div>
+              <div class="rmain">
+                <div class="rname"><span class="ename">Лиса · Апельсин</span></div>
+                <div class="rsnip">Первый визит 14 марта · 3 диалога</div>
+              </div>
+              <span class="pill ok">В работе</span>
+            </div>
+            <div class="chips" style="padding-bottom:10px">
+              <div class="chip on">Оплата</div>
+              <div class="chip on">Срочно</div>
+              <div class="chip">+ метка</div>
+            </div>
+            <div class="slabel" style="padding:4px 16px 4px">Контактные данные</div>
+            <div class="kv">
+              <span class="k"><span class="wg">⚠️</span> Телефон</span>
+              <span class="v"><span class="mono">+7 9•• ••• •• 12</span><span class="linkish">Показать</span></span>
+            </div>
+            <div class="kv">
+              <span class="k"><svg class="i sm" style="color:var(--success)"><use href="#i-check"/></svg> Почта</span>
+              <span class="v"><span class="mono">i****@mail.ru</span><span class="linkish">Показать</span></span>
+            </div>
+            <div class="kv bad">
+              <span class="k"><span class="wg">⚠️</span> Имя</span>
+              <span class="v" style="color:var(--danger)">Недействительно</span>
+            </div>
+            <div class="subnote">⚠️ &mdash; оператор ещё не подтвердил эти данные. Одна строка на одно поле: «непроверенного телефона» отдельной строкой не бывает.</div>
+            <div class="kv" style="margin-top:8px"><span class="k">Заметки команды</span><span class="v">2 <svg class="i sm"><use href="#i-chev"/></svg></span></div>
+            <div class="kv"><span class="k">Прошлые диалоги</span><span class="v">2 <svg class="i sm"><use href="#i-chev"/></svg></span></div>
+            <div class="kv"><span class="k">Приём файлов от посетителя</span><span class="v"><span class="sw on"><i></i></span></span></div>
+            <div class="cactions" style="padding:14px 16px 18px; margin:0">
+              <div class="btn out">Закрыть диалог</div>
+              <div class="btn warnout">Ограничить</div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag fixed">Исправлено по замечанию</span>
+          <span class="route">VisitorPanel + ContactDetailsPanel + Notes + Tags + History</span>
+          <p><span class="flag">Показано явно, а не только описано.</span> Одна строка на атрибут &mdash; телефон, почта, имя &mdash; и значок <span class="wg">⚠️</span> ровно тогда, когда оператор ещё не подтвердил значение. Никаких пар «непроверенный телефон» / «проверенный телефон».</p>
+          <p>Это совпадает с тем, что уже сделала консоль в <span class="mono">25-58</span>: старый значок Verified/Unverified убрали, потому что он был Unverified на каждой строке без исключения. Настоящее состояние &mdash; это <span class="mono">assessment</span>: пусто, «Подтверждено» или «Недействительно», и третье красит строку, а не добавляет вторую.</p>
+          <p>Раскрытие замаскированного значения остаётся под аудитом: одна строка на каждое раскрытие в журнале, никогда не счётчик по оператору. Переключатель приёма файлов от посетителя живёт здесь &mdash; и это тот самый переключатель, от которого зависит скрепка в треде.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <h3>Что возвращается на планшете</h3>
+      <p>На планшете возвращается собственная форма консоли: list-detail-каркас с контекстом посетителя как третьей панелью, а нижняя панель становится боковой навигационной. Тот же код, одна точка перелома &mdash; последний кадр на этой странице. <strong>Планшет &mdash; приятное дополнение, а не цель</strong>: телефон основной инструмент, и ни один этап плана не завязан на широкий экран.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">03</span>
+      <h2>Уведомления &mdash; обещание, ради которого всё остальное имеет смысл</h2>
+      <p>Каналы уведомлений &mdash; понятие уровня ОС, у веба аналога нет. Экран нарисован для мира, где push уже есть: так выглядит обещание. Всё выключено за одной полосой, называющей задачу бэкенда, которая должна приехать первой.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Уведомления</div>
+          </div>
+          <div class="scroll">
+            <div class="card warnband" style="margin-top:4px">
+              <div class="ctitle" style="color:var(--warning)">Пока недоступно</div>
+              <div class="cmeta">Доставка на фоне требует push-инфраструктуры в <span class="mono">ago-chat</span>: регистрация устройства, рассылка из outbox, решение о доставке по оператору. Сейчас приложение оповещает только на переднем плане.</div>
+            </div>
+            <div class="slabel">Каналы уведомлений</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Назначен диалог</div><div class="rsnip">Звук и вибрация · высокая важность</div></div><span class="sw on dim"><i></i></span></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сообщение в моём диалоге</div><div class="rsnip">Звук · высокая важность</div></div><span class="sw on dim"><i></i></span></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Запись ждёт решения</div><div class="rsnip">Звук · подтвердится сама к дедлайну</div></div><span class="sw on dim"><i></i></span></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Дедлайн подтверждения близко</div><div class="rsnip">За час до автоподтверждения</div></div><span class="sw dim"><i></i></span></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сообщение команде</div><div class="rsnip">Без звука</div></div><span class="sw on dim"><i></i></span></div>
+            <div class="slabel">Когда не беспокоить</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Тихие часы</div><div class="rsnip">22:00 – 08:00 · часовой пояс бизнеса</div></div><span class="sw on dim"><i></i></span></div>
+            <div class="card flat" style="margin-top:12px">
+              <div class="cmeta">Статус «Отошёл» относится к оператору, а не к устройству: включив его на телефоне, вы включаете его и для десктопной консоли. Это существующее поведение сервера, а не новинка приложения.</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новый экран</span>
+          <span class="route">предок &mdash; AlertSettings консоли, соответствие не один-к-одному</span>
+          <p>Прошлая версия этого экрана только объясняла, чего приложение <em>не может</em>. Это выбор в пользу обратного: экран, который честно говорит «пока нет», но при этом уже нарисован целиком &mdash; иначе хорошую версию не спроектирует никто и никогда.</p>
+          <p>Пять каналов, по одному на вид события, потому что Android разрешает пользователю отключить канал мимо приложения &mdash; и это правильно: «диалог назначен мне» и «в команде написали» не должны выключаться вместе.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

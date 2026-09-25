@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Дизайн Android-приложения AGO Chat, по разделам: граф переходов, экраны и заметки к ним.">
+<title>AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html" aria-current="page">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      </nav>
+    </div>
+    <p class="top-src">Источник: <span class="mono">ago-root</span> 26-00/26-112/26-126 &middot; разнесено по разделам в <span class="mono">26-130</span>, вместо одного артефакта на ~200 КБ.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">ago-root 26-130 &middot; мини-сайт дизайна Android</p>
+  <h1>AGO Chat для Android &mdash; дизайн по разделам</h1>
+  <p class="lede">Шестнадцать экранов Android-приложения AGO Chat, нарисованных в компонентах
+    Material на собственной палитре продукта (<span class="mono">tokens.css</span>), плюс граф
+    переходов между всеми экранами. Раньше это был один артефакт на ~200 КБ; правка одного экрана
+    в нём стоила перечитывания всего файла. Здесь то же содержимое разложено по разделам &mdash;
+    маленькие файлы в git, а не один непрерывный холст.</p>
+  <p class="lede">Ничего из нарисованного здесь ещё не реализовано. Это точка согласования: план,
+    экраны и переходы &mdash; и только потом Kotlin. Плейсхолдерные данные везде: ни одного
+    реального тенанта, человека или номера.</p>
+
+  <div class="toc-grid">
+    <a class="toc-card" href="common.html">
+      <span class="toc-num">00</span>
+      <h3>Общее</h3>
+      <p>Граф переходов между всеми экранами, шапка и меню аккаунта, широкий экран (планшет).</p>
+    </a>
+    <a class="toc-card" href="login-boot.html">
+      <span class="toc-num">01</span>
+      <h3>Вход</h3>
+      <p>Экран входа и терминальный экран для владельца платформы, у которого нет места оператора.</p>
+    </a>
+    <a class="toc-card" href="dialogs.html">
+      <span class="toc-num">02&ndash;03</span>
+      <h3>Диалоги</h3>
+      <p>Список диалогов (Мои/Ожидают/Все), тред, шторка посетителя, экран уведомлений.</p>
+    </a>
+    <a class="toc-card" href="booking.html">
+      <span class="toc-num">04&ndash;05</span>
+      <h3>Записи</h3>
+      <p>Ожидают/Утверждены/Клиенты, детальная запись (26-112), и весь флоу конфигурации записей.</p>
+    </a>
+    <a class="toc-card" href="team.html">
+      <span class="toc-num">&mdash;</span>
+      <h3>Команда</h3>
+      <p>Раздел нижней навигации уже в графе переходов; экраны этой итерацией ещё не нарисованы.</p>
+    </a>
+    <a class="toc-card" href="settings.html">
+      <span class="toc-num">06, 08</span>
+      <h3>Настройки</h3>
+      <p>Экран «Настройки» (тема, язык), и «Ещё» &mdash; каналы, автоматизация, хранилище.</p>
+    </a>
+  </div>
+
+  <div class="note" style="margin-top:44px">
+    <h3>Откуда это</h3>
+    <p>Источник &mdash; артефакт <span class="mono">8b4fb3a8</span> (ago-root 26-00, редакции
+      26-90/26-96/26-97/26-112), включая корректировку глифов <span class="mono">26-126</span>.
+      Артефакт остаётся как снимок на момент своего создания; этот репозиторий &mdash; новый
+      источник истины для дизайна Android (задача <span class="mono">26-130</span>).</p>
+  </div>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
