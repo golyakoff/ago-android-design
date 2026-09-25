@@ -59,6 +59,11 @@ const AGO_SPRITE_HTML = `
   <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 4 1.6 5.6 1.6 5.6H4.4S6 13 6 9z"/><path d="M10 18.5a2.2 2.2 0 0 0 4 0"/></symbol>
   <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.5L2.5 20h19L12 4.5z"/><path d="M12 10v4.2M12 17.2v.1"/></symbol>
+  <!-- exclamation on its own (Material Symbols \`exclamation\`: bare stem + dot, no triangle) - the
+       status glyph for a settings row that "needs attention". Drawn stroke-only like the rest of the
+       sprite: the second sub-path is a zero-length segment that round caps render as the dot. The
+       triangle-wrapped variant stays #i-alert; this one is used inside the small .statdot circle. -->
+  <symbol id="i-excl" viewBox="0 0 24 24"><path d="M12 5.5v8.5M12 18v.1"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>

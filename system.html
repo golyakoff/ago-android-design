@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Системное: первый запуск, режим работы батареи и автозапуск — чтобы уведомления доходили.">
+<title>Системное — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html" aria-current="page">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">09, 10 &middot; системное</p>
+  <section>
+    <div class="shead">
+      <span class="num">09</span>
+      <h2>Первый запуск &mdash; чтобы уведомления доходили</h2>
+      <p>На многих телефонах система «замораживает» приложение в фоне или не даёт ему стартовать
+        после перезагрузки, и push-уведомления перестают приходить. При первом запуске приложение
+        один раз подсказывает, что с этим сделать &mdash; не блокируя работу.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar"><div class="ttl">Диалоги</div><div class="avatar-chip">АГ<span class="presence"></span></div></div>
+          <div class="scroll">
+            <div class="row" style="align-items:center"><div class="av">МК</div><div class="rmain"><div class="rname">Мария К.</div><div class="rsnip">Здравствуйте, подскажите по заказу…</div></div></div>
+            <div class="row" style="align-items:center"><div class="av">СП</div><div class="rmain"><div class="rname">Сергей П.</div><div class="rsnip">Спасибо, всё понятно!</div></div></div>
+            <div class="row" style="align-items:center"><div class="av">ОТ</div><div class="rmain"><div class="rname">Ольга Т.</div><div class="rsnip">А доставка сегодня будет?</div></div></div>
+          </div>
+          <div data-bnav="dialogs"></div>
+          <div class="scrim"></div>
+          <div class="sheet">
+            <div class="handle"><i></i></div>
+            <div class="sh-head" style="align-items:flex-start; padding-bottom:6px">
+              <svg class="i" style="color:var(--warning); flex:0 0 auto; margin-top:1px"><use href="#i-alert"/></svg>
+              <p style="margin:0; font-size:13.5px; color:var(--ink)">Уведомления о новых сообщениях могут не доходить при текущих настройках телефона. Рекомендуется режим экономии батареи «Без ограничений».</p>
+            </div>
+            <div style="padding:0 16px 18px">
+              <div class="btn fill wide">Настройки батареи</div>
+              <p style="margin:14px 0 0; font-size:13px; color:var(--ink)">Также рекомендуется установить программу в автозапуск, чтобы не пропустить уведомления после перезагрузки.</p>
+              <div class="btn out wide" style="margin-top:10px">Настройки автозапуска</div>
+              <div style="display:flex; align-items:center; gap:9px; margin-top:16px">
+                <span class="cbox" style="margin-top:0"></span>
+                <span style="font-size:13px; color:var(--ink)">Больше не показывать это окно</span>
+              </div>
+              <p class="hint" style="margin-top:12px">Это можно изменить позже в Настройки → Режим работы.</p>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">/dialogs &middot; шторка первого запуска</span>
+          <p>Один раз поверх «Диалогов», обе рекомендации сразу. <span class="flag">Закрытие без действия
+            не блокирует приложение</span> &mdash; ни крестик, ни галочка «больше не показывать» ничего
+            не ломают: подсказка нужна, чтобы уведомления доходили, а не чтобы её нельзя было закрыть.</p>
+          <p>Две кнопки на два разрешения: первичная заливкой &mdash; «Настройки батареи», вторичная
+            контуром &mdash; «Настройки автозапуска». Треугольник-предупреждение (<span class="mono">#i-alert</span>)
+            живёт только в шапке этой шторки; в самих настройках статус показан кружком-глифом, а не
+            треугольником.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">10</span>
+      <h2>Режим работы и автозапуск &mdash; две строки в «Настройках»</h2>
+      <p>Раздел «Уведомления» на экране «Настройки» держит две независимые строки &mdash; «Режим
+        работы» (оптимизация батареи) и «Автозапуск». У каждой свой статус-кружок, своё объяснение и
+        своя кнопка в системные настройки. Зелёный кружок &mdash; всё хорошо, оранжевый &mdash; нужно
+        внимание.</p>
+    </div>
+    <div class="wall">
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Настройки</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Тема</div>
+            <div class="seg" style="margin:0 16px 20px">
+              <div class="on">Системная</div>
+              <div>Светлая</div>
+              <div>Тёмная</div>
+            </div>
+            <div class="slabel">Уведомления</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
+            <div class="row" style="align-items:center">
+              <div class="statdot ok"><svg class="i"><use href="#i-check"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Режим работы: Без ограничений</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="statdot ok"><svg class="i"><use href="#i-check"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: Включено</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="slabel">О приложении</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сборка</div></div></div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">/settings &middot; режим работы + автозапуск</span>
+          <p>Обе строки зелёные: Material <span class="mono">check</span> (<span class="mono">#i-check</span>)
+            в кружке цвета <span class="mono">--success</span>. Тот же язык статус-меток, что и у цепочки
+            готовности в других разделах, только своим рядом настроек.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Настройки</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Тема</div>
+            <div class="seg" style="margin:0 16px 20px">
+              <div class="on">Системная</div>
+              <div>Светлая</div>
+              <div>Тёмная</div>
+            </div>
+            <div class="slabel">Уведомления</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
+            <div class="row" style="align-items:center">
+              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Режим работы: Экономия энергии</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: Выключено</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="slabel">О приложении</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сборка</div></div></div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">/settings &middot; нужно внимание</span>
+          <p>Обе строки оранжевые: Material <span class="mono">exclamation</span> &mdash; голый
+            восклицательный знак (стержень + точка, <span class="mono">#i-excl</span>), <span class="flag">а
+            не треугольник</span> &mdash; в кружке цвета <span class="mono">--warning</span>. Треугольник
+            остаётся только за шторкой первого запуска.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Настройки</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Уведомления</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
+            <div class="row" style="align-items:center">
+              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Режим работы: Экономия энергии</div></div>
+              <svg class="i sm" style="color:var(--ink-faint); transform:rotate(90deg)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="card warnband">
+              <div class="slabel" style="padding:0 0 6px">Сейчас: Экономия энергии</div>
+              <p class="cmeta" style="margin:0 0 12px">Уведомления о новых сообщениях могут не доходить при текущих настройках телефона. Рекомендуется режим экономии батареи «Без ограничений» &mdash; тогда система не будет «замораживать» приложение в фоне.</p>
+              <div class="btn out wide">Настройки батареи</div>
+              <p class="hint" style="margin-top:8px">Откроется системный список приложений &mdash; найдите «АГО Чат» и выберите «Без ограничений».</p>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: Выключено</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="slabel">О приложении</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сборка</div></div></div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">/settings &middot; «Режим работы» развёрнуто</span>
+          <p>У строки своё объяснение и своя кнопка «Настройки батареи». <span class="flag">«Автозапуск»
+            ниже остаётся отдельной, свёрнутой строкой</span> &mdash; два разрешения, две строки, ни одна
+            не тянет за собой другую. Развёрнутая карточка &mdash; тот же <span class="mono">.card.warnband</span>,
+            что и другие предупреждающие карточки сайта.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Настройки</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Уведомления</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
+            <div class="row" style="align-items:center">
+              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Режим работы: Экономия энергии</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: Выключено</div></div>
+              <svg class="i sm" style="color:var(--ink-faint); transform:rotate(90deg)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="card warnband">
+              <div class="slabel" style="padding:0 0 6px">Рекомендация</div>
+              <p class="cmeta" style="margin:0 0 12px">Некоторые производители телефонов останавливают приложения после перезагрузки, пока для них отдельно не разрешён автозапуск. Разрешите его, чтобы не пропускать уведомления сразу после включения телефона.</p>
+              <div class="btn out wide">Настройки автозапуска</div>
+              <p class="hint" style="margin-top:8px">Откроются настройки автозапуска для этого телефона.</p>
+              <p class="hint" style="margin-top:8px; font-style:italic">Android не даёт единого способа прочитать этот статус на большинстве телефонов &mdash; точное состояние подтвердить нельзя, поэтому здесь показана рекомендация, а не проверенный факт.</p>
+            </div>
+            <div class="slabel">О приложении</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Сборка</div></div></div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">Новое</span>
+          <span class="route">/settings &middot; «Автозапуск» развёрнуто</span>
+          <p>Единая кнопка «Настройки автозапуска» на любом телефоне &mdash; нужный системный экран
+            выбирается кодом незаметно, названий производителей в интерфейсе нет нигде.
+            <span class="flag">Честная пометка про непроверяемый статус</span>: у автозапуска, в отличие
+            от режима батареи, кружок всегда оранжевый-рекомендательный, потому что прочитать реальное
+            состояние на большинстве прошивок нечем.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
