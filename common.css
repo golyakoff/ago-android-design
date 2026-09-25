@@ -371,11 +371,13 @@ svg.i.lg{width:26px; height:26px}
 }
 
 /* маленький кружок-статус в строке настроек (раздел «Системное»): тот же язык, что у меток цепочки
-   готовности (.chk .mark) - тонированный фон плюс глиф в цвет, - но живёт своим рядом настроек. */
-.statdot{width:22px; height:22px; flex:0 0 22px; border-radius:50%; display:grid; place-items:center}
+   готовности (.chk .mark) - тонированный фон плюс глиф в цвет, - но живёт своим рядом настроек.
+   Глиф намеренно крупнее и толще обычного svg.i (stroke-width 1.8): в маленьком тонированном кружке
+   тонкая обводка читается блёкло - та же правка сделана и в реальном приложении. */
+.statdot{width:26px; height:26px; flex:0 0 26px; border-radius:50%; display:grid; place-items:center}
 .statdot.ok{background:var(--success-tint); color:var(--success)}
 .statdot.warn{background:var(--warning-tint); color:var(--warning)}
-.statdot svg{width:14px; height:14px}
+.statdot svg{width:18px; height:18px; stroke-width:2.6}
 /* заголовок строки-статуса несёт само состояние («…: Экономия энергии»), которое важно прочитать
    целиком - поэтому здесь он переносится, а не обрезается многоточием, как имя диалога в .rname. */
 .rname.wrap{white-space:normal; overflow:visible}
