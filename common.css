@@ -11,8 +11,8 @@
  * values the artifact already carried). A second, invented palette here would be an extra fact to
  * keep in sync with the product for no reader benefit.
  *
- * Everything below down to the `/* ---- AGO Android Design: site chrome ---- */` marker is the
- * artifact's own CSS, copied verbatim (phone frame, Material chrome, tokens, dark mode) - the
+ * Everything below down to the "AGO Android Design: site chrome" marker (further down this file)
+ * is the artifact's own CSS, copied verbatim (phone frame, Material chrome, tokens, dark mode) - the
  * component styling is not this repository's to redesign, only to host. The site-chrome rules
  * after that marker (top nav, table of contents, per-page intro) are new: this page's own furniture
  * around the mockups, in the same spirit as `ago-brandbook`'s `.topbar`/`.pagenav`.
