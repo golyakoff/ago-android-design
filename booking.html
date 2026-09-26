@@ -334,6 +334,187 @@
           <p>Открывает то же самое: пункт меню ведёт на уже существующий экран (Услуги/Часы) без изменений внутри него &mdash; переезжает только точка входа. Тот же приём годится для любой вкладки, которая начинает разъезжаться: прежде чем резать текст или уменьшать шрифт, спроси, не пора ли часть сегментов сделать пунктами <span class="mono">⋮</span>.</p>
         </div>
       </div>
+
+      <!-- ============================================================
+           26-175: переработка действий над записью.
+           Ожидают: убрать «Отменить», добавить «Подтвердить» → Подтвердить + Отклонить.
+           Утверждены: добавить «Отменить» и «Перенести оператором»; «Не пришёл» — после визита.
+           ============================================================ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Запись</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card">
+              <div class="ctitle" style="font-size:18px">Мария Орлова</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:4px">
+                <span class="cmeta">Вторник, 29 сентября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">11:15&ndash;13:15</span>
+              </div>
+              <div class="rmeta" style="margin-top:10px"><span class="pill warn">Подтвердится через 3 ч</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); margin-top:12px; font-size:13px"><span style="color:var(--ink-soft)">Услуга</span><span style="font-weight:600">Окрашивание · 120 мин</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Мастер</span><span style="font-weight:600">Ирина Соколова</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px; align-items:center"><span style="color:var(--ink-soft)">Телефон</span><span style="display:flex; align-items:center; gap:10px"><span class="mono">+7 9•• ••• •• 08</span><span class="linkish">Показать</span></span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn fill">Подтвердить</div>
+                <div class="btn out">Отклонить</div>
+              </div>
+              <div class="btn" style="width:100%; flex:none; border:none; color:var(--ink-soft); margin-top:2px">Закрыть</div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">строка «Ожидают» &rarr; детальная запись</span>
+          <p><strong>Ожидают: Подтвердить + Отклонить.</strong> «Отменить» убрана &mdash; на строке, которая сама подтвердится, если её не тронуть, осмысленное отрицание &mdash; это <em>вето</em> (<span class="mono">Reject</span>), а не отмена подтверждённого визита. «Подтвердить» &mdash; главное действие, «Отклонить» &mdash; вторичное.</p>
+          <p><strong>«Подтвердить» &mdash; это ранний ручной коммит того же перехода, что делает автосвип</strong> (<span class="mono">Event.Confirm: PendingConfirmation→Booked</span>). Домен уже так умеет: <span class="mono">Event.Confirm</span> намеренно не проверяет дедлайн, потому что и свип, и оператор &mdash; законные вызывающие. Не хватает только эндпоинта <span class="mono">POST /bookings/{id}/confirm</span> и use case; право <span class="mono">booking:confirm</span> уже объявлено и уже выдано роли «Оператор», но пока никем не потребляется.</p>
+          <p><strong>Строка «Подтвердится через N&nbsp;ч» остаётся</strong> &mdash; это правда об автоподтверждении: если никто не нажал, свип подтвердит запись на дедлайне. Ручное подтверждение просто делает это раньше и снимает дедлайн; автосвип остаётся резервом.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Запись</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card">
+              <div class="ctitle" style="font-size:18px">Анна Ковалёва</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:4px">
+                <span class="cmeta">Четверг, 1 октября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">10:00&ndash;11:00</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); margin-top:12px; font-size:13px"><span style="color:var(--ink-soft)">Услуга</span><span style="font-weight:600">Стрижка · 60 мин</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Мастер</span><span style="font-weight:600">Ирина Соколова</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px; align-items:center"><span style="color:var(--ink-soft)">Телефон</span><span style="display:flex; align-items:center; gap:10px"><span class="mono">+7 ··· ·· 67</span><span class="linkish">Показать</span></span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Источник</span><span style="font-weight:600">Виджет на сайте</span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn fill">Перейти к диалогу</div>
+                <div class="btn out">Перенести оператором</div>
+              </div>
+              <div class="cactions" style="margin-top:8px">
+                <div class="btn warnout">Отменить</div>
+                <div class="btn" style="border:none; color:var(--ink-soft)">Закрыть</div>
+              </div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">строка «Утверждены» &rarr; детальная запись (визит впереди)</span>
+          <p><strong>Утверждены: добавлены «Перенести оператором» и «Отменить».</strong> «Перейти к диалогу» и «Закрыть» остаются. «Отменить» &mdash; опасный тон (<span class="mono">Booked→Cancelled</span>, <span class="mono">CancelledByOperator</span>).</p>
+          <p><strong>«Не пришёл» здесь не показана</strong> &mdash; визит ещё не состоялся. <span class="mono">Event.MarkNoShow</span> отказывает до конца слота, поэтому кнопка появляется только когда <span class="mono">now &ge; EndsAt</span> (следующий экран). Тот же урок, что <span class="mono">26-163</span> применил к очереди: не предлагать действие там, где сервер его отклонит.</p>
+          <p><strong>Перенос &mdash; отдельное право</strong> (<span class="mono">booking:reschedule</span>, по аргументу гранулярности adr/0016) либо, как запасной вариант, по <span class="mono">booking:cancel</span> &mdash; решение автора. Новое право стоит парной строки в каталоге <span class="mono">ago-chat</span> и в сид-роли «Оператор» (adr/0093).</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Запись</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card">
+              <div class="ctitle" style="font-size:18px">Дмитрий Соловьёв</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:4px">
+                <span class="cmeta">Сегодня, 26 сентября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">12:00&ndash;12:30</span>
+              </div>
+              <div class="rmeta" style="margin-top:10px"><span class="pill">Визит уже прошёл</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); margin-top:12px; font-size:13px"><span style="color:var(--ink-soft)">Услуга</span><span style="font-weight:600">Мужская стрижка · 30 мин</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Мастер</span><span style="font-weight:600">Пётр Ким</span></div>
+              <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px; align-items:center"><span style="color:var(--ink-soft)">Телефон</span><span style="display:flex; align-items:center; gap:10px"><span class="mono">+7 ··· ·· 31</span><span class="linkish">Показать</span></span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn out">Не пришёл</div>
+                <div class="btn warnout">Отменить</div>
+              </div>
+              <div class="btn" style="width:100%; flex:none; border:none; color:var(--ink-soft); margin-top:2px">Закрыть</div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">строка «Утверждены» &rarr; детальная запись (визит прошёл)</span>
+          <p><strong>«Не пришёл» появляется только после конца слота.</strong> Тот же экран, но <span class="mono">now &ge; EndsAt</span>: кнопка «Не пришёл» (<span class="mono">Booked→NoShow</span>) теперь доступна. «Перенести оператором» на прошедшем визите не показывается &mdash; двигать уже состоявшееся время бессмысленно; перенос &mdash; только для будущих записей.</p>
+          <p>Это &mdash; настоящее прибытие «Не пришёл» на Android: <span class="mono">markNoShow</span> есть в API-слое, но ни один экран его сегодня не вызывает (в <span class="mono">WorkerSlotsScreen</span> «Неявка» &mdash; только ярлык статуса). Консоль же предлагает «Не пришёл» на очереди «Ожидают», где сервер его отклоняет &mdash; это тоже чинится (перенести на подтверждённые).</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Перенести запись<span class="sub">Анна Ковалёва · Стрижка · 60 мин</span></div>
+          </div>
+          <div class="scroll">
+            <div class="card flat" style="margin-bottom:12px">
+              <div class="cmeta">Сейчас: <b>Чт 1 окт, 10:00&ndash;11:00</b>, мастер Ирина Соколова. Выберите новое время у того же мастера &mdash; услуга и длительность те же.</div>
+            </div>
+            <div class="dstrip">
+              <div><span class="dw">Чт</span><span class="dd">1</span><span class="dot"></span></div>
+              <div class="on"><span class="dw">Пт</span><span class="dd">2</span><span class="dot"></span></div>
+              <div><span class="dw">Сб</span><span class="dd">3</span></div>
+              <div><span class="dw">Вс</span><span class="dd">4</span><span class="dot"></span></div>
+              <div><span class="dw">Пн</span><span class="dd">5</span><span class="dot"></span></div>
+              <div><span class="dw">Вт</span><span class="dd">6</span><span class="dot"></span></div>
+            </div>
+            <div class="slabel" style="padding-top:8px">Пт 2 октября · свободно</div>
+            <div class="chips" style="padding-bottom:4px">
+              <div class="chip">09:00</div><div class="chip">09:30</div><div class="chip on">14:00</div>
+              <div class="chip">14:30</div><div class="chip">16:00</div><div class="chip">16:30</div>
+            </div>
+            <div class="card warnband" style="margin-top:12px">
+              <div class="cmeta">Достаточно ли подряд идущих слотов, решает сервер в момент записи &mdash; свободность нового времени проверяется тем же compare-and-set внутри транзакции (правило 8), не предчтением.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Выбрано 14:00 · далее</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">«Перенести оператором» &rarr; выбор нового времени</span>
+          <p><strong>Набросок флоу переноса.</strong> Та же лента дат, что и на «Утверждены», но показывает <em>свободные</em> времена того же мастера. Выбор одного времени включает «Далее». В v1 &mdash; <strong>только время</strong>: тот же мастер, та же услуга (длина прогона не меняется). Другой мастер/услуга &mdash; это «отменить и записать заново», отдельная задача.</p>
+          <p><strong>Перенос в этой модели данных &mdash; это отпустить старый прогон и заявить новый.</strong> Строка тут &mdash; это и слот, и запись; переезда «на месте» нет (целевое время &mdash; уже свои <span class="mono">Available</span>-строки; возврата в <span class="mono">Available</span> у старых строк нет намеренно). Поэтому перенос = отмена старого прогона + атомарный клейм нового, в одной транзакции. Это предмет предлагаемого ADR.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Перенести запись<span class="sub">Подтверждение</span></div>
+          </div>
+          <div class="scroll">
+            <div class="card">
+              <div class="ctitle">Анна Ковалёва · Стрижка</div>
+              <div class="kv" style="border-top:none; padding:10px 0"><span class="k">Было</span><span class="v">Чт 1 окт, 10:00&ndash;11:00</span></div>
+              <div class="kv" style="padding:10px 0"><span class="k">Станет</span><span class="v" style="color:var(--brand-deep)">Пт 2 окт, 14:00&ndash;15:00</span></div>
+              <div class="kv" style="padding:10px 0"><span class="k">Мастер</span><span class="v">Ирина Соколова</span></div>
+            </div>
+            <div class="card dangerband">
+              <div class="cmeta">Старое время освобождается (перекрытие с него снимается) и по текущим правилам продукта заново клиентам <b>не</b> предлагается &mdash; как и при обычной отмене. Клиенту уйдёт уведомление, когда появится рассылка (<span class="mono">20-05</span>).</div>
+            </div>
+            <div class="card flat">
+              <div class="cmeta">Если новое время займут за эту секунду &mdash; перенос не состоится, а старая запись останется как была. Ничего не «повиснет» между двумя временами.</div>
+            </div>
+          </div>
+          <div class="stickybar">
+            <div class="btn fill wide">Перенести на Пт 2 окт, 14:00</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">выбор времени &rarr; подтверждение переноса</span>
+          <p><strong>Было → станет, одной парой.</strong> Новый прогон приземляется сразу в <span class="mono">Booked</span>: оператор, переносящий запись, и есть подтверждающий &mdash; нового окна вето нет (как и у ручного «Подтвердить»).</p>
+          <p><strong>Атомарность названа вслух.</strong> Если целевое время займут в гонке &mdash; вся транзакция откатывается, старая запись цела. Свободный старый слот заново не открывается (наследуется от текущей отмены); стоит ли открывать &mdash; отдельное стоячее решение, оно касается и обычной отмены.</p>
+        </div>
+      </div>
     </div>
   </section>
 
