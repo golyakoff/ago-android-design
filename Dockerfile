@@ -41,6 +41,18 @@ COPY booking.html /usr/share/nginx/html/booking.html
 COPY team.html /usr/share/nginx/html/team.html
 COPY settings.html /usr/share/nginx/html/settings.html
 COPY system.html /usr/share/nginx/html/system.html
+COPY channels.html /usr/share/nginx/html/channels.html
+COPY branding.html /usr/share/nginx/html/branding.html
+COPY auto-reply.html /usr/share/nginx/html/auto-reply.html
+COPY widget.html /usr/share/nginx/html/widget.html
+COPY widget-appearance.html /usr/share/nginx/html/widget-appearance.html
+COPY widget-behaviour.html /usr/share/nginx/html/widget-behaviour.html
+COPY widget-consent.html /usr/share/nginx/html/widget-consent.html
+COPY canned-responses.html /usr/share/nginx/html/canned-responses.html
+COPY tags.html /usr/share/nginx/html/tags.html
+COPY consent.html /usr/share/nginx/html/consent.html
+COPY modules-faq.html /usr/share/nginx/html/modules-faq.html
+COPY visitor-restrictions.html /usr/share/nginx/html/visitor-restrictions.html
 COPY common.css /usr/share/nginx/html/common.css
 COPY tokens.js /usr/share/nginx/html/tokens.js
 # `15-07`'s own pattern: the commit as a file the running container serves, so smoke.sh and
