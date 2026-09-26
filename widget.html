@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="«Виджет на сайте» — хаб: один пункт «Ещё» открывает три редактора-группы (Внешний вид, Поведение и приветствие, Согласие и запись).">
+<title>Виджет на сайте — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html">Каналы</a>
+      <a href="branding.html">Оформление</a>
+      <a href="auto-reply.html">Автоответ</a>
+      <a href="widget.html" aria-current="page">Виджет</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">виджет на сайте</p>
+  <h1>Виджет на сайте &mdash; хаб и три редактора-группы</h1>
+  <p class="lede">Консоль рисует <strong>один</strong> экран из семи стопкой сложенных панелей и 16 полей.
+    На телефоне это ровно та «слишком длинная простыня», которую отвергло решение о разбиении: единый
+    пункт «Ещё → Виджет на сайте» открывает <strong>хаб</strong>, а хаб &mdash; три коротких
+    редактора-группы, каждый отвечает на один вопрос, который тенант держит в голове.</p>
+
+  <div class="brief">
+    <div><span class="n ok">3</span><span class="k">редактора-группы за одним пунктом: Внешний вид · Поведение и приветствие · Согласие и запись</span></div>
+    <div><span class="n">16</span><span class="k">полей DTO, и каждое сохранение шлёт их <b>все</b> &mdash; иначе сервер молча сбросит отсутствующие булевы</span></div>
+    <div><span class="n">1</span><span class="k">общая ViewModel держит закоммиченный полный конфиг; редактор мержит только свой срез</span></div>
+  </div>
+
+  <section>
+    <div class="shead">
+      <span class="num">11</span>
+      <h2>Хаб: один пункт открывает три группы</h2>
+      <p>Не семь экранов (четыре консольные панели &mdash; это по одному переключателю; вкладка на
+        чекбокс читается как поломка), не один экран (та самая простыня), не вкладки (бриф говорит
+        «каждый экран, который сохраняет» &mdash; значит независимые сохранения). Три &mdash; это число
+        по-настоящему разных вопросов: как выглядит, что делает, что можно и что обязательно.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <span class="tag redesign">хаб</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Виджет на сайте</div>
+          </div>
+          <div class="scroll">
+            <div class="card flat" style="margin-top:12px">
+              <div class="cmeta">Изменения появятся у посетителя при <b>следующей загрузке страницы</b> &mdash;
+                виджет читает настройки один раз при запуске, без живого обновления открытой вкладки.</div>
+            </div>
+            <div class="slabel">Настройки виджета</div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname">Внешний вид</div>
+                <div class="rsnip" style="white-space:normal">Цвет <span class="mono">#2F6FED</span> · справа внизу · Русский · «Чем помочь?»</div>
+              </div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname">Поведение и приветствие</div>
+                <div class="rsnip" style="white-space:normal">Автооткрытие через 30 с · привлекать внимание вкл</div>
+              </div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname">Согласие и запись</div>
+                <div class="rsnip" style="white-space:normal">Согласие обязательно · приём файлов выкл</div>
+              </div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/channels/widget-config &mdash; открывается из «Ещё → Каналы», между «Установка виджета» и «MAX»</span>
+          <p>Подписи строк &mdash; это сводка текущего конфига, чтобы тенант видел состояние группы, не заходя
+            в неё. Заметка adr/0029 («следующая загрузка страницы») и загрузка/ошибка/повтор живут <b>один
+            раз</b> здесь, на хабе, а не повторяются в каждом редакторе.</p>
+          <p>Вложенность хаб → редактор &mdash; собственная навигация фичи, а не второй уровень списка «Ещё»
+            (у треда из «Диалогов» точно так же есть своя внутренняя навигация). Гейт &mdash;
+            <span class="mono">site:configure</span>, одно и то же разрешение на строку, GET и PUT: rail-vs-server
+            разрыва здесь нет.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <span class="tag asis">состояние: не загрузилось</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Виджет на сайте</div>
+          </div>
+          <div class="terminal">
+            <div class="glyph"><svg class="i lg"><use href="#i-globe"/></svg></div>
+            <h4>Не удалось загрузить настройки</h4>
+            <p>Проверьте соединение и попробуйте ещё раз. Настройки доступны только с правом
+              <span class="mono">site:configure</span>, поэтому «попробовать снова» здесь честно.</p>
+            <div class="btn out" style="flex:none; padding:0 22px">Повторить</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">WidgetConfigHubScreen · Failed(reason) → RefusalBody(onRetry=refresh)</span>
+          <p>Единственное место для «не загрузилось / повторить» &mdash; хаб. Три редактора не дублируют это
+            состояние: они получают уже загруженный <span class="mono">committed</span>-конфиг из общей
+            ViewModel.</p>
+          <p><b>Принцип (teaching mode):</b> разбиение консоли на 7 панелей &mdash; это information architecture
+            для десктопа; разбиение приложения на 3 экрана &mdash; другая IA для другого вьюпорта, по правилу
+            «один связный вопрос на экран», а не по порядку полей на бэкенде. Альтернатива &mdash; один экран с
+            <span class="mono">TabRow</span> из трёх вкладок и одним «Сохранить» &mdash; отклонена: бриф говорит
+            «каждый экран, который сохраняет, шлёт полный объект», а это про <b>несколько независимо
+            сохраняющих</b> экранов, вкладки же схлопнули бы их обратно в единую форму.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <h3>Ловушка полного DTO &mdash; центральная корректность</h3>
+    <p>Три экрана сохраняют независимо, и каждый PUT обязан нести все 16 полей, иначе сервер сбросит
+      отсутствующие (<span class="mono">requireContactConsent</span> помечен <span class="mono">[JsonRequired]</span>
+      именно поэтому; любой другой <span class="mono">bool</span> при отсутствии биндится в
+      <span class="mono">false</span>). Наивное «каждый экран PUT-ит только свои поля» молча выключило бы
+      согласие/приём файлов/привлечение внимания при сохранении любого другого экрана.</p>
+    <p>Защита структурная: одна общая <span class="mono">WidgetConfigViewModel</span> держит
+      <span class="mono">committed</span> &mdash; полный конфиг (загружен один раз GET-ом, пересеивается из
+      эха каждого PUT). Сохранение редактора строит <span class="mono">committed.copy(&lt;свой срез из
+      черновика&gt;)</span> и PUT-ит целиком. Ни один булев никогда не отсутствует в PUT, и несохранённый
+      черновик соседнего экрана не утекает в чужое сохранение.</p>
+  </div>
+
+  <footer>
+    <p>Один из четырёх макетов области «Виджет на сайте»: этот хаб плюс три редактора-группы
+      (<a href="widget-appearance.html">Внешний вид</a>, <a href="widget-behaviour.html">Поведение и приветствие</a>,
+      <a href="widget-consent.html">Согласие и запись</a>). Источник содержания &mdash;
+      <span class="mono">docs/design/tenant-widget-android.md</span>. Примерные значения показаны как примеры.</p>
+  </footer>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="«Поведение и приветствие» — редактор-группа виджета: привлечение внимания, автооткрытие (+задержка), текст приветствия, подтверждение после контактов.">
+<title>Виджет · Поведение и приветствие — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html">Каналы</a>
+      <a href="branding.html">Оформление</a>
+      <a href="auto-reply.html">Автоответ</a>
+      <a href="widget.html" aria-current="page">Виджет</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">виджет · поведение и приветствие</p>
+  <h1>Поведение и приветствие</h1>
+  <p class="lede">Один вопрос: <strong>что виджет делает сам по себе, и что говорит.</strong> Привлечение
+    внимания, автооткрытие с задержкой, приветствие при автооткрытии и подтверждение после отправки
+    контактов &mdash; поведенческая половина консольного «Лаунчера» плюс панель подтверждения. Открывается
+    из <a href="widget.html">хаба «Виджет на сайте»</a>.</p>
+
+  <section>
+    <div class="shead">
+      <span class="num">11 · W2</span>
+      <h2>Редактор «Поведение и приветствие»</h2>
+      <p>Слева &mdash; автооткрытие включено, приветствие заполнено. Справа &mdash; тот же экран с включённым
+        автооткрытием, но пустым приветствием: клиентская проверка блокирует «Сохранить».</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <span class="tag redesign">заполнено</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Поведение и приветствие</div>
+          </div>
+          <div class="scroll">
+            <div class="row" style="align-items:center; padding-top:16px">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Привлекать внимание</div>
+                <div class="rsnip" style="white-space:normal">Иконка виджета анимируется, пока закрыта. Для выбравших «уменьшить движение» отключается всегда.</div>
+              </div>
+              <span class="sw on"><i></i></span>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Открывать виджет автоматически</div>
+                <div class="rsnip" style="white-space:normal">Виджет сам раскрывается через заданную задержку.</div>
+              </div>
+              <span class="sw on"><i></i></span>
+            </div>
+            <div class="formrow">
+              <label>Задержка перед открытием</label>
+              <div class="inp">30 секунд <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+              <div class="hint">15 / 30 / 45 секунд · 1 / 1,5 / 2 минуты. Видно всегда &mdash; консоль тоже не прячет.</div>
+            </div>
+            <div class="formrow">
+              <label>Текст приветствия при автооткрытии</label>
+              <div class="inp" style="height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; line-height:1.4">Здравствуйте! Подскажем по услугам и записи &mdash; спросите прямо тут.</div>
+              <div class="hint">Обязательно, пока автооткрытие включено.</div>
+            </div>
+            <div class="slabel">После отправки контактов</div>
+            <div class="formrow">
+              <label>Подтверждающая фраза</label>
+              <div class="inp" style="height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; line-height:1.4">Спасибо, {name}! Мы свяжемся с вами в рабочее время.</div>
+              <div class="hint">Пусто &mdash; собственная фраза виджета. <span class="mono">{name}</span> подставляет виджет, не клиент.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">WidgetBehaviourEditor · committed.copy(attractAttention, autoOpenEnabled, autoOpenDelaySeconds, autoOpenGreetingText, contactCaptureConfirmationText)</span>
+          <p>Подтверждающая фраза живёт здесь, а не в «Согласии»: это <b>реплика, которую произносит виджет</b>
+            &mdash; та же тенант-авторская копия, что и приветствие автооткрытия, а не гейт согласия. Две
+            «произносимые строки» рядом читаются лучше, чем разбросанные по экранам.</p>
+          <p>Задержка видна всегда, без ветвления &mdash; как в консоли. Сохранение мержит <b>только</b> этот
+            срез поверх закоммиченного полного конфига; внешний вид и согласие остаются нетронутыми.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <span class="tag fixed">проверка блокирует сохранение</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Поведение и приветствие</div>
+          </div>
+          <div class="scroll">
+            <div class="row" style="align-items:center; padding-top:16px">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Привлекать внимание</div>
+                <div class="rsnip" style="white-space:normal">Иконка виджета анимируется, пока закрыта.</div>
+              </div>
+              <span class="sw"><i></i></span>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Открывать виджет автоматически</div>
+                <div class="rsnip" style="white-space:normal">Виджет сам раскрывается через заданную задержку.</div>
+              </div>
+              <span class="sw on"><i></i></span>
+            </div>
+            <div class="formrow">
+              <label>Задержка перед открытием</label>
+              <div class="inp">30 секунд <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+            <div class="formrow">
+              <label>Текст приветствия при автооткрытии</label>
+              <div class="inp" style="height:auto; min-height:74px; align-items:flex-start; padding:10px 12px; border-color:var(--danger)"><span class="ph">Введите приветствие…</span></div>
+              <div class="hint" style="color:var(--danger)">Заполните приветствие &mdash; оно показывается при автооткрытии. Сервер тоже откажет (<span class="mono">WidgetConfig.InvalidAutoOpenGreetingText</span>).</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn off wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">autoOpenEnabled &amp;&amp; greeting.isBlank() → блокировка сохранения (зеркало консоли)</span>
+          <p>Приветствие обязательно (непустое), только когда автооткрытие включено; при выключенном &mdash;
+            пусто маппится в <span class="mono">null</span>. Клиентская проверка блокирует «Сохранить»
+            заранее, но авторитет &mdash; сервер, и его <span class="mono">Refused(detail)</span> показывается
+            дословно в <span class="mono">ActionErrorBanner</span>; черновик сохраняется, committed не меняется.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Редактор-группа области <a href="widget.html">«Виджет на сайте»</a>. Соседи:
+      <a href="widget-appearance.html">Внешний вид</a>,
+      <a href="widget-consent.html">Согласие и запись</a>. Источник &mdash;
+      <span class="mono">docs/design/tenant-widget-android.md §6.2</span>. Значения примерные.</p>
+  </footer>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

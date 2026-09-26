@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="«Согласие и запись» — редактор-группа виджета: требовать согласие, текст уведомления (чтение+правка), ссылка, непроверенный телефон, приём файлов по умолчанию.">
+<title>Виджет · Согласие и запись — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html">Каналы</a>
+      <a href="branding.html">Оформление</a>
+      <a href="auto-reply.html">Автоответ</a>
+      <a href="widget.html" aria-current="page">Виджет</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">виджет · согласие и запись</p>
+  <h1>Согласие и запись</h1>
+  <p class="lede">Один вопрос: <strong>на что посетитель должен согласиться и что ему разрешено.</strong>
+    Требование согласия, его уведомление, временное послабление по телефону и приём файлов по умолчанию
+    &mdash; четыре консольные панели (согласие, уведомление, бронирование, вложения), сведённые в один
+    экран. Открывается из <a href="widget.html">хаба «Виджет на сайте»</a>.</p>
+
+  <section>
+    <div class="shead">
+      <span class="num">11 · W3</span>
+      <h2>Редактор «Согласие и запись»</h2>
+      <p>Слева &mdash; уведомление уже задано, показано в режиме чтения с «Изменить». Справа &mdash;
+        уведомление в режиме правки (текст + ссылка), плюс переключатель согласия и его
+        <span class="mono">[JsonRequired]</span>-природа.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <span class="tag redesign">чтение уведомления</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Согласие и запись</div>
+          </div>
+          <div class="scroll">
+            <div class="row" style="align-items:center; padding-top:16px">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Требовать согласие</div>
+                <div class="rsnip" style="white-space:normal">Контакты не сохраняются, пока посетитель не примет ваш документ (<span class="mono">/account/documents</span>).</div>
+              </div>
+              <span class="sw on"><i></i></span>
+            </div>
+            <div class="slabel">Уведомление об обработке данных</div>
+            <div class="card">
+              <div class="cmeta" style="color:var(--ink)">Нажимая «Отправить», вы соглашаетесь на обработку персональных данных для ответа на ваше обращение и записи на услуги…</div>
+              <div class="linkish" style="font-size:12.5px; margin-top:6px">Показать полностью</div>
+              <div class="kv" style="padding:10px 0 0; border-top:1px solid var(--line); margin-top:10px">
+                <span class="k"><svg class="i sm"><use href="#i-globe"/></svg> Ссылка</span>
+                <span class="v"><span class="linkish mono" style="font-size:12px">reserve-me.ru/privacy</span></span>
+              </div>
+              <div class="cactions"><div class="btn out">Изменить</div></div>
+            </div>
+            <div class="slabel">Запись и файлы</div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Принимать непроверенные телефоны</div>
+                <div class="rsnip" style="white-space:normal">Временное послабление, пока не подключён SMS-шлюз. Уберите, когда появится проверка по SMS.</div>
+              </div>
+              <span class="sw"><i></i></span>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Приём файлов по умолчанию</div>
+                <div class="rsnip" style="white-space:normal">Новые диалоги начинаются с уже включённой скрепкой в поле ввода.</div>
+              </div>
+              <span class="sw"><i></i></span>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">WidgetConsentEditor · committed.copy(requireContactConsent, noticeText, noticeUrl, acceptUnverifiedPhone, allowAttachmentUploadsByDefault)</span>
+          <p>Уведомление сохраняет консольную форму «сначала прочитать, потом править» (<span class="mono">25-24</span>):
+            экран сообщает, <b>что сейчас в силе</b>, прежде чем предложить редактор. «Требовать согласие» и
+            «что говорит уведомление» &mdash; два разных решения, и разделение сохранено внутри экрана.</p>
+          <p>«Принимать непроверенные телефоны» намеренно сформулировано как <b>временное</b> послабление
+            (<span class="mono">14-15 / 25-39</span>), а не как обычный тумблер функции.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <span class="tag fixed">правка уведомления</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Согласие и запись</div>
+          </div>
+          <div class="scroll">
+            <div class="row" style="align-items:center; padding-top:16px">
+              <div class="rmain">
+                <div class="rname" style="font-weight:600; font-size:13.5px">Требовать согласие</div>
+                <div class="rsnip" style="white-space:normal">Выключено &mdash; но это <span class="mono">[JsonRequired]</span>-гейт: полный DTO всегда шлёт его явно, никогда не «забывает».</div>
+              </div>
+              <span class="sw"><i></i></span>
+            </div>
+            <div class="slabel">Уведомление &mdash; правка</div>
+            <div class="formrow">
+              <label>Текст уведомления</label>
+              <div class="inp" style="height:auto; min-height:88px; align-items:flex-start; padding:10px 12px; line-height:1.4">Нажимая «Отправить», вы соглашаетесь на обработку персональных данных для ответа на ваше обращение и записи на услуги согласно политике конфиденциальности.</div>
+              <div class="hint">Пусто &mdash; уведомление не показывается. Когда ничего не задано, виден только редактор.</div>
+            </div>
+            <div class="formrow">
+              <label>Ссылка на политику</label>
+              <div class="inp"><span class="ph">https://example.com/privacy</span></div>
+              <div class="hint">Только <span class="mono">https://</span> (клиентская вежливость). Независимо от текста уведомления.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">noticeFormVisible · https-only isValidNoticeUrl · requireContactConsent всегда в PUT (§3)</span>
+          <p><b>Принцип (teaching mode):</b> консоль получает безопасность полного DTO бесплатно &mdash; у неё
+            одна форма и один «Сохранить» над всеми полями. Приложение восстанавливает эту безопасность через
+            три экрана, держа закоммиченное целое в одной общей ViewModel и мержа по одному срезу. Поэтому
+            <span class="mono">requireContactConsent</span> и любой другой булев всегда уходят на сервер и
+            никогда не сбрасываются молча.</p>
+          <p>Приём файлов по умолчанию засевает скрепку в композере треда (<span class="mono">25-104</span>,
+            см. навигацию). Отказ сервера (<span class="mono">InvalidNoticeText / InvalidNoticeUrl</span>)
+            показывается дословно; черновик остаётся, committed не меняется.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Редактор-группа области <a href="widget.html">«Виджет на сайте»</a>. Соседи:
+      <a href="widget-appearance.html">Внешний вид</a>,
+      <a href="widget-behaviour.html">Поведение и приветствие</a>. Источник &mdash;
+      <span class="mono">docs/design/tenant-widget-android.md §6.3</span>. Значения примерные.</p>
+  </footer>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
