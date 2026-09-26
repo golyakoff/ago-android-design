@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Автоответ вне смены — тумблер, ответ по умолчанию и упорядоченные правила «ключевое слово → ответ» с перетаскиванием.">
+<title>Автоответ — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html">Каналы</a>
+      <a href="branding.html">Оформление</a>
+      <a href="auto-reply.html" aria-current="page">Автоответ</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">автоответ вне смены</p>
+  <section>
+    <div class="shead">
+      <span class="num">14</span>
+      <h2>Автоответ вне смены &mdash; тумблер, запасной ответ и правила по порядку</h2>
+      <p>Когда включено и никого нет в сети, на первое сообщение посетителя уходит ответ вместо тишины.
+        Правила «ключевое слово &rarr; ответ» упорядочены, и порядок &mdash; это поведение:
+        <strong>побеждает первое совпавшее правило</strong>, поэтому их можно перетаскивать. Под правом
+        <span class="mono">site:configure</span>.</p>
+    </div>
+
+    <div class="wall">
+
+      <!-- ============ Включён, с правилами ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Автоответ вне смены</div>
+          </div>
+          <div class="scroll">
+            <div class="card flat" style="margin-top:12px">
+              <div class="cmeta">Срабатывает только когда никого нет в сети. Пока кто-то онлайн &mdash; даже просто занят &mdash; автоответ молчит, и никогда не отвечает в уже взятом диалоге.</div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname wrap">Отвечать автоматически, когда никого нет в сети</div></div>
+              <span class="sw on"><i></i></span>
+            </div>
+            <div class="formrow">
+              <label>Ответ по умолчанию</label>
+              <div class="inp" style="height:auto; min-height:56px; align-items:flex-start; padding:10px 12px"><span style="white-space:normal; line-height:1.4">Спасибо за обращение &mdash; сейчас мы не работаем и ответим утром.</span></div>
+              <div class="hint">Отправляется, если ни одно ключевое слово ниже не подошло.</div>
+            </div>
+            <div class="slabel">Правила по ключевым словам</div>
+            <div class="card warnband" style="margin-bottom:10px">
+              <div class="cmeta">Побеждает <b>первое</b> совпавшее правило &mdash; более конкретные ставьте выше. Перетаскивайте за ручку слева.</div>
+            </div>
+
+            <div class="row" style="align-items:center; gap:10px; padding:10px 16px">
+              <span style="flex:0 0 20px; color:var(--ink-faint)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname">возврат</div><div class="rsnip">Возврат средств занимает три рабочих дня.</div></div>
+              <div class="iconbtn" style="flex:0 0 32px; width:32px; height:32px; color:var(--ink-faint)"><svg class="i sm"><use href="#i-trash"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center; gap:10px; padding:10px 16px">
+              <span style="flex:0 0 20px; color:var(--ink-faint)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname">доставка</div><div class="rsnip">Доставка по городу &mdash; на следующий день, курьером.</div></div>
+              <div class="iconbtn" style="flex:0 0 32px; width:32px; height:32px; color:var(--ink-faint)"><svg class="i sm"><use href="#i-trash"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center; gap:10px; padding:10px 16px">
+              <span style="flex:0 0 20px; color:var(--ink-faint)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname" style="color:var(--ink-faint)">новое правило</div><div class="rsnip" style="color:var(--ink-faint)">ключевое слово &rarr; ответ</div></div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">14-04 &middot; новый экран</span>
+          <span class="route">/settings/auto-reply &middot; site:configure</span>
+          <p><strong>Порядок правил виден и управляем, потому что это поведение.</strong> Сервер сопоставляет
+            первым-совпавшим, поэтому правила &mdash; упорядоченный список с ручками перетаскивания, а не набор.
+            Последняя строка &mdash; всегда пустая, для ввода нового правила (у неё нет ручки: двигать нечего);
+            пустая строка при сохранении отбрасывается.</p>
+        </div>
+      </div>
+
+      <!-- ============ Перетаскивание правила ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Автоответ вне смены</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Правила по ключевым словам</div>
+            <div class="card warnband" style="margin-bottom:10px">
+              <div class="cmeta">Побеждает <b>первое</b> совпавшее правило &mdash; более конкретные ставьте выше.</div>
+            </div>
+
+            <!-- поднятое перетаскиваемое правило -->
+            <div class="row" style="align-items:center; gap:10px; padding:12px 16px; margin:0 8px; background:var(--surface); border:1px solid var(--line-strong); border-radius:12px; box-shadow:var(--shadow); position:relative; z-index:2">
+              <span style="flex:0 0 20px; color:var(--brand)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname">доставка</div><div class="rsnip">Доставка по городу &mdash; на следующий день, курьером.</div></div>
+            </div>
+            <!-- цель вставки -->
+            <div style="height:2px; background:var(--brand); margin:6px 16px; border-radius:1px"></div>
+            <div class="row" style="align-items:center; gap:10px; padding:10px 16px; opacity:.55">
+              <span style="flex:0 0 20px; color:var(--ink-faint)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname">возврат</div><div class="rsnip">Возврат средств занимает три рабочих дня.</div></div>
+            </div>
+            <div class="row" style="align-items:center; gap:10px; padding:10px 16px; opacity:.55">
+              <span style="flex:0 0 20px; color:var(--ink-faint)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname">оплата</div><div class="rsnip">Принимаем карты и СБП.</div></div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">перетаскивание &mdash; смена приоритета</span>
+          <p><strong>Момент перетаскивания.</strong> Поднятое правило приподнято тенью и рамкой (тот же
+            <span class="mono">--shadow</span>, что у карточек), ручка окрашивается в брендовый цвет, остальные
+            строки приглушены, а брендовая черта показывает, куда оно встанет. Отпустить «доставку» выше
+            «возврата» &mdash; значит сделать её приоритетнее при совпадении: перетаскивание буквально правит
+            «кто победит первым».</p>
+        </div>
+      </div>
+
+      <!-- ============ Выключен ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Автоответ вне смены</div>
+          </div>
+          <div class="scroll">
+            <div class="row" style="align-items:center; margin-top:6px">
+              <div class="rmain"><div class="rname wrap">Отвечать автоматически, когда никого нет в сети</div></div>
+              <span class="sw"><i></i></span>
+            </div>
+            <div class="formrow">
+              <label style="color:var(--ink-faint)">Ответ по умолчанию</label>
+              <div class="inp" style="height:auto; min-height:56px; align-items:flex-start; padding:10px 12px; opacity:.5"><span style="white-space:normal; line-height:1.4; color:var(--ink-faint)">Спасибо за обращение &mdash; сейчас мы не работаем и ответим утром.</span></div>
+            </div>
+            <div class="slabel" style="color:var(--ink-faint)">Правила по ключевым словам</div>
+            <div class="row" style="align-items:center; gap:10px; padding:10px 16px; opacity:.5">
+              <span style="flex:0 0 20px; color:var(--ink-faint)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>
+              <div class="rmain" style="min-width:0"><div class="rname">возврат</div><div class="rsnip">Возврат средств занимает три рабочих дня.</div></div>
+            </div>
+            <div class="card flat" style="text-align:center; margin-top:10px">
+              <div class="cmeta">Пока выключено, ни ответ по умолчанию, ни правила не отправляются. Настройки сохраняются &mdash; включите тумблер, чтобы они снова заработали.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">enabled = false</span>
+          <p><strong>Выключенный автоответ не забывает свои настройки.</strong> Тумблер выключен, поля и правила
+            приглушены, но сохранены &mdash; включение возвращает их как были. Разделение состояния и содержимого:
+            «не отвечать сейчас» не значит «стереть, что отвечать».</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

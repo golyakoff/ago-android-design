@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Оформление ответного письма — название компании и логотип, статусы проверки: Активен, Проверка, Отклонён.">
+<title>Оформление — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html">Каналы</a>
+      <a href="branding.html" aria-current="page">Оформление</a>
+      <a href="auto-reply.html">Автоответ</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">оформление письма</p>
+  <section>
+    <div class="shead">
+      <span class="num">Почта @</span>
+      <h2>Оформление ответного письма &mdash; форма, а не подключение</h2>
+      <p>У почты нет отдельного токена на тенанта, поэтому это не «подключить/отключить», а настройка:
+        название компании и логотип, которыми оформляется ответное письмо посетителю. Два независимых
+        сохранения &mdash; имя принимается сразу, а логотип уходит на проверку и получает свой статус позже.
+        Под правом <span class="mono">site:configure</span>, как и другие настройки сайта.</p>
+    </div>
+
+    <div class="wall">
+
+      <!-- ============ Логотип активен ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Почта @<span class="sub">Оформление ответного письма</span></div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:10px">
+              <label>Название компании</label>
+              <div class="inp"><span>Мастерская «Клён»</span></div>
+              <div class="hint">Отображается в письме-ответе посетителю &mdash; если оставить пустым, используется название сайта.</div>
+            </div>
+            <div class="formrow"><div class="btn fill wide">Сохранить</div></div>
+            <div style="height:1px; background:var(--line); margin:8px 16px 4px"></div>
+            <div class="slabel">Логотип</div>
+            <div class="row" style="align-items:center; gap:14px">
+              <div style="width:64px; height:64px; flex:0 0 64px; border-radius:12px; border:1px solid var(--line); background:linear-gradient(140deg,var(--brand),var(--brand-deep)); display:grid; place-items:center; color:#fff; font-family:'Unbounded',sans-serif; font-weight:700; font-size:26px">К</div>
+              <div class="rmain">
+                <div class="statdot ok" style="display:inline-grid; vertical-align:middle; margin-right:7px"><svg class="i sm"><use href="#i-check"/></svg></div>
+                <span style="font-size:14px; font-weight:700; color:var(--success)">Активен</span>
+                <div class="rsnip" style="margin-top:4px">PNG &middot; 96&times;96 &middot; 8,4 КБ</div>
+              </div>
+            </div>
+            <div class="formrow"><div class="btn out wide">Заменить логотип</div></div>
+            <div class="subnote" style="padding-bottom:14px">Статичное изображение PNG, JPEG или GIF, не более 100&times;100 пикселей.</div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">25-160 &middot; новый экран</span>
+          <span class="route">/channels/email &middot; logoStatus = Ready</span>
+          <p><strong>Готовый логотип: превью плюс значок «Активен».</strong> Статус в стиле
+            <span class="mono">check_circle</span> зелёным &mdash; изображение прошло проверку и уже оформляет
+            письма. Превью указывает прямо на публичный URL логотипа, без пресайна.</p>
+        </div>
+      </div>
+
+      <!-- ============ Логотип на проверке ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Почта @<span class="sub">Оформление ответного письма</span></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Логотип</div>
+            <div class="row" style="align-items:center; gap:14px">
+              <div style="width:64px; height:64px; flex:0 0 64px; border-radius:12px; border:1px solid var(--line); background:var(--sunken); display:grid; place-items:center; color:var(--ink-faint)"><svg class="i lg"><use href="#i-clip"/></svg></div>
+              <div class="rmain">
+                <div class="statdot warn" style="display:inline-grid; vertical-align:middle; margin-right:7px; background:var(--sunken); color:var(--ink-soft)"><svg class="i sm"><use href="#i-excl"/></svg></div>
+                <span style="font-size:14px; font-weight:700; color:var(--ink-soft)">Проверка&hellip;</span>
+                <div class="rsnip" style="margin-top:4px">logo-new.png &middot; загружен только что</div>
+              </div>
+            </div>
+            <div class="card flat">
+              <div class="cmeta">Изображение загружено и проверяется. Его настоящий статус появится, когда проверка завершится &mdash; обновите экран, чтобы увидеть результат.</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">logoStatus = Pending</span>
+          <p><strong>Проверка &mdash; асинхронная, и экран это не скрывает.</strong> Настоящий результат появляется
+            только после работы проверяющего потребителя в <span class="mono">Ago.Chat.Worker</span>; экран ничего
+            не опрашивает вживую &mdash; тенант перезаходит или обновляет страницу, чтобы увидеть, как статус
+            устоялся. Нейтральный тон: ещё не «ок» и не «отклонён».</p>
+        </div>
+      </div>
+
+      <!-- ============ Логотип отклонён ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Почта @<span class="sub">Оформление ответного письма</span></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Логотип</div>
+            <div class="row" style="align-items:center; gap:14px">
+              <div style="width:64px; height:64px; flex:0 0 64px; border-radius:12px; border:1px solid var(--danger); background:var(--danger-tint); display:grid; place-items:center; color:var(--danger)"><svg class="i lg"><use href="#i-close"/></svg></div>
+              <div class="rmain">
+                <div class="statdot warn" style="display:inline-grid; vertical-align:middle; margin-right:7px; background:var(--danger-tint); color:var(--danger)"><svg class="i sm"><use href="#i-alert"/></svg></div>
+                <span style="font-size:14px; font-weight:700; color:var(--danger)">Отклонён</span>
+                <div class="rsnip" style="margin-top:4px">banner.gif &middot; загружен 2 мин назад</div>
+              </div>
+            </div>
+            <div class="card dangerband">
+              <div class="ctitle" style="color:var(--danger)">Причина:</div>
+              <div class="cmeta">изображение больше 100&times;100 пикселей (загружено 512&times;512). Уменьшите его и загрузите заново.</div>
+            </div>
+            <div class="formrow"><div class="btn out wide">Загрузить другой файл</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">logoStatus = Rejected &middot; logoRejectionReason</span>
+          <p><strong>Отклонение несёт причину.</strong> Красный тон (токены <span class="mono">danger</span>,
+            <span class="mono">26-183</span>) и дословная причина из <span class="mono">logoRejectionReason</span>,
+            а не общее «не удалось». Действие очевидно: исправить файл и загрузить заново.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
