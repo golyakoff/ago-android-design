@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Подключение канала — Telegram, MAX, VK: не подключён, подключается, проверен, недоступен, отказ, отключить.">
+<title>Каналы — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html" aria-current="page">Каналы</a>
+      <a href="branding.html">Оформление</a>
+      <a href="auto-reply.html">Автоответ</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">каналы</p>
+  <section>
+    <div class="shead">
+      <span class="num">14</span>
+      <h2>Каналы &mdash; подключить мессенджер за один экран</h2>
+      <p>Telegram, MAX и VK делят один экран подключения (общий <span class="mono">ChannelConnectScreen</span>):
+        поле для одного секрета, живая проверка у провайдера до сохранения, и статус, который спрашивает
+        провайдера заново при каждом заходе &mdash; а не читает сохранённый флаг (<span class="mono">adr/0143</span>).
+        Весь раздел под правом <span class="mono">channel:manage</span>: оператору без него пункт просто
+        не виден, а сервер отказывает на всех трёх маршрутах независимо.</p>
+    </div>
+
+    <div class="wall">
+
+      <!-- ============ Telegram: не подключён ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот Telegram</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:8px">
+              <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 14px">Вставьте токен бота, который выдал BotFather при создании бота. AGO проверит его в Telegram, прежде чем сохранить.</p>
+              <label>Токен бота</label>
+              <div class="inp"><span class="ph">123456789:AA…</span></div>
+              <div class="hint">После сохранения больше нигде не показывается.</div>
+            </div>
+            <div class="formrow"><div class="btn off wide">Подключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">23-36 &middot; новый экран</span>
+          <span class="route">/channels/telegram &middot; channel:manage</span>
+          <p>Одно поле, один секрет. Кнопка «Подключить» неактивна, пока поле пусто &mdash; тот же
+            <span class="mono">disabled</span>, что и в консоли. Токен &mdash; поле-пароль: набранное скрыто и
+            никогда не возвращается обратно (в ответе на подключение нет поля, из которого он мог бы прийти).</p>
+        </div>
+      </div>
+
+      <!-- ============ Telegram: подключается ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот Telegram</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:8px">
+              <label>Токен бота</label>
+              <div class="inp"><span style="letter-spacing:.14em; color:var(--ink-faint)">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span></div>
+              <div class="hint">После сохранения больше нигде не показывается.</div>
+            </div>
+            <div class="formrow"><div class="btn off wide">Подключаем&hellip;</div></div>
+            <div class="subnote" style="text-align:center; padding-top:2px">AGO проверяет токен в Telegram&hellip;</div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">во время запроса на подключение</span>
+          <p>Между нажатием и ответом кнопка гаснет в «Подключаем…», поле заблокировано. Проверка &mdash;
+            это настоящий сетевой вызов к Telegram (<span class="mono">getMe</span>), а не локальная валидация
+            формата: экран не рисует успех, пока провайдер не согласился.</p>
+        </div>
+      </div>
+
+      <!-- ============ Telegram: подключён / проверен ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот Telegram</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:12px">
+              <div class="chk" style="padding:2px 0"><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>Подключено</b><span>Проверено в Telegram</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Подключено с</span><span class="v">12 сентября 2026</span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Проверено</span><span class="v" style="color:var(--ink-soft); font-weight:500">сегодня, 9:38</span></div>
+            </div>
+            <div class="formrow"><div class="btn out wide">Отключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">status.verified &middot; provider agreed live</span>
+          <p><strong>«Подключено» здесь значит «провайдер только что согласился», а не «стоит флаг».</strong>
+            Значок в стиле <span class="mono">check_circle</span> и подпись «Проверено» несут время последнего
+            живого ответа Telegram (<span class="mono">checkedAt</span>). Бот, удалённый на стороне Telegram,
+            перестанет быть «Подключено» в тот же момент, когда сюда посмотрят.</p>
+        </div>
+      </div>
+
+      <!-- ============ Telegram: подключён / недоступен ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот Telegram</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:12px">
+              <div class="chk" style="padding:2px 0"><span class="mark idle"><svg class="i sm"><use href="#i-excl"/></svg></span><span class="ctext"><b>Не удалось проверить</b><span>Подключено с 12 сентября 2026</span></span></div>
+            </div>
+            <div class="card flat">
+              <div class="cmeta">AGO не удалось связаться с Telegram прямо сейчас. Это не значит, что токен неверный &mdash; попробуйте ещё раз через минуту.</div>
+            </div>
+            <div class="formrow"><div class="btn out wide">Отключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">status.unreachable &middot; adr/0143 (5-секундная граница)</span>
+          <p><strong>Третье состояние, отдельное и от «проверено», и от «отказ».</strong> Живая проверка не
+            уложилась в срок или провайдер не ответил вовсе &mdash; это ничего не говорит о самом токене.
+            Нейтральный тон и совет «подождать и повторить», <em>никогда</em> не красное «получите новый токен»:
+            два факта требуют противоположных действий.</p>
+        </div>
+      </div>
+
+      <!-- ============ Telegram: отказ ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот Telegram</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:12px">
+              <div class="chk" style="padding:2px 0"><span class="mark miss"><svg class="i sm"><use href="#i-alert"/></svg></span><span class="ctext"><b>Не отвечает</b><span>Подключено с 12 сентября 2026</span></span></div>
+            </div>
+            <div class="card dangerband">
+              <div class="ctitle" style="color:var(--danger)">Telegram ответил:</div>
+              <div class="cmeta">401 Unauthorized &mdash; токен отозван или неверен. Получите новый токен у BotFather и подключите заново.</div>
+            </div>
+            <div class="formrow"><div class="btn out wide">Отключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">status.connected &amp;&amp; !verified &middot; refusalReason</span>
+          <p><strong>Отказ несёт причину — дословный ответ провайдера.</strong> Красный тон
+            (токены <span class="mono">danger</span> из <span class="mono">26-183</span>) и прямое действие:
+            получить новый токен и подключить заново. Причина берётся из <span class="mono">refusalReason</span>,
+            а не сочиняется приложением.</p>
+        </div>
+      </div>
+
+      <!-- ============ Telegram: подтверждение отключения ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот Telegram</div>
+          </div>
+          <div class="card" style="margin-top:12px; opacity:.4">
+            <div class="chk" style="padding:2px 0"><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>Подключено</b><span>Проверено в Telegram</span></span></div>
+          </div>
+          <div class="scrim"></div>
+          <div class="sheet">
+            <div class="handle"><i></i></div>
+            <div class="sh-head" style="display:block; padding:2px 24px 4px">
+              <div class="ctitle" style="font-size:17px">Отключить этого бота?</div>
+            </div>
+            <div style="padding:0 24px">
+              <p style="font-size:13.5px; color:var(--ink-soft); margin:0">Бот сразу перестанет доставлять сообщения. Вы можете подключить его &mdash; или другого бота &mdash; снова в любой момент.</p>
+            </div>
+            <div class="cactions" style="margin:18px 24px 22px">
+              <div class="btn out">Отмена</div>
+              <div class="btn dangerfill">Отключить</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">«Отключить» &rarr; подтверждение</span>
+          <p><strong>Отключение &mdash; за подтверждением, но не «опасное навсегда».</strong> Нижний лист, как у
+            вето записи: подтверждающая кнопка в заливке <span class="mono">danger</span>
+            (<span class="mono">danger-fill</span>/<span class="mono">on-danger</span> из
+            <span class="mono">26-183</span>), потому что доставка прекратится немедленно &mdash; но текст прямо
+            говорит, что подключить можно снова.</p>
+        </div>
+      </div>
+
+      <!-- ============ MAX: тот же каркас ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Бот MAX</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:8px">
+              <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 14px">Вставьте токен бота, который выдал @MasterBot при создании бота в MAX. AGO проверит его в MAX, прежде чем сохранить.</p>
+              <label>Токен бота</label>
+              <div class="inp"><span class="ph">Токен @MasterBot</span></div>
+              <div class="hint">После сохранения больше нигде не показывается.</div>
+            </div>
+            <div class="formrow"><div class="btn off wide">Подключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">25-09 &middot; тот же каркас</span>
+          <span class="route">/channels/max &middot; channel:manage</span>
+          <p><strong>Тот же экран, другой провайдер.</strong> MAX переиспользует
+            <span class="mono">ChannelConnectScreen</span> целиком &mdash; меняются только название, текст-подсказка
+            и имя провайдера в сообщениях. Все шесть состояний Telegram выше воспроизводятся здесь один в один,
+            поэтому нарисовано только «не подключён»: доказательство переиспользования, а не копия шести кадров.</p>
+        </div>
+      </div>
+
+      <!-- ============ VK: не подключён ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Сообщество VK</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:8px">
+              <p style="font-size:13.5px; color:var(--ink-soft); margin:0 0 14px">Вставьте ключ доступа сообщества (Управление &rarr; Работа с API &rarr; Ключи доступа, с доступом к сообщениям). AGO проверит его в VK, прежде чем сохранить.</p>
+              <label>Ключ доступа сообщества</label>
+              <div class="inp"><span class="ph">vk1.a.…</span></div>
+              <div class="hint">После сохранения больше нигде не показывается.</div>
+            </div>
+            <div class="formrow"><div class="btn fill wide">Подключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">25-15 &middot; новый экран</span>
+          <span class="route">/channels/vk &middot; channel:manage</span>
+          <p>Тот же каркас на одном секрете &mdash; ключ доступа сообщества, проверяемый живым вызовом
+            <span class="mono">groups.getById</span> до записи строки. Отличие VK &mdash; в том, что показывается
+            <em>после</em> подключения (следующий кадр).</p>
+        </div>
+      </div>
+
+      <!-- ============ VK: панель «показывается один раз» ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Сообщество VK</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:12px">
+              <div class="chk" style="padding:2px 0"><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>Подключено</b><span>Проверено в VK</span></span></div>
+            </div>
+            <div class="slabel" style="display:flex; align-items:center; justify-content:space-between">
+              <span>Завершите настройку в VK</span>
+              <span class="pill warn">Показывается один раз</span>
+            </div>
+            <div class="card flat" style="margin-bottom:8px">
+              <div class="cmeta">Вставьте эти значения в настройки Callback API вашего сообщества (Управление &rarr; Работа с API &rarr; Callback API), чтобы начать получать сообщения.</div>
+            </div>
+            <div class="formrow" style="padding-bottom:6px">
+              <label>URL обратного вызова</label>
+              <div class="inp"><span class="mono" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap">https://api.example.test/vk/8f2a…</span><span class="linkish" style="flex:0 0 auto; margin-left:10px">Копировать</span></div>
+            </div>
+            <div class="formrow" style="padding-top:6px">
+              <label>Секретный ключ</label>
+              <div class="inp"><span class="mono" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap">whs_9c1f…a730</span><span class="linkish" style="flex:0 0 auto; margin-left:10px">Копировать</span></div>
+              <div class="hint">Значения-примеры. Показаны здесь один раз, сразу после подключения.</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">25-65 &middot; shown-once панель</span>
+          <span class="route">justConnected &middot; ConnectVkChannelResponseDto</span>
+          <p><strong>Единственные два секрета в продукте, которые показываются человеку, — и ровно один раз.</strong>
+            URL обратного вызова и секретный ключ приходят только в ответе на подключение и нигде не хранятся
+            для повторного показа. Каждый &mdash; моноширинным, с действием «Копировать» рядом; плашка
+            «Показывается один раз» предупреждает, что уйти с экрана &mdash; значит их потерять. Значения на макете
+            &mdash; примеры (<span class="mono">example.test</span>), не настоящий адрес и не настоящий ключ.</p>
+        </div>
+      </div>
+
+      <!-- ============ VK: перезаход — секреты уже не показать ============ -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Сообщество VK</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:12px">
+              <div class="chk" style="padding:2px 0"><span class="mark"><svg class="i sm"><use href="#i-check"/></svg></span><span class="ctext"><b>Подключено</b><span>Проверено в VK</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Подключено с</span><span class="v">12 сентября 2026</span></div>
+            </div>
+            <div class="card flat">
+              <div class="cmeta">URL обратного вызова и секретный ключ были показаны один раз, сразу после подключения. Чтобы увидеть их снова, отключите сообщество и подключите его заново.</div>
+            </div>
+            <div class="formrow"><div class="btn out wide">Отключить</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">status.connected &amp;&amp; justConnected == null (перезаход)</span>
+          <p><strong>Честно говорит, что значений больше нет, а не молча прячет панель.</strong> При перезаходе или
+            у второго оператора секретов уже нет для показа &mdash; экран прямо это заявляет и указывает
+            единственный способ получить новые: отключить и подключить заново. Всё, что можно было утаить
+            (пустая карточка), лгало бы про доступность.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
