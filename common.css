@@ -25,7 +25,7 @@
   --line:#e5e2da; --line-strong:#c8c3b6;
   --brand:#4b3aff; --brand-deep:#3324c9; --brand-tint:#ecebff; --lavender:#d9d6ff;
   --success:#12684a; --success-tint:#e6f6ee;
-  --danger:#9f1d17; --danger-tint:#fdecea; --on-danger:#ffffff;
+  --danger:#9f1d17; --danger-tint:#fdecea; --danger-fill:#9f1d17; --on-danger:#ffffff;
   --warning:#7a4d00; --warning-tint:#fff4e0;
   --frame:#2a2738; --frame-edge:#4a4560;
   --shadow:0 1px 2px rgba(20,20,31,.06), 0 12px 32px rgba(20,20,31,.10);
@@ -38,7 +38,7 @@
     --line:#323040; --line-strong:#514c68;
     --brand:#6052ff; --brand-deep:#c3beff; --brand-tint:#1d1a38; --lavender:#413a72;
     --success:#7fe0af; --success-tint:#0f2b22;
-    --danger:#ff8a80; --danger-tint:#3a1613; --on-danger:#3a1613;
+    --danger:#ff8a80; --danger-tint:#3a1613; --danger-fill:#b3261e; --on-danger:#ffffff;
     --warning:#ffb74d; --warning-tint:#3a2a10;
     --frame:#000000; --frame-edge:#3a3650;
     --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 34px rgba(0,0,0,.45);
@@ -51,7 +51,7 @@
   --line:#323040; --line-strong:#514c68;
   --brand:#6052ff; --brand-deep:#c3beff; --brand-tint:#1d1a38; --lavender:#413a72;
   --success:#7fe0af; --success-tint:#0f2b22;
-  --danger:#ff8a80; --danger-tint:#3a1613; --on-danger:#3a1613;
+  --danger:#ff8a80; --danger-tint:#3a1613; --danger-fill:#b3261e; --on-danger:#ffffff;
   --warning:#ffb74d; --warning-tint:#3a2a10;
   --frame:#000000; --frame-edge:#3a3650;
   --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 34px rgba(0,0,0,.45);
@@ -325,7 +325,7 @@ svg.i.lg{width:26px; height:26px}
 .swipe-del{
   position:absolute; top:0; right:0; bottom:0; width:80px; display:flex; flex-direction:column;
   align-items:center; justify-content:center; gap:5px;
-  background:var(--danger); color:var(--on-danger);
+  background:var(--danger-fill); color:var(--on-danger);
 }
 .swipe-del span{font-size:10.5px; font-weight:700; line-height:1.2; letter-spacing:.03em; text-align:center}
 
@@ -360,7 +360,7 @@ svg.i.lg{width:26px; height:26px}
 .btn.fill{background:var(--brand); color:#fff}
 .btn.out{border-color:var(--line-strong); color:var(--ink)}
 .btn.warnout{border-color:var(--danger); color:var(--danger)}
-.btn.dangerfill{background:var(--danger); color:var(--on-danger)}
+.btn.dangerfill{background:var(--danger-fill); color:var(--on-danger)}
 .btn.off{background:var(--sunken); color:var(--ink-faint)}
 .btn.wide{width:100%; flex:none}
 
@@ -396,7 +396,7 @@ svg.i.lg{width:26px; height:26px}
 .bnav span{font-size:11px; font-weight:600}
 .bnav .nb{
   position:absolute; top:1px; right:9px; min-width:16px; height:16px; padding:0 4px; border-radius:8px;
-  background:var(--danger); color:var(--on-danger); font-size:10px; font-weight:700; display:grid; place-items:center;
+  background:var(--danger-fill); color:var(--on-danger); font-size:10px; font-weight:700; display:grid; place-items:center;
 }
 
 /* тред */
