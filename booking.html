@@ -57,37 +57,100 @@
             <div>Утверждены</div>
             <div>Клиенты</div>
           </div>
+          <div style="padding:0 16px 8px; font-size:12px; color:var(--ink-soft)">Всё подтверждается автоматически.</div>
+          <!-- `26-163`: строки, а не карточки - тот же язык, что у «Утверждены» ниже: ведущая колонка «когда»
+               (время, под ним дата - очередь отсортирована по дедлайну и тянется через дни), имя жирным,
+               «услуга · длительность» подписью. Справа - сколько осталось до автоподтверждения: на вето-очереди
+               это единственный факт, который сканируют глазами. Никаких hex-идентификаторов. -->
           <div class="scroll">
-            <div class="card">
-              <div class="ctitle">Стрижка · 60 мин</div>
-              <div class="cmeta">Завтра, 12:30 · мастер Ирина Соколова</div>
-              <div class="cmeta" style="margin-top:6px">Клиент <span class="mono">+7 9•• ••• •• 47</span> <span class="linkish">Показать</span></div>
-              <div class="rmeta"><span class="pill warn">Подтвердится через 3 ч</span><span class="pill mono">cal a0f3c952</span></div>
-              <div class="cactions">
-                <div class="btn fill">Подтвердить</div>
-                <div class="btn out">Отклонить</div>
-              </div>
+            <div class="row" style="align-items:center">
+              <div style="width:42px; flex:0 0 42px"><div class="rtime-strong">12:30</div><div style="font-size:11px; color:var(--ink-soft); font-variant-numeric:tabular-nums">27.09</div></div>
+              <div class="rmain"><div class="rname">Анна Ковалёва</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; font-size:12px; font-weight:600; color:var(--ink-soft); white-space:nowrap">через 3 ч</div>
             </div>
-            <div class="card">
-              <div class="ctitle">Окрашивание · 180 мин</div>
-              <div class="cmeta">Чт 24 апреля, 10:00 · мастер Пётр Ким</div>
-              <div class="cmeta" style="margin-top:6px">Клиент <span class="mono">+7 9•• ••• •• 08</span> <span class="linkish">Показать</span></div>
-              <div class="rmeta"><span class="pill warn">Подтвердится через 26 ч</span><span class="pill mono">cal a0f3c952</span><span class="pill">Из чата</span></div>
-              <div class="cactions">
-                <div class="btn fill">Подтвердить</div>
-                <div class="btn out">Отклонить</div>
-              </div>
+            <div class="row" style="align-items:center">
+              <div style="width:42px; flex:0 0 42px"><div class="rtime-strong">10:00</div><div style="font-size:11px; color:var(--ink-soft); font-variant-numeric:tabular-nums">01.10</div></div>
+              <div class="rmain"><div class="rname" style="color:var(--ink-soft)">+7 ··· ·· 08</div><div class="rsnip">Окрашивание · 180 мин</div></div>
+              <div style="margin-left:auto; font-size:12px; font-weight:600; color:var(--ink-soft); white-space:nowrap">через 26 ч</div>
             </div>
-            <div class="card flat" style="text-align:center">
+            <div class="row" style="align-items:center">
+              <div style="width:42px; flex:0 0 42px"><div class="rtime-strong">15:00</div><div style="font-size:11px; color:var(--ink-soft); font-variant-numeric:tabular-nums">01.10</div></div>
+              <div class="rmain"><div class="rname">Дмитрий Соловьёв</div><div class="rsnip">Мужская стрижка · 30 мин</div></div>
+              <div style="margin-left:auto; font-size:12px; font-weight:600; color:var(--ink-soft); white-space:nowrap">через 31 ч</div>
+            </div>
+            <div class="card flat" style="text-align:center; margin-top:14px">
               <div class="cmeta">Одна очередь на все календари. Здесь нет «моих» записей.</div>
             </div>
           </div>
           <div data-bnav="booking"></div>
         </div></div>
         <div class="cap">
+          <span class="tag redesign">26-163 &middot; перерисован</span>
           <span class="route">/calendar/waiting &middot; вкладка «В ожидании» → «Ожидают»</span>
-          <p>Строки таблицы становятся карточками, где вето &mdash; под рукой. Показывается при <span class="mono">calendar:configure</span> <em>или</em> любом из <span class="mono">booking:confirm/reject/cancel</span> &mdash; тот же расширенный гейт, что и в консоли.</p>
-          <p><span class="flag">Настоящий пробел, найденный при рисовании этого экрана.</span> <span class="mono">PendingBooking</span> несёт <span class="mono">workerId</span>, <span class="mono">serviceId</span>, <span class="mono">calendarId</span> &mdash; и ни одного имени. А <span class="mono">ConfirmedBooking</span> несёт и <span class="mono">workerDisplayName</span>, и <span class="mono">serviceName</span>, и <span class="mono">customerDisplayName</span>. То есть на экране, где у человека секунды на решение, слов нет вообще, а на экране, где решать нечего, есть все. Карточки здесь нарисованы с именами, потому что так и должно быть &mdash; но для этого ответу очереди нужно вырасти на три поля, и это отдельная задача, а не выдумка на клиенте. Пока этого нет, честный вид карточки &mdash; строка <span class="mono pill">cal a0f3c952</span> вместо названия.</p>
+          <p>Тот же язык строк, что у «Утверждены»: время и дата в ведущей колонке, имя клиента жирным, услуга и длительность подписью. Справа &mdash; сколько осталось до автоподтверждения, потому что очередь отсортирована именно по этому и это единственное, что здесь читают бегло. Тап по строке открывает детальную запись (следующий экран). Показывается при <span class="mono">calendar:configure</span> <em>или</em> любом из <span class="mono">booking:reject/cancel</span> &mdash; тот же расширенный гейт, что и в консоли.</p>
+          <p><strong>Имена &mdash; настоящие, и пробел закрыт.</strong> Первая версия этого экрана рисовала <span class="mono">Услуга 01a08a02</span> и <span class="mono">Мастер 01a084ec</span>, хотя <span class="mono">PendingBookingResponse</span> несёт <span class="mono">workerDisplayName</span> и <span class="mono">serviceName</span> с <span class="mono">26-50</span>, а имя клиента приезжает из реестра персон чата по <span class="mono">personId</span> &mdash; тем же display-merge, что и на «Утверждены». Когда имени нет &mdash; маскированный телефон, потом «Без имени», <strong>но никогда не шестнадцатеричный код</strong>. Идентификатор календаря на экране не показывается вовсе: это адрес для записи на сервер, а не факт для человека.</p>
+        </div>
+      </div>
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div class="on">Ожидают <span class="ct">3</span></div>
+            <div>Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <div style="padding:0 16px 8px; font-size:12px; color:var(--ink-soft)">Всё подтверждается автоматически.</div>
+          <div class="scroll">
+            <div class="row" style="align-items:center">
+              <div style="width:42px; flex:0 0 42px"><div class="rtime-strong">12:30</div><div style="font-size:11px; color:var(--ink-soft); font-variant-numeric:tabular-nums">27.09</div></div>
+              <div class="rmain"><div class="rname">Анна Ковалёва</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; font-size:12px; font-weight:600; color:var(--ink-soft); white-space:nowrap">через 3 ч</div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div style="width:42px; flex:0 0 42px"><div class="rtime-strong">10:00</div><div style="font-size:11px; color:var(--ink-soft); font-variant-numeric:tabular-nums">01.10</div></div>
+              <div class="rmain"><div class="rname" style="color:var(--ink-soft)">+7 ··· ·· 08</div><div class="rsnip">Окрашивание · 180 мин</div></div>
+              <div style="margin-left:auto; font-size:12px; font-weight:600; color:var(--ink-soft); white-space:nowrap">через 26 ч</div>
+            </div>
+          </div>
+          <!-- `26-163`: детальная запись «Ожидают» - тот же нижний лист (ModalBottomSheet), что и у
+               «Утверждены»: имя заголовком, дата слева / время справа, строки ярлык-слева/значение-справа с
+               тонкими разделителями. Под датой - строка автоподтверждения: это и есть путь «принять»,
+               потому что у календаря нет операторского confirm-эндпоинта (Event.Confirm вызывает только
+               сборщик). Действия - ровно два вето, которые сервер реально принимает для PendingConfirmation:
+               Отклонить (Event.Reject) и Отменить (Event.Cancel). «Не пришёл» здесь нет: Event.MarkNoShow
+               принимает только Booked. -->
+          <div class="scrim"></div>
+          <div class="sheet">
+            <div class="handle"><i></i></div>
+            <div style="padding:6px 24px 0">
+              <div class="ctitle" style="font-size:18px">Анна Ковалёва</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:6px">
+                <span class="cmeta">Воскресенье, 27 сентября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">12:30&ndash;13:30</span>
+              </div>
+              <div style="margin-top:8px; font-size:13px; font-weight:600; color:var(--brand-deep)">Подтвердится через 3 ч</div>
+            </div>
+            <div class="kv" style="margin-top:16px; padding:11px 24px"><span class="k">Услуга</span><span class="v">Стрижка</span></div>
+            <div class="kv" style="padding:11px 24px"><span class="k">Мастер</span><span class="v">Ирина Соколова</span></div>
+            <div class="kv" style="padding:11px 24px"><span class="k">Телефон</span><span class="v"><span class="mono">+7 ··· ·· 47</span></span></div>
+            <div class="cactions" style="margin:20px 24px 0">
+              <div class="btn out">Отклонить</div>
+              <div class="btn out">Отменить</div>
+            </div>
+            <div style="text-align:center; padding:12px 24px 20px"><span class="linkish">Закрыть</span></div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <div class="cap">
+          <span class="tag newscreen">26-163 &middot; новый экран</span>
+          <span class="route">строка «Ожидают» &rarr; детальная запись &rarr; вето</span>
+          <p>Тот же нижний лист, что у детальной записи «Утверждены»: имя заголовком, дата слева и время справа одной строкой, «Услуга»/«Мастер»/«Телефон» строками с тонкими разделителями. «Телефон» рисуется только когда сервер его прислал &mdash; <span class="mono">null</span> здесь значит «нет права <span class="mono">customer:read</span>», а не «телефона нет», и прочерк на этом месте лгал бы.</p>
+          <p><strong>Почему нет кнопки «Принять».</strong> Проверено по коду календаря, а не по ощущению: <span class="mono">ConsoleEndpoints</span> публикует для записи ровно три действия &mdash; <span class="mono">reject</span>, <span class="mono">cancel</span>, <span class="mono">no-show</span>. Операторского <span class="mono">confirm</span> нет: <span class="mono">Event.Confirm</span> вызывает только сборщик по дедлайну (право <span class="mono">booking:confirm</span> объявлено, но ни один эндпоинт его не проверяет). Очередь &mdash; список вето, а не список одобрений: «принять» &mdash; это ничего не нажимать, и лист говорит это прямо строкой «Подтвердится через 3 ч» вместо кнопки, на которую сервер не ответит. Ручное подтверждение &mdash; продуктовое решение и новый эндпоинт календаря, отдельной задачей.</p>
+          <p><strong>Ровно два вето, и оба настоящие.</strong> <span class="mono">Event.Reject</span> принимает только <span class="mono">PendingConfirmation</span>; <span class="mono">Event.Cancel</span> &mdash; и <span class="mono">PendingConfirmation</span>, и <span class="mono">Booked</span>, под отдельным правом (<span class="mono">booking:cancel</span> против <span class="mono">booking:reject</span>) &mdash; поэтому оба на месте, равным весом. <strong>«Не пришёл» убран</strong>: <span class="mono">Event.MarkNoShow</span> принимает только <span class="mono">Booked</span> &mdash; неявка утверждает что-то о визите, который был подтверждён и не состоялся, и для ожидающей записи сервер отказывал на каждом нажатии. Тап по вето сначала закрывает лист, потом шлёт запрос: строка гаснет в списке, отказ сервера ложится в баннер над списком, успех перечитывает очередь &mdash; и всё это было бы скрыто за открытым листом.</p>
         </div>
       </div>
       <div class="slot">
