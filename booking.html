@@ -394,8 +394,8 @@
               <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px; align-items:center"><span style="color:var(--ink-soft)">Телефон</span><span style="display:flex; align-items:center; gap:10px"><span class="mono">+7 ··· ·· 67</span><span class="linkish">Показать</span></span></div>
               <div style="display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-top:1px solid var(--line); font-size:13px"><span style="color:var(--ink-soft)">Источник</span><span style="font-weight:600">Виджет на сайте</span></div>
               <div class="cactions" style="margin-top:14px">
-                <div class="btn fill">Перейти к диалогу</div>
-                <div class="btn out">Перенести оператором</div>
+                <div class="btn fill">Открыть диалог</div>
+                <div class="btn out">Перенести</div>
               </div>
               <div class="cactions" style="margin-top:8px">
                 <div class="btn warnout">Отменить</div>
@@ -407,7 +407,7 @@
         </div></div>
         <div class="cap">
           <span class="route">строка «Утверждены» &rarr; детальная запись (визит впереди)</span>
-          <p><strong>Утверждены: добавлены «Перенести оператором» и «Отменить».</strong> «Перейти к диалогу» и «Закрыть» остаются. «Отменить» &mdash; опасный тон (<span class="mono">Booked→Cancelled</span>, <span class="mono">CancelledByOperator</span>).</p>
+          <p><strong>Утверждены: добавлены «Перенести» и «Отменить».</strong> «Открыть диалог» и «Закрыть» остаются. «Отменить» &mdash; опасный тон (<span class="mono">Booked→Cancelled</span>, <span class="mono">CancelledByOperator</span>).</p>
           <p><strong>«Не пришёл» здесь не показана</strong> &mdash; визит ещё не состоялся. <span class="mono">Event.MarkNoShow</span> отказывает до конца слота, поэтому кнопка появляется только когда <span class="mono">now &ge; EndsAt</span> (следующий экран). Тот же урок, что <span class="mono">26-163</span> применил к очереди: не предлагать действие там, где сервер его отклонит.</p>
           <p><strong>Перенос &mdash; отдельное право</strong> (<span class="mono">booking:reschedule</span>, по аргументу гранулярности adr/0016) либо, как запасной вариант, по <span class="mono">booking:cancel</span> &mdash; решение автора. Новое право стоит парной строки в каталоге <span class="mono">ago-chat</span> и в сид-роли «Оператор» (adr/0093).</p>
         </div>
@@ -442,7 +442,7 @@
         </div></div>
         <div class="cap">
           <span class="route">строка «Утверждены» &rarr; детальная запись (визит прошёл)</span>
-          <p><strong>«Не пришёл» появляется только после конца слота.</strong> Тот же экран, но <span class="mono">now &ge; EndsAt</span>: кнопка «Не пришёл» (<span class="mono">Booked→NoShow</span>) теперь доступна. «Перенести оператором» на прошедшем визите не показывается &mdash; двигать уже состоявшееся время бессмысленно; перенос &mdash; только для будущих записей.</p>
+          <p><strong>«Не пришёл» появляется только после конца слота.</strong> Тот же экран, но <span class="mono">now &ge; EndsAt</span>: кнопка «Не пришёл» (<span class="mono">Booked→NoShow</span>) теперь доступна. «Перенести» на прошедшем визите не показывается &mdash; двигать уже состоявшееся время бессмысленно; перенос &mdash; только для будущих записей.</p>
           <p>Это &mdash; настоящее прибытие «Не пришёл» на Android: <span class="mono">markNoShow</span> есть в API-слое, но ни один экран его сегодня не вызывает (в <span class="mono">WorkerSlotsScreen</span> «Неявка» &mdash; только ярлык статуса). Консоль же предлагает «Не пришёл» на очереди «Ожидают», где сервер его отклоняет &mdash; это тоже чинится (перенести на подтверждённые).</p>
         </div>
       </div>
@@ -478,7 +478,7 @@
           <div class="stickybar"><div class="btn fill wide">Выбрано 14:00 · далее</div></div>
         </div></div>
         <div class="cap">
-          <span class="route">«Перенести оператором» &rarr; выбор нового времени</span>
+          <span class="route">«Перенести» &rarr; выбор нового времени</span>
           <p><strong>Набросок флоу переноса.</strong> Та же лента дат, что и на «Утверждены», но показывает <em>свободные</em> времена того же мастера. Выбор одного времени включает «Далее». В v1 &mdash; <strong>только время</strong>: тот же мастер, та же услуга (длина прогона не меняется). Другой мастер/услуга &mdash; это «отменить и записать заново», отдельная задача.</p>
           <p><strong>Перенос в этой модели данных &mdash; это отпустить старый прогон и заявить новый.</strong> Строка тут &mdash; это и слот, и запись; переезда «на месте» нет (целевое время &mdash; уже свои <span class="mono">Available</span>-строки; возврата в <span class="mono">Available</span> у старых строк нет намеренно). Поэтому перенос = отмена старого прогона + атомарный клейм нового, в одной транзакции. Это предмет предлагаемого ADR.</p>
         </div>

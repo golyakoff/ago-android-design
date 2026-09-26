@@ -1,0 +1,6 @@
+fix(26-182): shorten confirmed-booking card action labels
+
+«Перейти к диалогу» -> «Открыть диалог», «Перенести оператором» ->
+«Перенести» on the 26-175 confirmed-sheet mockups in booking.html §04,
+per author review (ago-root#1693). «Отменить» / «Закрыть» unchanged.
+Caption prose quoting the old labels updated to match.
