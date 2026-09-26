@@ -370,14 +370,18 @@ svg.i.lg{width:26px; height:26px}
   padding:16px 16px 7px;
 }
 
-/* маленький кружок-статус в строке настроек (раздел «Системное»): тот же язык, что у меток цепочки
-   готовности (.chk .mark) - тонированный фон плюс глиф в цвет, - но живёт своим рядом настроек.
-   Глиф намеренно крупнее и толще обычного svg.i (stroke-width 1.8): в маленьком тонированном кружке
-   тонкая обводка читается блёкло - та же правка сделана и в реальном приложении. */
-.statdot{width:26px; height:26px; flex:0 0 26px; border-radius:50%; display:grid; place-items:center}
-.statdot.ok{background:var(--success-tint); color:var(--success)}
-.statdot.warn{background:var(--warning-tint); color:var(--warning)}
-.statdot svg{width:18px; height:18px; stroke-width:2.6}
+/* плоский глиф-статус (26-184/26-187): Material Symbols Outlined check_circle/error/info -
+   кольцо, охватывающее свой знак, БЕЗ тонированной подложки. Пришёл на смену прежнему .statdot
+   (залитый кружок + голый знак): кольцо теперь часть глифа, а состояние передаётся цветом, а не
+   фоном. Тот же язык, что и у флагов режима работы/автозапуска в реальном приложении.
+     .ok   -> зелёный   (check_circle) - всё хорошо / проверено;
+     .err  -> красный   (error)        - ошибка / отклонён / заблокирован;
+     .info -> нейтральный (info)        - ожидание / рекомендация / нейтральная подсказка. */
+.statglyph{width:24px; height:24px; flex:0 0 24px; display:grid; place-items:center}
+.statglyph svg{width:24px; height:24px}
+.statglyph.ok{color:var(--success)}
+.statglyph.err{color:var(--danger)}
+.statglyph.info{color:var(--ink-soft)}
 /* заголовок строки-статуса несёт само состояние («…: Экономия энергии»), которое важно прочитать
    целиком - поэтому здесь он переносится, а не обрезается многоточием, как имя диалога в .rname. */
 .rname.wrap{white-space:normal; overflow:visible}
@@ -574,6 +578,17 @@ header.top{padding:30px 0 26px; border-bottom:1px solid var(--line)}
 }
 .pagenav a:hover{color:var(--ink); background:var(--sunken)}
 .pagenav a[aria-current="page"]{color:var(--ink); background:var(--sunken); box-shadow:inset 0 0 0 1px var(--line)}
+
+/* компактная навигация внутренних страниц: полное меню разделов живёт только на «Обзоре»
+   (index.html); каждая внутренняя страница несёт лишь ссылку «← Обзор» и подпись своего раздела.
+   Одна и та же форма на всех внутренних страницах. */
+.pagenav.compact{align-items:center; gap:12px}
+.pagenav.compact .here{
+  font-size:13px; font-weight:700; color:var(--ink);
+}
+.pagenav.compact .here::before{
+  content:"·"; color:var(--ink-faint); margin-right:12px; font-weight:400;
+}
 
 /* index.html - table of contents */
 .toc-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:30px}

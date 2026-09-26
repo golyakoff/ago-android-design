@@ -21,15 +21,9 @@
   <div class="topwrap">
     <div class="topbar">
       <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
-      <nav class="pagenav" aria-label="Разделы">
-      <a href="index.html">Обзор</a>
-      <a href="common.html">Общее</a>
-      <a href="login-boot.html">Вход</a>
-      <a href="dialogs.html">Диалоги</a>
-      <a href="booking.html">Записи</a>
-      <a href="team.html">Команда</a>
-      <a href="settings.html">Настройки</a>
-      <a href="system.html" aria-current="page">Системное</a>
+      <nav class="pagenav compact" aria-label="Разделы">
+      <a href="index.html">&larr; Обзор</a>
+      <span class="here">Системное</span>
       </nav>
     </div>
   </div>
@@ -61,7 +55,7 @@
           <div class="sheet">
             <div class="handle"><i></i></div>
             <div class="sh-head" style="align-items:flex-start; padding-bottom:6px">
-              <svg class="i" style="color:var(--warning); flex:0 0 auto; margin-top:1px"><use href="#i-alert"/></svg>
+              <svg class="i" style="color:var(--danger); flex:0 0 auto; margin-top:1px"><use href="#i-error"/></svg>
               <p style="margin:0; font-size:13.5px; color:var(--ink)">Уведомления о новых сообщениях могут не доходить при текущих настройках телефона. Рекомендуется режим экономии батареи «Без ограничений».</p>
             </div>
             <div style="padding:0 16px 18px">
@@ -82,9 +76,9 @@
             не блокирует приложение</span> &mdash; ни крестик, ни галочка «больше не показывать» ничего
             не ломают: подсказка нужна, чтобы уведомления доходили, а не чтобы её нельзя было закрыть.</p>
           <p>Две кнопки на два разрешения: первичная заливкой &mdash; «Настройки батареи», вторичная
-            контуром &mdash; «Настройки автозапуска». Треугольник-предупреждение (<span class="mono">#i-alert</span>)
-            живёт только в шапке этой шторки; в самих настройках статус показан кружком-глифом, а не
-            треугольником.</p>
+            контуром &mdash; «Настройки автозапуска». Плоский глиф <span class="mono">error</span>
+            (<span class="mono">#i-error</span>) в шапке шторки &mdash; тот же, что и в строках настроек:
+            <span class="flag">треугольника нет нигде</span> (<span class="mono">26-184</span>).</p>
         </div>
       </div>
     </div>
@@ -95,9 +89,11 @@
       <span class="num">10</span>
       <h2>Режим работы и автозапуск &mdash; две строки в «Настройках»</h2>
       <p>Раздел «Уведомления» на экране «Настройки» держит две независимые строки &mdash; «Режим
-        работы» (оптимизация батареи) и «Автозапуск». У каждой свой статус-кружок, своё объяснение и
-        своя кнопка в системные настройки. Зелёный кружок &mdash; всё хорошо, оранжевый &mdash; нужно
-        внимание.</p>
+        работы» (оптимизация батареи) и «Автозапуск». У каждой свой плоский глиф-статус, своё
+        объяснение и своя кнопка в системные настройки. Зелёный <span class="mono">check_circle</span>
+        &mdash; всё хорошо; красный <span class="mono">error</span> &mdash; реально неблагоприятное
+        состояние; нейтральный <span class="mono">info</span> &mdash; рекомендация, статус которой
+        подтвердить нельзя. Ни подложки-кружка, ни треугольника (<span class="mono">26-184</span>).</p>
     </div>
     <div class="wall">
 
@@ -118,12 +114,12 @@
             <div class="slabel">Уведомления</div>
             <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
             <div class="row" style="align-items:center">
-              <div class="statdot ok"><svg class="i"><use href="#i-check"/></svg></div>
+              <div class="statglyph ok"><svg class="i"><use href="#i-check-circle"/></svg></div>
               <div class="rmain"><div class="rname wrap">Режим работы: Без ограничений</div></div>
               <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
             </div>
             <div class="row" style="align-items:center">
-              <div class="statdot ok"><svg class="i"><use href="#i-check"/></svg></div>
+              <div class="statglyph ok"><svg class="i"><use href="#i-check-circle"/></svg></div>
               <div class="rmain"><div class="rname wrap">Автозапуск: Включено</div></div>
               <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
             </div>
@@ -133,9 +129,9 @@
         </div></div>
         <div class="cap">
           <span class="route">/settings &middot; режим работы + автозапуск</span>
-          <p>Обе строки зелёные: Material <span class="mono">check</span> (<span class="mono">#i-check</span>)
-            в кружке цвета <span class="mono">--success</span>. Тот же язык статус-меток, что и у цепочки
-            готовности в других разделах, только своим рядом настроек.</p>
+          <p>Обе строки зелёные: плоский <span class="mono">check_circle</span> (<span class="mono">#i-check-circle</span>)
+            цвета <span class="mono">--success</span>, без тонированной подложки. Тот же язык статус-глифов,
+            что и в других разделах, только своим рядом настроек.</p>
         </div>
       </div>
 
@@ -156,13 +152,13 @@
             <div class="slabel">Уведомления</div>
             <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
             <div class="row" style="align-items:center">
-              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="statglyph err"><svg class="i"><use href="#i-error"/></svg></div>
               <div class="rmain"><div class="rname wrap">Режим работы: Экономия энергии</div></div>
               <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
             </div>
             <div class="row" style="align-items:center">
-              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
-              <div class="rmain"><div class="rname wrap">Автозапуск: Выключено</div></div>
+              <div class="statglyph info"><svg class="i"><use href="#i-info"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: рекомендуем проверить</div></div>
               <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
             </div>
             <div class="slabel">О приложении</div>
@@ -171,10 +167,12 @@
         </div></div>
         <div class="cap">
           <span class="route">/settings &middot; нужно внимание</span>
-          <p>Обе строки оранжевые: Material <span class="mono">exclamation</span> &mdash; голый
-            восклицательный знак (стержень + точка, <span class="mono">#i-excl</span>), <span class="flag">а
-            не треугольник</span> &mdash; в кружке цвета <span class="mono">--warning</span>. Треугольник
-            остаётся только за шторкой первого запуска.</p>
+          <p>Две строки, два разных состояния. «Режим работы: Экономия энергии» &mdash; реально
+            прочитанное неблагоприятное состояние: красный <span class="mono">error</span>
+            (<span class="mono">#i-error</span>). «Автозапуск» &mdash; статус, который на большинстве
+            прошивок подтвердить нечем: нейтральный <span class="mono">info</span>
+            (<span class="mono">#i-info</span>), <span class="flag">рекомендация, а не ложное
+            «Выключено»</span>. Оба глифа плоские, без подложки; треугольника нет нигде.</p>
         </div>
       </div>
 
@@ -189,7 +187,7 @@
             <div class="slabel" style="padding-top:14px">Уведомления</div>
             <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
             <div class="row" style="align-items:center">
-              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="statglyph err"><svg class="i"><use href="#i-error"/></svg></div>
               <div class="rmain"><div class="rname wrap">Режим работы: Экономия энергии</div></div>
               <svg class="i sm" style="color:var(--ink-faint); transform:rotate(90deg)"><use href="#i-chev"/></svg>
             </div>
@@ -200,8 +198,8 @@
               <p class="hint" style="margin-top:8px">Откроется системный список приложений &mdash; найдите «AGO Chat» и выберите «Без ограничений».</p>
             </div>
             <div class="row" style="align-items:center">
-              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
-              <div class="rmain"><div class="rname wrap">Автозапуск: Выключено</div></div>
+              <div class="statglyph info"><svg class="i"><use href="#i-info"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: рекомендуем проверить</div></div>
               <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
             </div>
             <div class="slabel">О приложении</div>
@@ -228,13 +226,13 @@
             <div class="slabel" style="padding-top:14px">Уведомления</div>
             <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Управление уведомлениями</div></div></div>
             <div class="row" style="align-items:center">
-              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
+              <div class="statglyph err"><svg class="i"><use href="#i-error"/></svg></div>
               <div class="rmain"><div class="rname wrap">Режим работы: Экономия энергии</div></div>
               <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
             </div>
             <div class="row" style="align-items:center">
-              <div class="statdot warn"><svg class="i"><use href="#i-excl"/></svg></div>
-              <div class="rmain"><div class="rname wrap">Автозапуск: Выключено</div></div>
+              <div class="statglyph info"><svg class="i"><use href="#i-info"/></svg></div>
+              <div class="rmain"><div class="rname wrap">Автозапуск: рекомендуем проверить</div></div>
               <svg class="i sm" style="color:var(--ink-faint); transform:rotate(90deg)"><use href="#i-chev"/></svg>
             </div>
             <div class="card warnband">
@@ -253,8 +251,9 @@
           <p>Единая кнопка «Настройки автозапуска» на любом телефоне &mdash; нужный системный экран
             выбирается кодом незаметно, названий производителей в интерфейсе нет нигде.
             <span class="flag">Честная пометка про непроверяемый статус</span>: у автозапуска, в отличие
-            от режима батареи, кружок всегда оранжевый-рекомендательный, потому что прочитать реальное
-            состояние на большинстве прошивок нечем.</p>
+            от режима батареи, глиф нейтральный (<span class="mono">info</span>, «рекомендуем проверить»),
+            потому что прочитать реальное состояние на большинстве прошивок нечем &mdash; и приложение
+            не выдаёт догадку за факт (<span class="mono">26-187</span>).</p>
         </div>
       </div>
 

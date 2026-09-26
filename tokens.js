@@ -64,6 +64,19 @@ const AGO_SPRITE_HTML = `
        sprite: the second sub-path is a zero-length segment that round caps render as the dot. The
        triangle-wrapped variant stays #i-alert; this one is used inside the small .statdot circle. -->
   <symbol id="i-excl" viewBox="0 0 24 24"><path d="M12 5.5v8.5M12 18v.1"/></symbol>
+  <!-- \`26-184\`/\`26-187\`: flat, circle-enclosed status glyphs - Material Symbols Outlined
+       \`check_circle\`/\`error\`/\`info\`, each a ring ENCLOSING its own mark, drawn stroke-only
+       (\`svg.i\`: fill:none, stroke=currentColor) so a caller tints via \`color\`. These retire the
+       old \`.statdot\` treatment (a filled tinted circle + a bare #i-check/#i-excl/#i-alert mark):
+       the ring is now part of the glyph, there is no coloured podложka behind it, and state is a
+       colour, not a background. Geometry mirrors the app's own AgoIcons.CheckCircle/ErrorCircle/
+       InfoCircle (\`ago-android\` \`26-184\`/\`26-187\`): a \`circle(12,12,r=9)\` plus, respectively,
+       the checkmark \`M8 12.5l2.5 2.5 5-5.5\`, the exclamation stem+dot \`M12 7v6\`/\`M12 16h.01\`, and
+       the info dot+stem \`M12 8h.01\`/\`M12 11v5\` (the \`.01\` sub-path is a zero-length segment the
+       round line-cap renders as the dot - the same convention #i-excl already uses). -->
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5-5.5"/></symbol>
+  <symbol id="i-error" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M12 11v5"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>
