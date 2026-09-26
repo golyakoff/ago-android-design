@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Экран «Готовые ответы» — библиотека шаблонов оператора: список, добавление через FAB, редактор, удаление.">
+<title>Готовые ответы — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+  /* Первый FAB в приложении — своего класса в common.css ещё нет, поэтому он живёт здесь,
+     в собственном стиле страницы, а не в общей таблице (её не переписываем ради одного экрана). */
+  .fab{
+    position:absolute; right:16px; bottom:18px; width:56px; height:56px; border-radius:18px;
+    background:var(--brand); color:#fff; display:grid; place-items:center;
+    box-shadow:0 6px 18px rgba(20,20,31,.28); z-index:2;
+  }
+  .fab svg{width:26px; height:26px}
+  /* многострочное поле редактора — тот же .inp, но выше и с текстом сверху */
+  .inp.area{height:auto; min-height:96px; align-items:flex-start; padding:11px 12px; display:block; line-height:1.5}
+  .inp .counter{float:right; font-size:11px; color:var(--ink-faint); font-weight:600}
+  /* центрированный Material AlertDialog поверх экрана */
+  .dlg{
+    position:absolute; left:24px; right:24px; top:50%; transform:translateY(-50%);
+    background:var(--surface); border-radius:22px; padding:20px 20px 16px; z-index:4;
+    box-shadow:0 12px 40px rgba(12,12,20,.34);
+  }
+  .dlg h4{margin:0 0 8px; font-size:17px; font-weight:700; letter-spacing:-.01em}
+  .dlg p{margin:0 0 16px; font-size:13.5px; color:var(--ink-soft)}
+  .dlg .dactions{display:flex; gap:8px; justify-content:flex-end}
+  .dlg .dactions .btn{flex:0 0 auto; padding:0 18px}
+</style>
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      <a href="canned-responses.html" aria-current="page">Готовые ответы</a>
+      <a href="tags.html">Метки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">автоматизация &middot; готовые ответы</p>
+  <h1>Готовые ответы</h1>
+  <p class="lede">Библиотека шаблонов, которые оператор вставляет в поле ввода вместо того, чтобы
+    печатать заново (в треде их открывает «/»). <strong>Список + FAB + отдельный экран-редактор</strong>
+    — вместо десктопной «пустой строки снизу», которая не работает с экранной клавиатурой.
+    Открывается из Ещё → Автоматизация, только у обладателя <span class="mono">site:configure</span>.</p>
+
+  <div class="note">
+    <h3>Ловушка целого списка (PUT всей библиотеки)</h3>
+    <p>У готового ответа <strong>нет идентификатора</strong> — сервер хранит всю библиотеку одним
+      значением на сайте и заменяет её целиком. Любое изменение — добавить, отредактировать, удалить —
+      это правка списка в памяти и <strong>один PUT всего списка</strong>, после чего состояние
+      пересеивается из ответа сервера, а не из запроса. Порядок сохраняется, потому что его задал
+      оператор, а не потому что он что-то значит: с этим списком ничего не сопоставляется (в отличие от
+      «Автоответа вне смены», где порядок — это поведение).</p>
+  </div>
+
+  <section>
+    <div class="shead">
+      <span class="num">01</span>
+      <h2>Список и пустое состояние</h2>
+      <p>Каждая строка — заголовок и превью текста; тап открывает редактор. FAB добавляет новый ответ.
+        Загрузка и ошибка чтения — общие тела <span class="mono">LoadingBody</span> /
+        <span class="mono">RefusalBody</span>.</p>
+    </div>
+    <div class="wall">
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Готовые ответы</div>
+          </div>
+          <div class="scroll">
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">Приветствие</div><div class="rsnip">Здравствуйте! Меня зовут… Чем могу помочь?</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">Часы работы</div><div class="rsnip">Мы работаем ежедневно с 10:00 до 21:00 по МСК.</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">Как записаться</div><div class="rsnip">Записаться можно прямо в этом чате — напишите…</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">Отмена и перенос</div><div class="rsnip">Отменить или перенести запись можно за 2 часа…</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">Оплата</div><div class="rsnip">Оплатить можно картой на месте или онлайн…</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rmain"><div class="rname">Спасибо за обращение</div><div class="rsnip">Спасибо, что написали! Хорошего дня 🙂</div></div>
+              <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+          <div class="fab"><svg class="i"><use href="#i-plus"/></svg></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/automation/canned &middot; GET /sites/{siteId}/canned-responses</span>
+          <p>6 шаблонов. Заголовок — жирным, обрезается многоточием; вторая строка — превью тела в одну
+            строку. Тап по строке открывает редактор именно этого ответа.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Готовые ответы</div>
+          </div>
+          <div class="terminal">
+            <div class="glyph"><svg class="i lg"><use href="#i-chat"/></svg></div>
+            <h4>Пока нет готовых ответов</h4>
+            <p>Добавьте первый шаблон — он появится в поле ввода по «/».</p>
+          </div>
+          <div class="fab"><svg class="i"><use href="#i-plus"/></svg></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">пустая библиотека — загруженное состояние, не ошибка</span>
+          <p>Пустой список — это нормальное загруженное состояние с FAB, а не отказ. Оператору сразу
+            понятно, что делать.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">02</span>
+      <h2>Редактор — отдельный экран</h2>
+      <p>Заголовок (одна строка, до 100) и текст (много строк, до 8000) со счётчиками. Сохранение
+        отправляет <strong>весь список</strong> и пересеивает состояние из ответа сервера. У существующего
+        ответа внизу — «Удалить» с подтверждением.</p>
+    </div>
+    <div class="wall">
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+            <div class="ttl sm">Новый ответ</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:14px">
+              <label>Заголовок <span class="counter" style="float:right; font-weight:600; color:var(--ink-faint)">9 / 100</span></label>
+              <div class="inp">Приветствие</div>
+              <div class="hint">Короткая подпись, по которой оператор выбирает ответ.</div>
+            </div>
+            <div class="formrow">
+              <label>Текст <span class="counter" style="float:right; font-weight:600; color:var(--ink-faint)">52 / 8000</span></label>
+              <div class="inp area">Здравствуйте! Меня зовут Анна. Чем могу помочь?</div>
+              <div class="hint">Вставляется в поле ввода как есть — можно отредактировать перед отправкой.</div>
+            </div>
+          </div>
+          <div class="stickybar">
+            <div class="btn fill wide">Сохранить</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">редактор нового ответа</span>
+          <p>Кнопка «Сохранить» неактивна, пока заголовок или текст пусты. При сохранении — «Сохранение…»,
+            затем PUT всего списка и возврат к списку.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Изменить ответ</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:14px">
+              <label>Заголовок <span class="counter" style="float:right; font-weight:600; color:var(--ink-faint)">11 / 100</span></label>
+              <div class="inp">Часы работы</div>
+            </div>
+            <div class="formrow">
+              <label>Текст <span class="counter" style="float:right; font-weight:600; color:var(--ink-faint)">44 / 8000</span></label>
+              <div class="inp area">Мы работаем ежедневно с 10:00 до 21:00 по МСК.</div>
+            </div>
+            <div class="formrow" style="padding-top:6px">
+              <div class="btn warnout wide"><svg class="i sm"><use href="#i-trash"/></svg> Удалить ответ</div>
+            </div>
+          </div>
+          <div class="stickybar">
+            <div class="btn fill wide">Сохранить</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">редактор существующего ответа</span>
+          <p>У существующего ответа появляется «Удалить». И правка, и удаление — это тот же PUT всего
+            списка: элемент заменяется на своей позиции или выбрасывается, список отправляется целиком.</p>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Изменить ответ</div>
+          </div>
+          <div class="scroll" style="opacity:.5">
+            <div class="formrow" style="padding-top:14px">
+              <label>Заголовок</label>
+              <div class="inp">Часы работы</div>
+            </div>
+            <div class="formrow">
+              <label>Текст</label>
+              <div class="inp area">Мы работаем ежедневно с 10:00 до 21:00 по МСК.</div>
+            </div>
+          </div>
+          <div class="scrim"></div>
+          <div class="dlg">
+            <h4>Удалить готовый ответ?</h4>
+            <p>«Часы работы» будет удалён из библиотеки. Это действие нельзя отменить.</p>
+            <div class="dactions">
+              <div class="btn out">Отмена</div>
+              <div class="btn dangerfill">Удалить</div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">подтверждение удаления</span>
+          <p>Material <span class="mono">AlertDialog</span> по центру. Системная кнопка «Назад» закрывает
+            сначала диалог, потом экран (контракт кнопки «Назад»).</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="note warn">
+    <h3>Крайние случаи</h3>
+    <ul>
+      <li><b>Два оператора правят одновременно.</b> PUT всего списка — «последний победил», как и в
+        консоли (у этого значения нет версии). Пересев из ответа сервера хотя бы показывает выжившему
+        оператору настоящее сохранённое состояние.</li>
+      <li><b>Отказ сервера</b> (<span class="mono">CannedResponse.Invalid</span>) показывается дословно,
+        редактор остаётся открытым.</li>
+      <li><b>Проверка на клиенте — любезность, не власть:</b> заголовок ≤ 100, текст ≤ 8000, ≤ 50 ответов;
+        настоящий арбитр — <span class="mono">UpdateCannedResponsesHandler</span>.</li>
+    </ul>
+  </div>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

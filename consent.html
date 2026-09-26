@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Документы согласий на Android — чтение опубликованной версии, кто принял, и публикация новой версии с телефона.">
+<title>Документы согласий — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      <a href="consent.html" aria-current="page">Согласия</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">администрирование · документы согласий</p>
+  <h1>Документы согласий</h1>
+  <p class="lede">Полный паритет с консолью: тенант <strong>читает</strong> текущую версию каждого из
+    двух документов, видит <strong>кто и когда принял</strong> какую версию, и <strong>публикует новую
+    версию прямо с телефона</strong>. Экран открывается из «Ещё → Администрирование» и виден только
+    оператору с правом <span class="mono">site:configure</span>.</p>
+
+  <div class="brief">
+    <div><span class="n ok">3</span><span class="k">экрана: обзор, просмотр текста, редактор публикации</span></div>
+    <div><span class="n ok">2</span><span class="k">слайса — I (чтение + принявшие) и I2 (публикация)</span></div>
+    <div><span class="n">2</span><span class="k">порта — тенантный (обзор/принявшие/публикация) и анонимный (текст версии)</span></div>
+    <div><span class="n ok">0</span><span class="k">изменений бэкенда — все эндпоинты уже живут в ago-chat</span></div>
+  </div>
+
+  <div class="note">
+    <h3>Весь текст на макетах — пример</h3>
+    <p>Юридические формулировки на экранах ниже помечены «(пример)» и написаны только для макета. Реальный
+      текст согласия пишет сам тенант; AGO его не сочиняет — в этом и смысл экрана публикации.</p>
+  </div>
+
+  <!-- ─────────────────────────── 1. Обзор ─────────────────────────── -->
+  <section>
+    <div class="shead">
+      <span class="num">01</span>
+      <h2>Обзор — два документа, версии, кто чем связан</h2>
+      <p>Две карточки, «Контактные данные» и «Маркетинг». У каждой — плашка со статусом привязки (что
+        документ вообще требует), текущая версия с действиями «Открыть» и «Кто принял», свёрнутый список
+        предыдущих версий и кнопка публикации. Плашка «Контактные данные» ссылается на «Виджет на сайте» —
+        именно там включается сбор согласия, а не здесь.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Документы согласий</div>
+          </div>
+          <div class="scroll">
+
+            <div class="slabel" style="padding-top:14px">Контактные данные</div>
+            <div class="card" style="margin-bottom:14px">
+              <div class="card flat" style="margin:0 0 12px; border-left:3px solid var(--brand); display:flex; gap:9px; align-items:flex-start">
+                <svg class="i sm" style="color:var(--brand-deep); margin-top:2px; flex:0 0 auto"><use href="#i-check"/></svg>
+                <div class="cmeta" style="color:var(--ink)">Виджет требует это согласие перед приёмом контактов.</div>
+              </div>
+              <div class="ctitle">Текущая версия</div>
+              <div class="cmeta">Политика обработки данных · <span class="mono">v3</span> · 12 марта 2026</div>
+              <div class="cactions">
+                <div class="btn out"><svg class="i sm"><use href="#i-eye"/></svg>Открыть</div>
+                <div class="btn out">Кто принял</div>
+              </div>
+              <div class="kv" style="border-top:1px solid var(--line); margin-top:12px; padding:10px 0 0">
+                <span class="k"><svg class="i sm"><use href="#i-chev"/></svg> Предыдущие версии (2)</span>
+                <span class="v"></span>
+              </div>
+              <div class="btn out wide" style="margin-top:12px"><svg class="i sm"><use href="#i-plus"/></svg>Опубликовать новую версию</div>
+            </div>
+
+            <div class="slabel">Маркетинг</div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="card flat" style="margin:0 0 12px; border-left:3px solid var(--brand); display:flex; gap:9px; align-items:flex-start">
+                <svg class="i sm" style="color:var(--brand-deep); margin-top:2px; flex:0 0 auto"><use href="#i-check"/></svg>
+                <div class="cmeta" style="color:var(--ink)">Это согласие ничего не требует — оно только фиксирует, кто согласился на маркетинг.</div>
+              </div>
+              <div class="ctitle">Текущая версия</div>
+              <div class="cmeta" style="color:var(--ink-faint)">Ни одной версии ещё не опубликовано</div>
+              <div class="btn out wide" style="margin-top:12px"><svg class="i sm"><use href="#i-plus"/></svg>Опубликовать новую версию</div>
+            </div>
+
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/account/documents &middot; Ещё → Администрирование → Документы согласий</span>
+          <p>Плашка привязки — тот же смысл, что в консоли: у «Контактных данных» она либо «виджет требует
+            это согласие», либо (когда сбор выключен) <span class="flag">danger</span> «пока ничего не
+            требует» со ссылкой на «Виджет на сайте». У «Маркетинга» — всегда info «ничего не требует».</p>
+          <p>Маркетинг здесь <strong>без единой версии</strong>: список пуст, остаётся только кнопка
+            публикации. Это настоящее состояние, не ошибка — тенант ещё не написал текст.</p>
+          <p>Гейт совпадает с сервером: тот же <span class="mono">site:configure</span> и на строке в «Ещё»,
+            и внутри каждого хэндлера. Нет расхождения «видно, но сервер откажет», как у токен-каналов.</p>
+        </div>
+      </div>
+
+      <!-- Danger-состояние плашки Контактов -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Документы согласий</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Контактные данные</div>
+            <div class="card" style="margin-bottom:14px">
+              <div class="card dangerband" style="margin:0 0 12px; display:flex; gap:9px; align-items:flex-start">
+                <svg class="i sm" style="color:var(--danger); margin-top:2px; flex:0 0 auto"><use href="#i-alert"/></svg>
+                <div class="cmeta" style="color:var(--ink)">Пока сбор согласия выключен, этот документ ничего не требует. Включается в <span class="linkish">«Виджет на сайте»</span>.</div>
+              </div>
+              <div class="ctitle">Текущая версия</div>
+              <div class="cmeta">Политика обработки данных · <span class="mono">v3</span> · 12 марта 2026</div>
+              <div class="cactions">
+                <div class="btn out"><svg class="i sm"><use href="#i-eye"/></svg>Открыть</div>
+                <div class="btn out">Кто принял</div>
+              </div>
+
+              <!-- Развёрнутые предыдущие версии -->
+              <div class="kv" style="border-top:1px solid var(--line); margin-top:12px; padding:10px 0 2px">
+                <span class="k" style="color:var(--brand-deep); font-weight:700"><svg class="i sm"><use href="#i-chev"/></svg> Предыдущие версии (2)</span>
+              </div>
+              <div class="row" style="padding:8px 0"><div class="rmain"><div class="rname"><span class="mono">v2</span> · Политика обработки данных</div><div class="rsnip">4 января 2026</div></div><div class="btn out" style="flex:0 0 auto; padding:0 12px"><svg class="i sm"><use href="#i-eye"/></svg></div></div>
+              <div class="row" style="padding:8px 0"><div class="rmain"><div class="rname"><span class="mono">v1</span> · Политика обработки данных</div><div class="rsnip">18 сентября 2025</div></div><div class="btn out" style="flex:0 0 auto; padding:0 12px"><svg class="i sm"><use href="#i-eye"/></svg></div></div>
+
+              <div class="btn out wide" style="margin-top:12px"><svg class="i sm"><use href="#i-plus"/></svg>Опубликовать новую версию</div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">то же, но сбор согласия выключен + раскрыты предыдущие версии</span>
+          <p>Когда <span class="mono">contactConsentRequired = false</span>, плашка становится
+            <span class="flag">danger</span> и прямо называет экран, где это чинится. У каждой предыдущей
+            версии — своя кнопка «Открыть» и свой список «Кто принял», привязанные к конкретному тексту.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 2. Кто принял ─────────────────────────── -->
+  <section>
+    <div class="shead">
+      <span class="num">02</span>
+      <h2>Кто принял — по версиям, без слежки</h2>
+      <p>«Кто принял» раскрывается прямо в карточке и <strong>привязан к одной версии</strong>: у кого две
+        версии — у того два раздельных списка, не один слитый. Над таблицей всегда стоит оговорка о
+        приватности: показаны только кто и когда, без IP и браузера — этих полей вообще нет на проводе.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Документы согласий</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Контактные данные</div>
+            <div class="card">
+              <div class="ctitle">Текущая версия</div>
+              <div class="cmeta">Политика обработки данных · <span class="mono">v3</span> · 12 марта 2026</div>
+              <div class="cactions">
+                <div class="btn out"><svg class="i sm"><use href="#i-eye"/></svg>Открыть</div>
+                <div class="btn fill">Кто принял</div>
+              </div>
+
+              <div class="card flat" style="margin:12px 0 0">
+                <div class="ctitle" style="font-size:13px">Приняли версию <span class="mono">v3</span></div>
+                <div class="subnote" style="padding:4px 0 10px">Показаны только кто и когда — без IP-адреса и браузера.</div>
+                <div class="kv" style="padding:8px 0; border-top:1px solid var(--line)">
+                  <span class="k">Посетитель <span class="mono">a0f3c952</span></span>
+                  <span class="v">12 марта, 14:20</span>
+                </div>
+                <div class="kv" style="padding:8px 0">
+                  <span class="k">Посетитель <span class="mono">7c4e18f0</span></span>
+                  <span class="v">12 марта, 15:07</span>
+                </div>
+                <div class="kv" style="padding:8px 0">
+                  <span class="k">Посетитель <span class="mono">b27d05a1</span></span>
+                  <span class="v">13 марта, 09:41</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">GET …/consent-documents/Contact/acceptances → фильтр по версии на клиенте</span>
+          <p>Сервер отдаёт все согласия документа сразу; клиент фильтрует по <span class="mono">documentVersion</span>,
+            как это делает <span class="mono">AcceptancesList</span> в консоли. Отдельного версионного
+            эндпоинта нет и не нужно.</p>
+          <p><span class="flag">Идентификатор — 8 символов моноширинным, не весь GUID.</span> На телефон
+            36 символов не влезают; короткого префикса хватает, чтобы сопоставить строки, а долгое нажатие
+            копирует полный id. Столбец «версия» убран — список и так про одну версию.</p>
+        </div>
+      </div>
+
+      <!-- Пусто -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Документы согласий</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Маркетинг</div>
+            <div class="card">
+              <div class="ctitle">Текущая версия</div>
+              <div class="cmeta">Согласие на маркетинг · <span class="mono">v1</span> · 20 марта 2026</div>
+              <div class="cactions">
+                <div class="btn out"><svg class="i sm"><use href="#i-eye"/></svg>Открыть</div>
+                <div class="btn fill">Кто принял</div>
+              </div>
+              <div class="card flat" style="margin:12px 0 0">
+                <div class="ctitle" style="font-size:13px">Приняли версию <span class="mono">v1</span></div>
+                <div class="subnote" style="padding:4px 0 10px">Показаны только кто и когда — без IP-адреса и браузера.</div>
+                <div class="terminal" style="padding:18px 10px; flex:none">
+                  <p style="margin:0">Пока никто не принял эту версию.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">загружено, но пусто — это состояние, а не ошибка</span>
+          <p>Загруженный пустой список — законное состояние («ещё никто»), не сбой. Так же и обзор с пустым
+            списком версий не рисует «ошибку», а честно говорит «ни одной версии».</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 3. Просмотр текста ─────────────────────────── -->
+  <section>
+    <div class="shead">
+      <span class="num">03</span>
+      <h2>Просмотр — как увидит посетитель</h2>
+      <p>«Открыть» ведёт на отдельный экран чтения. Текст версии живёт не в обзоре (там только метаданные),
+        а на публичной поверхности документов — той же, что откроет будущая ссылка
+        <span class="mono">…/policies/{key}</span>. Текущая версия читается по «текущему» маршруту,
+        конкретная — по неизменяемому версионному.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Политика обработки данных<span class="sub">v3 · опубликовано 12 марта 2026</span></div>
+          </div>
+          <div class="scroll" style="padding:14px 18px; overflow:hidden">
+            <p style="font-size:13.5px; color:var(--ink); line-height:1.6"><em style="color:var(--ink-faint)">(пример)</em> Настоящий документ описывает, как «Мастерская Клён» обрабатывает контактные данные, которые вы оставляете в чате на сайте.</p>
+            <p style="font-size:13.5px; color:var(--ink); line-height:1.6"><b>1. Какие данные мы собираем.</b> Имя, телефон и адрес электронной почты, которые вы указываете самостоятельно, чтобы мы могли связаться с вами по вашему обращению.</p>
+            <p style="font-size:13.5px; color:var(--ink); line-height:1.6"><b>2. Зачем.</b> Данные используются только для ответа на ваше обращение и уточнения деталей заказа. Мы не передаём их третьим лицам и не используем для рекламы без отдельного согласия.</p>
+            <p style="font-size:13.5px; color:var(--ink); line-height:1.6"><b>3. Сколько хранятся.</b> До исполнения вашего обращения и в течение срока, установленного законом, после чего удаляются.</p>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">GET /api/v1/documents/{documentKey}  ·  /versions/{version} для старой версии</span>
+          <p>Текст выделяется и прокручивается (<span class="mono">SelectionContainer</span>). Тело —
+            обычный текст, без Markdown: именно так его показывает виджет посетителю. Заголовок экрана —
+            название версии, подзаголовок — версия и дата.</p>
+          <p><span class="flag">Порт анонимный.</span> Эта поверхность не требует ни сайта, ни токена —
+            поэтому у неё свой порт <span class="mono">PublishedDocumentApi</span>, отдельно от тенантного:
+            анонимный маршрут не должен видеть заголовок активного сайта и bearer.</p>
+        </div>
+      </div>
+
+      <!-- NotFound -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Просмотр документа</div>
+          </div>
+          <div class="terminal">
+            <div class="glyph" style="background:var(--danger-tint); color:var(--danger)"><svg class="i lg"><use href="#i-alert"/></svg></div>
+            <h4>Эта версия больше недоступна</h4>
+            <p>Возможно, документ изменили в другом месте, пока открывался этот экран.</p>
+            <div class="btn out" style="width:auto; padding:0 22px; margin-top:6px">Назад</div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">404 → NotFound (гонка), отдельно от «сеть отвалилась»</span>
+          <p>Строка версии была в обзоре, но к моменту чтения исчезла (<span class="mono">Document.NotFound</span>).
+            Это не «повторить», а терминальное «версия недоступна» — отдельная ветка результата, не
+            смешанная с транспортным сбоем.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 4. Публикация ─────────────────────────── -->
+  <section>
+    <div class="shead">
+      <span class="num">04</span>
+      <h2>Публикация — редактор во весь экран</h2>
+      <p>Публикация — это всегда <strong>новая версия</strong>, а не правка старой: редактор открывается
+        пустым, как и форма в консоли. Заголовок и текст, вставка из буфера (реальный путь на телефоне —
+        готовый текст приходит в буфер), подтверждение перед публикацией, и защита от случайного выхода с
+        непустым черновиком.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая версия<span class="sub">Контактные данные</span></div>
+          </div>
+          <div class="scroll">
+            <div class="subnote" style="padding:12px 16px 4px">Опубликованный текст сразу увидят посетители, и новые согласия будут привязаны к этой версии.</div>
+            <div class="formrow">
+              <label>Заголовок</label>
+              <div class="inp">Политика обработки данных <span class="hint" style="margin:0">29/200</span></div>
+            </div>
+            <div class="formrow">
+              <label>Текст документа</label>
+              <div class="inp" style="height:auto; min-height:150px; align-items:flex-start; padding:12px; line-height:1.55; display:block">
+                <span style="color:var(--ink)"><em style="color:var(--ink-faint)">(пример)</em> Настоящий документ описывает, как «Мастерская Клён» обрабатывает контактные данные, которые вы оставляете в чате на сайте. Имя, телефон и адрес электронной почты используются только для ответа на ваше обращение…</span>
+              </div>
+              <div class="hint">1 240 / 100 000</div>
+            </div>
+            <div class="formrow" style="padding-top:0">
+              <div class="btn out" style="width:auto; padding:0 16px"><svg class="i sm"><use href="#i-clip"/></svg>Вставить из буфера</div>
+            </div>
+          </div>
+          <div class="stickybar">
+            <div class="btn fill wide"><svg class="i sm"><use href="#i-send"/></svg>Опубликовать</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">POST /api/v1/sites/{siteId}/consent-documents/Contact  {title, body}</span>
+          <p>Редактор пустой при старте — правки существующей версии нет. Клиентская проверка вежливости
+            повторяет сервер: заголовок непустой ≤200, текст непустой ≤100 000; счётчики у обоих полей.
+            Авторитет всё равно сервер (<span class="mono">Document.Invalid</span>).</p>
+          <p>«Вставить из буфера» — явная кнопка поверх обычной вставки долгим нажатием, потому что вставка
+            подготовленного текста из буфера — реальный путь на телефоне.</p>
+        </div>
+      </div>
+
+      <!-- Подтверждение публикации -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая версия<span class="sub">Контактные данные</span></div>
+          </div>
+          <div class="scroll">
+            <div class="subnote" style="padding:12px 16px 4px">Опубликованный текст сразу увидят посетители…</div>
+            <div class="formrow"><label>Заголовок</label><div class="inp">Политика обработки данных</div></div>
+            <div class="formrow"><label>Текст документа</label><div class="inp" style="height:110px; align-items:flex-start; padding:12px; color:var(--ink-faint)">…</div></div>
+          </div>
+          <div class="scrim"></div>
+          <!-- Material AlertDialog: центрированное подтверждение -->
+          <div class="card" style="position:absolute; left:24px; right:24px; top:50%; transform:translateY(-50%); margin:0; box-shadow:var(--shadow)">
+            <div class="ctitle">Опубликовать новую версию?</div>
+            <div class="cmeta" style="margin-top:4px">«Контактные данные» · v4. Посетители сразу увидят этот текст, и новые согласия будут привязаны к нему.</div>
+            <div class="cactions">
+              <div class="btn out">Отмена</div>
+              <div class="btn fill">Опубликовать</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">confirm → publish → на обзор с перезагрузкой</span>
+          <p>Подтверждение (Material AlertDialog, как у консольного диалога) называет документ и следующий
+            номер версии. После <span class="mono">Published</span> — возврат на обзор и его перезагрузка
+            (<span class="mono">fetchOverview</span>), один источник правды, без оптимистичной вставки.</p>
+          <p><span class="flag">Конфликт публикации — 409.</span> Две публикации одного ключа гонятся →
+            <span class="mono">Conflict</span>: сообщение «повторите», кнопка остаётся активной, потому что
+            лекарство от 409 — повторить тот же запрос.</p>
+        </div>
+      </div>
+
+      <!-- Выход с черновиком -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая версия<span class="sub">Контактные данные</span></div>
+          </div>
+          <div class="scroll">
+            <div class="formrow"><label>Заголовок</label><div class="inp">Политика обработки данных</div></div>
+            <div class="formrow"><label>Текст документа</label><div class="inp" style="height:110px; align-items:flex-start; padding:12px; color:var(--ink)">Настоящий документ описывает…</div></div>
+          </div>
+          <div class="scrim"></div>
+          <div class="card" style="position:absolute; left:24px; right:24px; top:50%; transform:translateY(-50%); margin:0; box-shadow:var(--shadow)">
+            <div class="ctitle">Выйти без публикации?</div>
+            <div class="cmeta" style="margin-top:4px">Введённый текст не сохранится.</div>
+            <div class="cactions">
+              <div class="btn out">Остаться</div>
+              <div class="btn warnout">Выйти</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">back с непустым черновиком → подтверждение отмены</span>
+          <p>Сочинённый юридический текст стоит того, чтобы его беречь: выход с непустым черновиком спрашивает
+            подтверждение, в отличие от одноразового токен-поля каналов. Пустой черновик уходит молча. Тот же
+            приём, что у re-cut записи в <span class="mono">navigation.md</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note warn">
+    <h3>Навигация и гейт</h3>
+    <p>Строка «Документы согласий» — в разделе Администрирование экрана «Ещё», рисуется только под
+      <span class="mono">canConfigureSite</span> (<span class="mono">ADMINISTRATION_DOCUMENTS_ROW_ID</span>).
+      Три экрана — обзор, просмотр, редактор — переключаются внутренним состоянием
+      (<span class="mono">ConsentNav</span>), как у <span class="mono">openRowId</span> в «Ещё» и шагов
+      re-cut, а не вложенным NavHost. Системный «назад»: просмотр/редактор → обзор, обзор → список «Ещё».</p>
+  </div>
+
+  <footer>
+    <p>Макет к <span class="mono">docs/design/tenant-consent-android.md</span> (ago-root). Все юридические
+      формулировки — пример для макета, не реальный текст согласия.</p>
+  </footer>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

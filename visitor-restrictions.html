@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Экран «Ограниченные посетители» — список ограничений с пагинацией по ключу и снятием ограничения, из меню ⋮ в Диалогах.">
+<title>Ограниченные посетители — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      <a href="modules-faq.html">Модули / FAQ</a>
+      <a href="visitor-restrictions.html" aria-current="page">Ограничения</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">ограниченные посетители</p>
+  <h1>Ограниченные посетители</h1>
+  <p class="lede">Список ограничений на посетителей сайта &mdash; спам-заглушки и бессрочные блокировки,
+    &mdash; с возможностью <strong>снять</strong> любое действующее. Экран надзора: администратор
+    открывает его, чтобы проверить или отменить, а не следить в реальном времени, поэтому здесь нет
+    автообновления &mdash; только ручное обновление после снятия.</p>
+
+  <div class="brief">
+    <div><span class="n ok">⋮</span><span class="k">Живёт в меню «ещё» списка диалогов, под правом <span class="mono">site:configure</span> &mdash; не в разделе «Ещё»</span></div>
+    <div><span class="n">GET</span><span class="k"><span class="mono">/visitor-restrictions</span> с пагинацией по ключу (<span class="mono">before</span>/<span class="mono">nextBeforeId</span>)</span></div>
+    <div><span class="n">POST</span><span class="k"><span class="mono">/{visitorId}/lift</span> &mdash; снять; кнопка только у действующих строк и только при <span class="mono">block</span>/<span class="mono">mark_spam</span></span></div>
+  </div>
+
+  <div class="blockers">
+    <h3>Меню ⋮ в списке диалогов пока не существует</h3>
+    <p>Сегодня шапка списка диалогов несёт только аватар аккаунта (<span class="mono">26-90</span>
+      убрал старую пару «точка + меню»). Этот срез добавляет меню ⋮ обратно и вешает в него один пункт
+      под правом <span class="mono">site:configure</span>. Это не строка в «Ещё».</p>
+  </div>
+
+  <section>
+    <div class="shead">
+      <span class="num">01</span>
+      <h2>Точка входа &mdash; меню ⋮ в списке диалогов</h2>
+      <p>navigation.md: <span class="mono">ConvList &mdash; «⋮ · site:configure» &rarr; Restricted</span>.
+        Меню рисуется только у оператора с правом <span class="mono">site:configure</span> &mdash; у
+        остальных его нет вовсе (скрыто, а не заблокировано), как более короткое меню в консоли.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Диалоги</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-dots"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin:4px 16px 12px">
+            <div class="on">Мои <span class="ct">4</span></div>
+            <div>Ожидают <span class="ct">2</span></div>
+            <div>Все</div>
+          </div>
+          <div class="scroll">
+            <div class="row"><div class="av pair">🦊<span class="av-food">🍕</span></div><div class="rmain"><div class="rtop"><span class="rname">Лиса Пицца <span class="code">a0f3c9</span></span><span class="rtime">9:12</span></div><div class="rmid"><span class="rsnip">Спасибо, буду ждать звонка</span></div></div></div>
+            <div class="row"><div class="av pair">🦉<span class="av-food">🍔</span></div><div class="rmain"><div class="rtop"><span class="rname">Сова Бургер <span class="code">7c4e18</span></span><span class="rtime">8:59</span></div><div class="rmid"><span class="rsnip">А можно перенести на завтра?</span></div></div></div>
+          </div>
+          <!-- меню ⋮ — тот же .popover, что и меню профиля, привязанный к иконке ⋮ -->
+          <div class="popover" style="top:52px; right:52px; width:238px">
+            <div class="pop-item"><svg class="i sm"><use href="#i-alert"/></svg>Ограниченные посетители<svg class="i sm chev"><use href="#i-chev"/></svg></div>
+          </div>
+          <div data-bnav="dialogs"></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/conversations &mdash; меню ⋮ &middot; пункт под site:configure</span>
+          <p>Один пункт в меню &mdash; «Ограниченные посетители». Открывает экран-вкладыш поверх списка
+            (третье состояние <span class="mono">ConversationsTabHost</span>: <span class="mono">openRestricted</span>),
+            «назад» возвращает в список. Оператор без <span class="mono">site:configure</span> не видит
+            саму иконку ⋮.</p>
+          <p><span class="flag">Позже сюда же встанет «лупа» поиска</span> (navigation.md, ещё не
+            построена) &mdash; вторая иконка рядом с этим меню; учтено, чтобы не столкнулись.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">02</span>
+      <h2>Список ограничений &mdash; вид и снятие</h2>
+      <p>Каждое ограничение &mdash; карточка: код посетителя (8 символов моноширинным, как в консоли
+        <span class="mono">visitorId.slice(0,8)</span>), метка вида (спам / блок) своим тоном, статус,
+        когда и кем, до какого срока или бессрочно. Кнопка «Снять» &mdash; только у действующих строк.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Ограниченные посетители</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-bell"/></svg></div>
+          </div>
+          <div class="scroll">
+            <!-- действующая блокировка: тон danger, кнопка «Снять» -->
+            <div class="card" style="margin-top:12px">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill mono">b27d05a1</span>
+                <span class="pill bad">Блокировка</span>
+                <span class="pill">Активно</span>
+              </div>
+              <div class="cmeta">Ограничен 18 апр, 14:32 &middot; кем <span class="mono">a0f3c952</span></div>
+              <div class="cmeta">До: <b>Бессрочно</b> &middot; из диалога <span class="mono">7c4e18f0</span></div>
+              <div class="cactions"><div class="btn warnout wide">Снять ограничение</div></div>
+            </div>
+            <!-- действующая спам-заглушка: тон accent (brand), кнопка «Снять» -->
+            <div class="card">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill mono">d6081bba</span>
+                <span class="pill brand">Спам</span>
+                <span class="pill">Активно</span>
+              </div>
+              <div class="cmeta">Ограничен 18 апр, 11:07 &middot; кем <span class="mono">a0f3c952</span></div>
+              <div class="cmeta">До: <b>25 апр, 11:07</b> &middot; из диалога <span class="mono">b27d05a1</span></div>
+              <div class="cactions"><div class="btn warnout wide">Снять ограничение</div></div>
+            </div>
+            <!-- истёкшая спам-заглушка: кнопки нет -->
+            <div class="card flat">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill mono">3f11a0c4</span>
+                <span class="pill brand">Спам</span>
+                <span class="pill">Истекло</span>
+              </div>
+              <div class="cmeta">Ограничен 10 апр, 16:20 &middot; кем <span class="mono">e2b90741</span></div>
+              <div class="cmeta">До: 17 апр, 16:20 &middot; из диалога <span class="mono">d6081bba</span></div>
+            </div>
+            <!-- снятая блокировка: кнопки нет -->
+            <div class="card flat">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill mono">9a44e0b2</span>
+                <span class="pill bad">Блокировка</span>
+                <span class="pill">Снято</span>
+              </div>
+              <div class="cmeta">Ограничен 2 апр, 09:15 &middot; кем <span class="mono">a0f3c952</span></div>
+              <div class="cmeta">Снято 5 апр, 10:41 &middot; кем <span class="mono">e2b90741</span></div>
+            </div>
+            <div class="loadmore">Загрузить ещё &middot; страница по ключу</div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/conversations/restricted &middot; GET /visitor-restrictions?before=…</span>
+          <p>Тон несёт вид ограничения: <span class="mono">Block</span> &mdash; danger, <span class="mono">Spam</span>
+            &mdash; accent, ровно как <span class="mono">KIND_TONE</span> в консоли. Статус («Активно» /
+            «Истекло» / «Снято») считается на клиенте от <span class="mono">IClock</span> для показа &mdash;
+            порядок же задаёт ключ сервера (<span class="mono">id</span>), не часы.</p>
+          <p>«Загрузить ещё» идёт по <span class="mono">nextBeforeId</span> до конца &mdash; бессрочная
+            блокировка не потеряется, даже если её строку вытеснили новые.</p>
+          <p><span class="flag">Кнопка «Снять» &mdash; только у действующих строк</span> и только у
+            оператора с правом <span class="mono">conversation:block</span> или
+            <span class="mono">mark_spam</span> (скрыта, а не заблокирована). После снятия список
+            перечитывается сверху &mdash; один источник правды, без оптимистичного переключения.</p>
+        </div>
+      </div>
+
+      <!-- диалог подтверждения снятия -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Ограниченные посетители</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-bell"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:12px">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill mono">b27d05a1</span><span class="pill bad">Блокировка</span><span class="pill">Активно</span>
+              </div>
+              <div class="cmeta">Ограничен 18 апр, 14:32 &middot; кем <span class="mono">a0f3c952</span></div>
+              <div class="cmeta">До: <b>Бессрочно</b> &middot; из диалога <span class="mono">7c4e18f0</span></div>
+              <div class="cactions"><div class="btn warnout wide">Снять ограничение</div></div>
+            </div>
+          </div>
+          <div class="scrim"></div>
+          <!-- Material AlertDialog -->
+          <div class="card" style="position:absolute; left:24px; right:24px; top:270px; margin:0">
+            <div class="ctitle">Снять ограничение?</div>
+            <div class="cmeta" style="margin-top:4px">Посетитель <span class="mono">b27d05a1</span> снова
+              сможет писать в этот сайт. Действие обратимо &mdash; при необходимости его можно ограничить
+              снова.</div>
+            <div class="cactions">
+              <div class="btn out">Отмена</div>
+              <div class="btn dangerfill">Снять</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">POST /api/v1/visitor-restrictions/{visitorId}/lift &rarr; 204</span>
+          <p>Подтверждение &mdash; Material <span class="mono">AlertDialog</span> (в консоли это
+            <span class="mono">Dialog</span>). Отклоняется системной «назад» раньше самого экрана
+            (клаузула контракта «назад»). Отказ сервера (<span class="mono">Conversation.Forbidden</span> &mdash;
+            не то право; <span class="mono">Visitor.NotRestricted</span> &mdash; уже снято/истекло)
+            показывается баннером его же словами.</p>
+        </div>
+      </div>
+
+      <!-- пустое состояние -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Ограниченные посетители</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-bell"/></svg></div>
+          </div>
+          <div class="terminal">
+            <div class="glyph"><svg class="i lg"><use href="#i-check"/></svg></div>
+            <h4>Ограничений нет</h4>
+            <p>Ни один посетитель этого сайта сейчас не ограничен. Ограничения появляются здесь, когда
+              оператор помечает диалог как спам или блокирует посетителя.</p>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">пустой ответ &mdash; не спиннер</span>
+          <p>Пустой список &mdash; это <span class="mono">Loaded(rows = [])</span>, отдельное
+            терминальное состояние, а не бесконечная загрузка. Загрузка и ошибка чтения &mdash; свои
+            состояния (спиннер / баннер с повтором), как на всех экранах приложения.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <h3>Переиспользует существующий порт</h3>
+    <p>Порт <span class="mono">VisitorRestrictionApi</span> уже есть (<span class="mono">26-145</span>,
+      панель контакта: <span class="mono">block</span> / <span class="mono">lift</span> /
+      <span class="mono">isRestricted</span>). Этот срез <b>переиспользует <span class="mono">lift</span></b>
+      и <b>добавляет один метод чтения</b> <span class="mono">list(before, limit)</span> в тот же порт и
+      адаптер &mdash; один порт на один ресурс сервера, новых привязок DI не нужно.</p>
+  </div>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

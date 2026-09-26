@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Экран «Модули / FAQ» — только-чтение списка подключённых модулей (ago-chat) и редактор базы знаний (ago-faq, отдельный бэкенд).">
+<title>Модули / FAQ — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="settings.html">Настройки</a>
+      <a href="modules-faq.html" aria-current="page">Модули / FAQ</a>
+      <a href="visitor-restrictions.html">Ограничения</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">модули / faq</p>
+  <h1>Модули и база знаний</h1>
+  <p class="lede">Один экран, две независимые панели: <strong>Модули</strong> &mdash; только-чтение,
+    какие модули подключены на сайте (<span class="mono">ago-chat</span>); и <strong>База знаний</strong>
+    &mdash; чтение и правка текста, которым отвечает AI-FAQ (<span class="mono">ago-faq</span>, отдельный
+    бэкенд). Ровно как консоль рисует две формы на одной странице &mdash; у каждой своя загрузка,
+    сохранение и ошибки, потому что это два разных бэкенда.</p>
+
+  <div class="brief">
+    <div><span class="n">чтение</span><span class="k">Панель «Модули» &mdash; только чтение: <span class="mono">/sites/{id}/modules</span> стал GET-only (<span class="mono">adr/0151</span>)</span></div>
+    <div><span class="n ok">ago-faq</span><span class="k">База знаний &mdash; отдельный бэкенд, свой <span class="mono">baseUrl</span>, который может быть не задан</span></div>
+    <div><span class="n">Ещё</span><span class="k">Автоматизация &rarr; «База знаний», под правом <span class="mono">site:configure</span></span></div>
+  </div>
+
+  <div class="blockers">
+    <h3>Регистрация модуля &mdash; не действие тенанта</h3>
+    <p><span class="mono">adr/0151</span>/<span class="mono">23-83</span> убрали все записи тенанта в
+      <span class="mono">/modules</span> (регистрация, ротация, отзыв, проверка) &mdash; остался только
+      <span class="mono">GET</span>. Подключает модуль владелец платформы, не тенант. Поэтому панель
+      «Модули» &mdash; чтение, а не форма; это и есть паритет с консолью, а не урезание.</p>
+  </div>
+
+  <section>
+    <div class="shead">
+      <span class="num">01</span>
+      <h2>Точка входа &mdash; Ещё &rarr; Автоматизация</h2>
+      <p>navigation.md называет эту строку «База знаний» в разделе Автоматизация. Строка рисуется только
+        под правом <span class="mono">site:configure</span> (весь маршрут <span class="mono">/automation/faq</span>
+        в консоли под ним). Открывает экран-вкладыш тем же способом <span class="mono">openRowId</span>,
+        что и «Установка виджета».</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar"><div class="ttl">Ещё</div><div class="avatar-chip">АГ<span class="presence"></span></div></div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Каналы</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Установка виджета</div><div class="rsnip">Работает &middot; последний запрос 4 мин назад</div></div><span class="pill ok">OK</span></div>
+            <div class="slabel">Автоматизация</div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Готовые ответы</div><div class="rsnip">6 шаблонов</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">Автоответ вне смены</div><div class="rsnip">Включён &middot; 3 правила</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            <div class="row" style="align-items:center"><div class="rmain"><div class="rname">База знаний</div><div class="rsnip">Модуль FAQ &middot; редактирование ответов ассистента</div></div><svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+          </div>
+          <div data-bnav="more"></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">/automation/faq &middot; строка «База знаний», под site:configure</span>
+          <p>Раздел без строк не рисуется (<span class="mono">buildMoreSections</span>), поэтому оператор
+            без <span class="mono">site:configure</span> не видит и заголовка «Автоматизация».</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">
+      <span class="num">02</span>
+      <h2>Экран &mdash; две панели</h2>
+      <p>Панель «Модули» сверху &mdash; читаемый список подключённых модулей. Панель «База знаний» ниже
+        &mdash; редактор текста с кнопкой «Сохранить» и отметкой последнего сохранения. Две панели, две
+        разные загрузки/сохранения &mdash; общей кнопки нет, потому что сохранение одной не сохраняет
+        другую.</p>
+    </div>
+    <div class="wall">
+      <!-- настроенный ago-faq: обе панели живые -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Модули и база знаний</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-bell"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Модули</div>
+            <div class="card">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill brand">faq</span>
+                <span class="pill ok">Подключён</span>
+              </div>
+              <div class="kv" style="border-top:none; padding:6px 0"><span class="k"><svg class="i sm"><use href="#i-chat"/></svg>Триггеры</span><span class="v mono">/faq, /помощь</span></div>
+              <div class="kv" style="padding:6px 0"><span class="k"><svg class="i sm"><use href="#i-globe"/></svg>Точка входа</span><span class="v mono" style="font-size:11.5px">faq.example.com</span></div>
+            </div>
+            <div class="slabel">База знаний</div>
+            <div class="formrow">
+              <label>Текст базы знаний</label>
+              <div class="card flat" style="margin:0; min-height:132px; padding:12px; font-size:13px; color:var(--ink-soft); line-height:1.5">
+                Мы работаем с 9:00 до 20:00 по будням. Доставка по городу &mdash; в течение дня, при
+                заказе до 16:00. Возврат &mdash; в течение 14 дней с чеком. На вопросы про наличие
+                отвечает менеджер в чате…
+              </div>
+              <div class="hint">Последнее сохранение <b>18 апр, 14:02</b></div>
+            </div>
+            <div style="padding:4px 16px 16px"><div class="btn fill wide">Сохранить</div></div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">GET/PUT /sites/{id}/modules (ago-chat) + …/knowledge-base (ago-faq)</span>
+          <p><span class="flag">Панель «Модули» &mdash; только чтение.</span> Показывает подключённые
+            модули как есть из ответа GET: ключ, триггеры, точка входа, а также «Включено владельцем» и
+            срок, если они есть. Правки нет &mdash; регистрация не действие тенанта
+            (<span class="mono">adr/0151</span>).</p>
+          <p>Панель «База знаний» бьёт в <span class="mono">ago-faq</span> &mdash; другой бэкенд, тот же
+            токен. Правит текст, сохраняет (эхо-ответ пересеивает поле), показывает время сохранения.</p>
+        </div>
+      </div>
+
+      <!-- ago-faq не настроен -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Модули и база знаний</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-bell"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Модули</div>
+            <div class="card">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+                <span class="pill brand">faq</span><span class="pill ok">Подключён</span>
+              </div>
+              <div class="kv" style="border-top:none; padding:6px 0"><span class="k"><svg class="i sm"><use href="#i-chat"/></svg>Триггеры</span><span class="v mono">/faq</span></div>
+            </div>
+            <div class="slabel">База знаний</div>
+            <div class="card warnband">
+              <div style="display:flex; gap:10px; align-items:flex-start">
+                <svg class="i" style="color:var(--warning); flex:0 0 auto"><use href="#i-excl"/></svg>
+                <div class="cmeta" style="color:var(--ink)">Бэкенд AI-FAQ ещё не настроен для этого
+                  развёртывания. Редактор базы знаний появится, когда <span class="mono">ago-faq</span>
+                  будет развёрнут.</div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">config.faqApiBaseUrl == null &rarr; «не настроено»</span>
+          <p><span class="flag">У <span class="mono">ago-faq</span> нет боевого развёртывания.</span>
+            Новый nullable <span class="mono">AGO_FAQ_API_BASE_URL</span> (по образцу
+            <span class="mono">calendarApiBaseUrl</span>): адаптер всегда создаётся, а null отвечает
+            <span class="mono">NotConfigured</span> первой же строкой &mdash; как <span class="mono">KtorBookingsApi</span>.
+            Панель «Модули» при этом работает: другой бэкенд.</p>
+        </div>
+      </div>
+
+      <!-- модуль не подключён -->
+      <div class="slot">
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Модули и база знаний</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-bell"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Модули</div>
+            <div class="card flat">
+              <div style="display:flex; gap:11px; align-items:flex-start">
+                <div class="statdot warn"><svg class="i"><use href="#i-grid"/></svg></div>
+                <div class="cmeta" style="color:var(--ink)">Ни один модуль не подключён на этом аккаунте.
+                  AGO подключает их &mdash; напишите нам.</div>
+              </div>
+            </div>
+            <div class="slabel">База знаний</div>
+            <div class="formrow">
+              <label>Текст базы знаний</label>
+              <div class="card flat" style="margin:0; min-height:100px; padding:12px; font-size:13px; color:var(--ink-faint)">
+                Опишите здесь, что ассистент должен знать о вашем бизнесе: часы работы, доставка,
+                оплата, частые вопросы…
+              </div>
+              <div class="hint">Ещё не сохранялось.</div>
+            </div>
+            <div style="padding:4px 16px 16px"><div class="btn fill wide">Сохранить</div></div>
+          </div>
+        </div></div>
+        <div class="cap">
+          <span class="route">modules = [] &middot; knowledge-base пустой</span>
+          <p>Пустой список модулей &mdash; копия консоли: «Ни один модуль не подключён &mdash; напишите
+            нам», не ошибка. База знаний может редактироваться независимо &mdash; она на другом бэкенде и
+            не требует подключённого модуля в <span class="mono">ago-chat</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <h3>Новая конфигурация: <span class="mono">AGO_FAQ_API_BASE_URL</span></h3>
+    <p>База знаний живёт на <span class="mono">ago-faq</span> &mdash; отдельном бэкенде. Приложению нужен
+      новый nullable базовый URL, по образцу <span class="mono">AGO_CALENDAR_API_BASE_URL</span>:
+      <span class="mono">buildConfigField</span> через <span class="mono">agoOptionalProperty</span> без
+      дефолтного хоста; поле <span class="mono">OidcConfig.faqApiBaseUrl: String?</span>; проброс в
+      <span class="mono">provideOidcConfig</span>. Адаптер <span class="mono">KtorFaqKnowledgeBaseApi</span>
+      всегда создаётся; null отвечает <span class="mono">NotConfigured</span>, а не заставляет Hilt
+      инжектить nullable-порт.</p>
+    <p><span class="mono">X-Ago-Active-Site</span> общего клиента уходит и в <span class="mono">ago-faq</span>:
+      на вебе консоль его туда не шлёт (CORS-preflight против чужой политики), но <b>Android &mdash; не
+      браузер, preflight нет</b>, лишний заголовок безвреден, и переиспользовать один общий клиент здесь
+      правильно.</p>
+  </div>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

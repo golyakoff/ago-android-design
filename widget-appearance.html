@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="«Внешний вид» — редактор-группа виджета: цвет (+свотч), положение, язык, заголовок панели, переключатель каналов.">
+<title>Виджет · Внешний вид — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav" aria-label="Разделы">
+      <a href="index.html">Обзор</a>
+      <a href="common.html">Общее</a>
+      <a href="login-boot.html">Вход</a>
+      <a href="dialogs.html">Диалоги</a>
+      <a href="booking.html">Записи</a>
+      <a href="team.html">Команда</a>
+      <a href="channels.html">Каналы</a>
+      <a href="branding.html">Оформление</a>
+      <a href="auto-reply.html">Автоответ</a>
+      <a href="widget.html" aria-current="page">Виджет</a>
+      <a href="settings.html">Настройки</a>
+      <a href="system.html">Системное</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">виджет · внешний вид</p>
+  <h1>Внешний вид</h1>
+  <p class="lede">Один вопрос: <strong>что посетитель видит до того, как начал общаться.</strong> Цвет,
+    угол, язык, заголовок панели и переключатель каналов &mdash; консольные панели «Лаунчер» (визуальная
+    половина) и «Переключатель каналов», собранные в один экран. Открывается из
+    <a href="widget.html">хаба «Виджет на сайте»</a>.</p>
+
+  <section>
+    <div class="shead">
+      <span class="num">11 · W1</span>
+      <h2>Редактор «Внешний вид»</h2>
+      <p>Слева &mdash; заполненный пример: hex-поле с живым свотчем и рядом пресетов, иллюстративный
+        макет лаунчера, положение, язык (эндонимы), заголовок панели, расположение переключателя каналов.
+        Справа &mdash; проверка hex и условное поле размера иконок.</p>
+    </div>
+    <div class="wall">
+      <div class="slot">
+        <span class="tag redesign">заполнено</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Внешний вид</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:14px">
+              <label>Цвет акцента</label>
+              <div class="inp">
+                <span class="mono">#2F6FED</span>
+                <span style="width:24px; height:24px; border-radius:6px; background:#2F6FED; border:1px solid var(--line-strong); display:inline-block"></span>
+              </div>
+              <div class="hint">Пусто &mdash; собственный цвет виджета по умолчанию.</div>
+              <div style="display:flex; gap:9px; margin-top:9px">
+                <span style="width:26px; height:26px; border-radius:50%; background:#2F6FED; box-shadow:0 0 0 2px var(--brand), inset 0 0 0 2px var(--surface)"></span>
+                <span style="width:26px; height:26px; border-radius:50%; background:#12805A; border:1px solid var(--line-strong)"></span>
+                <span style="width:26px; height:26px; border-radius:50%; background:#9333EA; border:1px solid var(--line-strong)"></span>
+                <span style="width:26px; height:26px; border-radius:50%; background:#E11D48; border:1px solid var(--line-strong)"></span>
+                <span style="width:26px; height:26px; border-radius:50%; background:#EA580C; border:1px solid var(--line-strong)"></span>
+                <span style="width:26px; height:26px; border-radius:50%; background:#0F172A; border:1px solid var(--line-strong)"></span>
+              </div>
+              <div class="hint">Пресеты &mdash; тап заполняет hex (ввод цвета с клавиатуры на телефоне неудобен).</div>
+            </div>
+            <div class="slabel">Предпросмотр (иллюстративный)</div>
+            <div class="card" style="padding:0; overflow:hidden">
+              <div style="position:relative; height:120px; background:var(--sunken)">
+                <div style="position:absolute; top:12px; left:12px; right:12px; height:9px; border-radius:5px; background:var(--line)"></div>
+                <div style="position:absolute; top:30px; left:12px; width:60%; height:7px; border-radius:4px; background:var(--line)"></div>
+                <div style="position:absolute; top:44px; left:12px; width:44%; height:7px; border-radius:4px; background:var(--line)"></div>
+                <div style="position:absolute; right:14px; bottom:14px; width:46px; height:46px; border-radius:50%; background:#2F6FED; display:grid; place-items:center; box-shadow:0 4px 12px rgba(47,111,237,.4)">
+                  <svg class="i" style="color:#fff; width:22px; height:22px"><use href="#i-chat"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="hint" style="padding:0 16px">Показывает только цвет и угол &mdash; два поля, которые может честно отразить. Не живой виджет.</div>
+            <div class="formrow" style="padding-top:12px">
+              <label>Положение лаунчера</label>
+              <div class="seg" style="margin:0">
+                <div class="on">Справа внизу</div>
+                <div>Слева внизу</div>
+              </div>
+            </div>
+            <div class="formrow">
+              <label>Язык виджета</label>
+              <div class="inp">Русский <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+              <div class="hint">Варианты &mdash; <b>English</b> / <b>Русский</b>, эндонимы, не переводятся. Это язык виджета для посетителя &mdash; не язык приложения оператора.</div>
+            </div>
+            <div class="formrow">
+              <label>Заголовок панели</label>
+              <div class="inp">Чем помочь?</div>
+              <div class="hint">До 300 символов. Пусто &mdash; встроенное приветствие по умолчанию, а не «ничего».</div>
+            </div>
+            <div class="slabel">Переключатель каналов</div>
+            <div class="formrow">
+              <label>Расположение</label>
+              <div class="seg" style="margin:0">
+                <div class="on">Над полем ввода</div>
+                <div>Под кнопкой</div>
+              </div>
+              <div class="hint">Размер иконок появляется только для «Под кнопкой» &mdash; см. второй экран.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">WidgetAppearanceEditor · committed.copy(primaryColorHex, position, locale, panelTitle, channelSwitcher*)</span>
+          <p>Свотч &mdash; настоящий паритет с консолью (<span class="mono">.ago-widget-swatch</span>): маленький
+            залитый чип с разобранным цветом. Живого превью в консоли нет вовсе, поэтому и здесь его нет;
+            иллюстративный макет лаунчера &mdash; чистый Compose, без движка виджета и сети.</p>
+          <p>Пресеты и статичный макет &mdash; рекомендованные телефонные добавки поверх паритета; автор может
+            от них отказаться, не задев паритет. Пакет для этого не нужен (в отличие от экрана брендинга
+            каналов, который тянет Coil ради удалённого логотипа).</p>
+        </div>
+      </div>
+      <div class="slot">
+        <span class="tag fixed">проверка · условное поле</span>
+        <div class="phone"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl">Внешний вид</div>
+          </div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:14px">
+              <label>Цвет акцента</label>
+              <div class="inp" style="border-color:var(--danger)">
+                <span class="mono" style="color:var(--danger)">#2F6</span>
+                <span style="width:24px; height:24px; border-radius:6px; background:#2F6FED; border:1px solid var(--line-strong); display:inline-block"></span>
+              </div>
+              <div class="hint" style="color:var(--danger)">Введите цвет в формате <span class="mono">#RRGGBB</span>. Пока неверно &mdash; свотч показывает цвет по умолчанию.</div>
+            </div>
+            <div class="formrow">
+              <label>Положение лаунчера</label>
+              <div class="seg" style="margin:0"><div class="on">Справа внизу</div><div>Слева внизу</div></div>
+            </div>
+            <div class="slabel">Переключатель каналов</div>
+            <div class="formrow">
+              <label>Расположение</label>
+              <div class="seg" style="margin:0"><div>Над полем ввода</div><div class="on">Под кнопкой</div></div>
+            </div>
+            <div class="formrow">
+              <label>Размер иконок каналов</label>
+              <div class="inp">Средние <svg class="i sm" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+              <div class="hint">Видно только при «Под кнопкой». Значение всё равно всегда отправляется &mdash; скрытое поле круговым рейсом сохраняет своё текущее значение.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn off wide">Сохранить</div></div>
+        </div></div>
+        <div class="cap">
+          <span class="route">isValidHexColor · ^#[0-9A-Fa-f]{6}$ &mdash; клиентская вежливость, блокирует «Сохранить»</span>
+          <p>Проверка &mdash; только UX-вежливость; авторитетный гейт &mdash;
+            <span class="mono">UpdateWidgetConfigHandler</span>, а <span class="mono">Refused(detail)</span> с
+            сервера показывается дословно. Размер иконок скрывается при «Над полем ввода» (зеркало
+            консольного условного рендера), но никогда не nullable &mdash; уходит на сервер всегда.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Редактор-группа области <a href="widget.html">«Виджет на сайте»</a>. Соседи:
+      <a href="widget-behaviour.html">Поведение и приветствие</a>,
+      <a href="widget-consent.html">Согласие и запись</a>. Источник &mdash;
+      <span class="mono">docs/design/tenant-widget-android.md §6.1, §7</span>. Значения примерные.</p>
+  </footer>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
