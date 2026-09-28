@@ -3,12 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Команда — раздел нижней навигации: общение с командой, список операторов, приглашение оператора.">
+<meta name="description" content="Команда — раздел нижней навигации: общение с командой, активные пользователи, приглашения с их статусами.">
 <title>Команда — AGO Android Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="common.css">
+<style>
+  .pill.live{background:var(--brand-tint); color:var(--brand-deep)}
+  .cardhead{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+  .cardname{font-size:14px; font-weight:600; line-height:1.3; overflow-wrap:anywhere; min-width:0}
+  .cardroles{display:flex; gap:6px; flex-wrap:wrap; margin-top:9px}
+  .card + .card{margin-top:10px}
+  .invite-cta{margin:12px 0 4px}
+  .archline{display:flex; align-items:center; justify-content:space-between; margin-top:16px}
+  .archline .slabel{margin:0}
+  .archline svg{width:18px; height:18px; fill:none; stroke:var(--ink-faint); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+  .showfull{width:392px; max-width:100%; height:auto; margin:0 auto}
+  .showfull .screen{height:auto; min-height:0}
+</style>
 </head>
 <body>
 <div id="glyph-sprite"></div>
@@ -36,18 +49,87 @@
     <div class="shead">
       <span class="num">03</span>
       <h2>Команда</h2>
-      <p>Раздел нижней навигации &mdash; третий по частоте обращения за смену, сразу после Диалогов
-        и Записей (см. <a href="common.html">граф переходов</a>, подграф «3 &middot; Команда»).</p>
+      <p>Третий раздел нижней навигации. Два сегмента &mdash; <b>Общение</b> (командный чат) и
+        <b>Люди</b>. В «Людях» &mdash; активные пользователи и приглашения, у каждого приглашения
+        свой статус.</p>
     </div>
-    <div class="not-yet">
-      <h3>Что входит в раздел</h3>
-      <p>Граф переходов называет три узла этого раздела &mdash; <span class="mono">TeamChat</span>
-        (общение, сегмент «site:manage_operators» &rarr; «Люди»), <span class="mono">People</span>
-        (список операторов) и <span class="mono">InviteSheet</span> (приглашение оператора, с
-        системной шторкой «Поделиться»).</p>
-      <p>Раздел существует в структуре сайта заранее, чтобы добавление экрана было правкой одного
-        файла, а не решением, куда его вообще класть.</p>
+
+    <div class="phone showfull"><div class="screen">
+      <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+      <div class="appbar">
+        <div class="ttl">Команда</div>
+        <svg class="i"><use href="#i-dots"/></svg>
+        <div class="avatar-chip">АГ<span class="presence"></span></div>
+      </div>
+
+      <div class="seg"><div>Общение</div><div class="on">Люди</div></div>
+
+      <div style="padding:0 16px 20px">
+
+        <div class="slabel">Активные пользователи</div>
+        <div class="card">
+          <div class="cardhead">
+            <span class="cardname">Мария Иванова</span>
+            <span class="pill ok">В команде</span>
+          </div>
+          <div class="cardroles"><span class="chip">Оператор</span><span class="chip">Администратор</span></div>
+          <div class="hint">Принято 28 сентября 2026</div>
+        </div>
+
+        <button class="btn fill wide invite-cta">Пригласить</button>
+
+        <div class="slabel">Приглашения</div>
+        <div class="card">
+          <div class="cardhead">
+            <span class="cardname">petya@yandex.ru</span>
+            <span class="pill live">Ожидает</span>
+          </div>
+          <div class="cardroles"><span class="chip">Оператор</span></div>
+          <div class="hint">Действует до 5 октября 2026</div>
+          <button class="btn warnout wide" style="margin-top:11px">Отозвать</button>
+        </div>
+
+        <div class="archline">
+          <div class="slabel">Архив</div>
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+
+        <div class="card">
+          <div class="cardhead">
+            <span class="cardname">alena.chuprianova@yandex.ru</span>
+            <span class="pill">Удалено</span>
+          </div>
+          <div class="cardroles"><span class="chip">Оператор</span></div>
+          <div class="hint">Принято 20 сентября 2026<br>Удалено 27 сентября 2026</div>
+        </div>
+
+        <div class="card">
+          <div class="cardhead">
+            <span class="cardname">ivan@yandex.ru</span>
+            <span class="pill">Отозвано</span>
+          </div>
+          <div class="cardroles"><span class="chip">Администратор</span></div>
+          <div class="hint">Отозвано 26 сентября 2026</div>
+        </div>
+
+        <div class="card">
+          <div class="cardhead">
+            <span class="cardname">oleg@yandex.ru</span>
+            <span class="pill">Истекло</span>
+          </div>
+          <div class="cardroles"><span class="chip">Оператор</span></div>
+          <div class="hint">Истёк 24 сентября 2026</div>
+        </div>
+
+      </div>
+    </div></div>
+
+    <div class="note">
+      <h3>Общение &mdash; заготовка</h3>
+      <p>Сегмент «Общение» (командный чат) в этой странице пока не детализирован &mdash; заглушка,
+        как и договаривались; экран добавляется отдельной правкой.</p>
     </div>
+
   </section>
 
 </div>
