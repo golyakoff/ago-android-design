@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Записи ▸ Клиенты — рабочая поверхность телефонного оператора: поиск, статус телефона значком, карточка клиента, его записи (прошлые/будущие) и переход в диалог.">
+<title>Клиенты — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+  /* Кадры бок о бок с подписью снизу — тот же приём, что на manual-booking.html/team.html:
+     growing-высота под контент, .framecap под каждым кадром. */
+  .showfull{width:392px; max-width:100%; height:auto; margin:0 auto}
+  .showfull .screen{height:auto; min-height:0; position:relative}
+  .frames{display:flex; gap:28px; flex-wrap:wrap; justify-content:center; align-items:flex-start}
+  .framecol{flex:0 1 392px; max-width:100%}
+  .framecap{text-align:center; font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-faint); margin:10px 0 0}
+  .framecap b{color:var(--ink-soft); font-weight:600}
+
+  /* Поисковая строка над списком — та же .inp-рамка, что и везде, глиф #i-search внутри. */
+  .searchrow{padding:2px 16px 10px}
+  .searchrow .inp{height:44px}
+
+  /* Строка клиента — тап открывает карточку. Аватар + имя/личность + вторичная строка;
+     справа значок-предупреждение (только когда телефон не подтверждён никак) и/или пилюля неявок. */
+  .crow{display:flex; gap:13px; padding:13px 16px; align-items:center; cursor:pointer}
+  .crow + .crow{border-top:1px solid var(--line)}
+  .crow .rmain{flex:1; min-width:0}
+  .crow .rsub{font-size:12.5px; color:var(--ink-soft); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .crow .rside{display:flex; align-items:center; gap:9px; flex:0 0 auto; margin-left:auto}
+  /* значок «телефон не подтверждён» — ровно тот приём, что в modules-faq.html: #i-excl цвета --warning */
+  .warnglyph{width:22px; height:22px; flex:0 0 22px; display:grid; place-items:center; color:var(--warning)}
+  .warnglyph svg{width:20px; height:20px}
+</style>
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav compact" aria-label="Разделы">
+      <a href="index.html">&larr; Обзор</a>
+      <span class="here">Клиенты</span>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">записи · клиенты</p>
+  <section>
+    <div class="shead">
+      <span class="num">05+</span>
+      <h2>Клиенты &mdash; рабочая поверхность телефонного оператора</h2>
+      <p>Сегодня «Клиенты» &mdash; плоский список всех контактов: имя, телефон и две неуклюжие строки
+        «Не подтверждён кодом» / «Не подтверждён оператором». Ни поиска, ни фильтров, ни способа открыть
+        клиента. Оператор на телефоне не может решить ни одной своей задачи. Редизайн даёт три вещи:
+        <b>поиск</b> (по имени и телефону), <b>карточку клиента</b> (её сегодня нет вовсе) и из неё &mdash;
+        два перехода: <b>к записи клиента</b> (чтобы перенести, <span class="mono">26-208</span>) и
+        <b>в его диалог</b> (активный, иначе последний &mdash; только чтение). Статус телефона теперь
+        &mdash; маленький значок <svg class="i" style="color:var(--warning); vertical-align:-3px"><use href="#i-excl"/></svg>,
+        а не строка-приговор. Детали и разбивка по задачам: <span class="mono">docs/backlog/26-269</span>.</p>
+    </div>
+
+    <div class="frames">
+
+      <!-- ── Список: поиск + фильтр + значок статуса ──────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-plus"/></svg></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:12px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div>Утверждены</div>
+            <div class="on">Клиенты</div>
+          </div>
+          <div class="searchrow">
+            <div class="inp"><span class="ph">Поиск по имени или телефону</span><svg class="i" style="color:var(--ink-soft)"><use href="#i-search"/></svg></div>
+          </div>
+          <div class="chips" style="height:auto; padding-bottom:12px">
+            <div class="chip on">Все</div>
+            <div class="chip">С предстоящей записью</div>
+          </div>
+          <div class="scroll">
+            <!-- обычный клиент, телефон подтверждён — значка нет (тихая норма) -->
+            <div class="crow">
+              <span class="av" style="width:42px; height:42px; flex:0 0 42px; font-size:15px">АК</span>
+              <div class="rmain">
+                <div class="rname">Анна Ковалёва</div>
+                <div class="rsub"><span class="mono">+7 9•• ••• •• 08</span> · 3 записи</div>
+              </div>
+              <div class="rside"><svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+            <!-- клиент с эмодзи-личностью (из чата), есть неявки -->
+            <div class="crow">
+              <span class="av pair" style="width:42px; height:42px; flex:0 0 42px">🦊<span class="av-food">🍊</span></span>
+              <div class="rmain">
+                <div class="rname">Лиса · Апельсин</div>
+                <div class="rsub"><span class="mono">7c4e18f0</span> · 2 записи</div>
+              </div>
+              <div class="rside"><span class="pill bad">2 неявки</span><svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+            <!-- телефон не подтверждён никак — единственный значок-предупреждение -->
+            <div class="crow">
+              <span class="av" style="width:42px; height:42px; flex:0 0 42px; font-size:15px">МО</span>
+              <div class="rmain">
+                <div class="rname">Мария Орлова</div>
+                <div class="rsub"><span class="mono">+7 9•• ••• •• 31</span> · 1 запись</div>
+              </div>
+              <div class="rside"><span class="warnglyph" title="Телефон не подтверждён"><svg class="i"><use href="#i-excl"/></svg></span><svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+            <!-- клиент без имени (ручная запись, чат имени не дал) — маскированный телефон + значок пользователя -->
+            <div class="crow">
+              <span class="av" style="width:42px; height:42px; flex:0 0 42px; color:var(--ink-soft)"><svg class="i"><use href="#i-user-plus"/></svg></span>
+              <div class="rmain">
+                <div class="rname" style="color:var(--ink-soft)"><span class="mono">+7 9•• ••• •• 67</span></div>
+                <div class="rsub">Без имени · 1 запись</div>
+              </div>
+              <div class="rside"><span class="warnglyph" title="Телефон не подтверждён"><svg class="i"><use href="#i-excl"/></svg></span><svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Список.</b> Поиск сверху · фильтр «С предстоящей записью» · строка тапается</p>
+      </div>
+
+      <!-- ── Поиск: набрано «Анна» ────────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-plus"/></svg></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:12px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div>Утверждены</div>
+            <div class="on">Клиенты</div>
+          </div>
+          <div class="searchrow">
+            <div class="inp"><span>Анна</span><svg class="i" style="color:var(--ink-soft)"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:2px">Найдено 2</div>
+            <div class="crow">
+              <span class="av" style="width:42px; height:42px; flex:0 0 42px; font-size:15px">АК</span>
+              <div class="rmain">
+                <div class="rname">Анна Ковалёва</div>
+                <div class="rsub"><span class="mono">+7 9•• ••• •• 08</span> · 3 записи · есть предстоящая</div>
+              </div>
+              <div class="rside"><svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+            <div class="crow">
+              <span class="av" style="width:42px; height:42px; flex:0 0 42px; font-size:15px">АМ</span>
+              <div class="rmain">
+                <div class="rname">Анна Мельник</div>
+                <div class="rsub"><span class="mono">+7 9•• ••• •• 12</span> · 1 запись</div>
+              </div>
+              <div class="rside"><svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg></div>
+            </div>
+            <div class="card flat" style="margin:12px 16px 0; text-align:center">
+              <div class="cmeta">Поиск фильтрует уже загруженный список &mdash; по имени (из чата) и по
+                телефону, сразу при вводе. Серверный поиск &mdash; на будущее, под большие базы.</div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Кейс 1&ndash;2 · вход.</b> «Анна» на звонке &rarr; фильтр по имени/телефону</p>
+      </div>
+
+      <!-- ── Поиск: ничего не найдено ─────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-plus"/></svg></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:12px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div>Утверждены</div>
+            <div class="on">Клиенты</div>
+          </div>
+          <div class="searchrow">
+            <div class="inp"><span>Смирнов</span><svg class="i" style="color:var(--ink-soft)"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card flat" style="margin:22px 16px 0; text-align:center; padding:26px 16px">
+              <div class="ctitle">Никого не нашли</div>
+              <div class="cmeta" style="margin-top:4px">Нет клиентов по запросу «Смирнов». Проверьте написание
+                или очистите поиск.</div>
+              <div class="cactions" style="justify-content:center; margin-top:14px"><div class="btn out">Очистить поиск</div></div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Пустой результат.</b> Явное состояние, а не пустая область</p>
+      </div>
+
+      <!-- ── Карточка клиента · Предстоящие ───────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Клиент</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:2px">
+              <div style="display:flex; gap:13px; align-items:center">
+                <span class="av" style="width:48px; height:48px; flex:0 0 48px; font-size:17px">АК</span>
+                <div style="flex:1; min-width:0">
+                  <div class="ctitle" style="font-size:18px">Анна Ковалёва</div>
+                  <div class="cmeta" style="display:flex; align-items:center; gap:10px; margin-top:2px"><span class="mono">+7 ··· ·· 08</span><span class="linkish">Показать</span></div>
+                </div>
+              </div>
+              <div class="rmeta" style="margin-top:12px"><span class="pill ok">Постоянный клиент</span><span class="pill">3 записи</span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn fill"><svg class="i sm" style="color:#fff; vertical-align:-3px"><use href="#i-call"/></svg> Позвонить</div>
+                <div class="btn out"><svg class="i sm" style="vertical-align:-3px"><use href="#i-chat"/></svg> Диалог</div>
+              </div>
+              <div class="cactions" style="margin-top:8px">
+                <div class="btn out wide"><svg class="i sm" style="vertical-align:-3px"><use href="#i-plus"/></svg> Записать</div>
+              </div>
+            </div>
+
+            <div class="seg" style="margin:14px 16px 12px">
+              <div class="on">Предстоящие <span class="ct">1</span></div>
+              <div>Прошедшие <span class="ct">2</span></div>
+            </div>
+
+            <div class="row" style="align-items:center">
+              <div class="rtime-strong" style="width:52px">14:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Стрижка</div><div class="rsnip">5 октября 2026 · Ирина Соколова · 60 мин</div></div>
+              <svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+
+            <div class="card flat" style="margin:14px 16px 0; text-align:center">
+              <div class="cmeta">Тап по записи открывает её карточку &mdash; оттуда перенос
+                (<span class="mono">26-208</span>). Именно так решаются «перенесите по телефону» и
+                «напомните, на когда записаны».</div>
+            </div>
+
+            <div class="kv" style="margin-top:14px"><span class="k">Подтверждён по SMS</span><span class="v">да · 2 окт</span></div>
+            <div class="kv"><span class="k">Первый визит</span><span class="v" style="font-weight:500; color:var(--ink-soft)">14 марта 2026</span></div>
+            <div class="kv"><span class="k">Последний визит</span><span class="v" style="font-weight:500; color:var(--ink-soft)">21 сентября 2026</span></div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Карточка · Предстоящие.</b> Хаб: позвонить · диалог · записать · записи клиента</p>
+      </div>
+
+      <!-- ── Карточка клиента · Прошедшие + телефон не подтверждён (кейс 8) ────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Клиент</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:2px">
+              <div style="display:flex; gap:13px; align-items:center">
+                <span class="av" style="width:48px; height:48px; flex:0 0 48px; font-size:17px">МО</span>
+                <div style="flex:1; min-width:0">
+                  <div class="ctitle" style="font-size:18px; display:flex; align-items:center; gap:8px">Мария Орлова
+                    <span class="warnglyph" title="Телефон не подтверждён"><svg class="i"><use href="#i-excl"/></svg></span></div>
+                  <div class="cmeta" style="display:flex; align-items:center; gap:10px; margin-top:2px"><span class="mono">+7 ··· ·· 31</span><span class="linkish">Показать</span></div>
+                </div>
+              </div>
+              <div class="rmeta" style="margin-top:12px"><span class="pill bad">2 неявки</span><span class="pill">1 запись</span></div>
+              <div class="card warnband" style="margin:14px 0 0">
+                <div style="display:flex; gap:9px; align-items:flex-start">
+                  <svg class="i" style="color:var(--warning); flex:0 0 auto"><use href="#i-excl"/></svg>
+                  <div class="cmeta">Телефон не подтверждён &mdash; ни по SMS, ни оператором. Позвонили и это
+                    точно он? <span class="linkish">Подтвердить телефон</span></div>
+                </div>
+              </div>
+              <div class="cactions" style="margin-top:12px">
+                <div class="btn fill"><svg class="i sm" style="color:#fff; vertical-align:-3px"><use href="#i-call"/></svg> Позвонить</div>
+                <div class="btn out"><svg class="i sm" style="vertical-align:-3px"><use href="#i-plus"/></svg> Записать</div>
+              </div>
+            </div>
+
+            <div class="seg" style="margin:14px 16px 12px">
+              <div>Предстоящие <span class="ct">0</span></div>
+              <div class="on">Прошедшие <span class="ct">2</span></div>
+            </div>
+
+            <div class="row" style="align-items:center">
+              <div class="rtime-strong" style="width:52px">11:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Окрашивание</div><div class="rsnip">3 сентября 2026 · Ирина Соколова · 120 мин</div></div>
+              <span class="pill bad" style="flex:0 0 auto">Неявка</span>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rtime-strong" style="width:52px">10:30</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Стрижка</div><div class="rsnip">12 августа 2026 · Пётр Ким · 45 мин</div></div>
+              <svg class="i" style="color:var(--ink-faint)"><use href="#i-chev"/></svg>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Карточка · Прошедшие + кейс 8.</b> Значок = телефон не подтверждён; «Подтвердить телефон»</p>
+      </div>
+
+      <!-- ── Запись клиента → карточка записи (кейс 1: перенос) ────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Запись</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:2px">
+              <div class="ctitle" style="font-size:18px">Анна Ковалёва</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:4px">
+                <span class="cmeta">Понедельник, 5 октября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">14:00&ndash;15:00</span>
+              </div>
+              <div class="kv" style="margin-top:12px"><span class="k">Услуга</span><span class="v">Стрижка · 60 мин</span></div>
+              <div class="kv"><span class="k">Мастер</span><span class="v">Ирина Соколова</span></div>
+              <div class="kv"><span class="k">Телефон</span><span class="v"><span class="mono">+7 ··· ·· 08</span><span class="linkish">Показать</span></span></div>
+              <div class="kv"><span class="k">Источник</span><span class="v" style="font-weight:500; color:var(--ink-soft)">Виджет на сайте</span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn fill">Перенести</div>
+                <div class="btn out">Перейти к диалогу</div>
+              </div>
+            </div>
+            <div class="card flat" style="margin-top:12px; text-align:center">
+              <div class="cmeta">Та же карточка записи, что открывается из «Утверждены». Из карточки клиента
+                мы пришли к ней напрямую &mdash; и «Перенести» ведёт в уже готовый флоу переноса.</div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Кейс 1.</b> Запись клиента &rarr; «Перенести» (существующий флоу <span class="mono">26-208</span>)</p>
+      </div>
+
+      <!-- ── Диалог активный (кейс 3) ─────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Анна Ковалёва<span class="sub">Виджет &middot; в работе &middot; 5 мин</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="thread">
+            <div class="sysnote">Назначено вам · 09:30</div>
+            <div class="bub in">Здравствуйте! Хочу перенести стрижку на понедельник.<span class="t">09:30</span></div>
+            <div class="bub out">Добрый день! Да, конечно &mdash; какое время удобно?<span class="t">09:31 ✓✓</span></div>
+            <div class="bub in">После обеда, часа в два.<span class="t">09:33</span></div>
+          </div>
+          <div class="composer">
+            <div class="iconbtn"><svg class="i"><use href="#i-clip"/></svg></div>
+            <div class="field">Сообщение…</div>
+            <div class="iconbtn tinted"><svg class="i"><use href="#i-send"/></svg></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Кейс 3 · активный диалог.</b> Есть открытый диалог &rarr; в него, с полем ввода</p>
+      </div>
+
+      <!-- ── Диалог только для чтения (кейс 3, закрытый) ──────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Лиса · Апельсин<span class="sub">Виджет &middot; закрыт &middot; 14 марта</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+          </div>
+          <div class="thread">
+            <div class="sysnote">Диалог закрыт · 14 марта, 12:20</div>
+            <div class="bub in">Подскажите, во сколько вы работаете в субботу?<span class="t">11:58</span></div>
+            <div class="bub out">С 10 до 19. Записать вас?<span class="t">12:01 ✓✓</span></div>
+            <div class="bub in">Да, на стрижку к Ирине.<span class="t">12:05</span></div>
+            <div class="bub out">Готово, записала на 14:00. До встречи!<span class="t">12:08 ✓✓</span></div>
+          </div>
+          <div class="card flat" style="margin:0 12px 12px; text-align:center; border-radius:14px">
+            <div class="cmeta">Диалог закрыт &mdash; только чтение. Поля ввода нет: писать некуда, и это видно.</div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Кейс 3 · последний диалог.</b> Активного нет &rarr; последний, только чтение (без поля ввода)</p>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <h3>Статус телефона &mdash; значок, а не приговор</h3>
+      <p>Две неуклюжие строки «Не подтверждён кодом» / «Не подтверждён оператором» уходят. За ними две
+        <b>разные</b> правды (<span class="mono">PersonRecord.PhoneVerifiedAt</span> &mdash; доказан кодом по
+        SMS; <span class="mono">PhoneConfirmedByOperatorAt</span> &mdash; оператор позвонил и это он),
+        и обе остаются на проводе и в карточке. Но в <b>списке</b> оператору важно одно: <b>с этим номером
+        что-то надо сделать или нет</b>. Поэтому строка показывает
+        <svg class="i" style="color:var(--warning); vertical-align:-3px"><use href="#i-excl"/></svg> &mdash; тот
+        же приём, что в <span class="mono">modules-faq.html</span> &mdash; <b>только когда телефон не
+        подтверждён никак</b> (единственное действие-требующее состояние). Подтверждён любым способом
+        &mdash; <b>значка нет</b>: зелёная галочка на каждой строке &mdash; это шум. Значок редкий, потому и
+        заметный, и он ведёт к делу &mdash; «Подтвердить телефон» в карточке (существующий эндпоинт
+        <span class="mono">ConfirmOperatorVerifiedPhone</span>, <span class="mono">23-12</span>).</p>
+    </div>
+
+    <div class="note">
+      <h3>Прошлое и будущее &mdash; фильтр в списке, разбивка в карточке</h3>
+      <p>«Прошлое / будущее» &mdash; свойство <b>записи</b>, а не клиента, поэтому разбивка живёт там, где
+        записи: в карточке клиента, двумя сегментами <b>Предстоящие / Прошедшие</b> (предстоящие ведут &mdash;
+        звонок обычно о них). А в самом <b>списке</b> полезен лёгкий фильтр <b>«С предстоящей записью»</b> &mdash;
+        он сужает до тех, о ком чаще всего и звонят (кейсы 1&ndash;2). «Все» &mdash; по умолчанию. Это и есть
+        чистый ответ на вопрос автора, как это выразить в интерфейсе.</p>
+    </div>
+
+    <div class="note">
+      <h3>Карточка клиента &mdash; хаб, а не новая логика</h3>
+      <p>Карточка &mdash; чистый <b>чтение + навигация</b>. Она ничего не пишет сама: «Перенести» &mdash;
+        готовый флоу <span class="mono">26-208</span>, «Подтвердить телефон» &mdash; готовый
+        <span class="mono">23-12</span>, «Записать» &mdash; deep-link в ручную запись
+        <span class="mono">26-268</span> с уже узнанным клиентом. Новых чтений ровно два, и каждое живёт в
+        своём продукте (<span class="mono">adr/0184</span>): записи клиента &mdash; на календаре, диалоги
+        клиента &mdash; в чате; консоль и приложение <b>сливают их на клиенте</b>, без запроса «сервер&harr;сервер».
+        Имя клиента и так уже подтягивается из чата для показа &mdash; ровно тем же слиянием
+        (<span class="mono">usePersonNames</span> / <span class="mono">PersonsApi</span>).</p>
+    </div>
+
+    <div class="note">
+      <h3>Два новых чтения &mdash; чего сегодня нет</h3>
+      <p><b>Записи одного клиента (прошлые + будущие).</b> Сегодня единственное чтение записей &mdash;
+        <span class="mono">GET /confirmed-bookings?from&amp;to</span> по <b>всему</b> тенанту за окно дат;
+        «записей одного человека» нет. Это <b>новое чтение календаря</b> по <span class="mono">personId</span>.
+        <b>Диалоги одного клиента (активный + прошлые).</b> Существующая история посетителя привязана к
+        <span class="mono">conversationId</span> (<span class="mono">/conversations/{id}/visitor-history</span>) &mdash;
+        она отвечает «что ещё делал этот посетитель <em>в этом диалоге</em>». Из списка клиентов у нас
+        <span class="mono">personId</span>, а не диалог, поэтому нужно <b>новое чтение чата</b> по человеку:
+        активный диалог, иначе самый свежий. Оба &mdash; чтения для показа, не на пути записи, поэтому
+        правило&nbsp;8 к ним не относится; при недоступности деградируют до «диалога пока нет», как и слияние
+        имён деградирует до «имя пока не показано» (<span class="mono">adr/0184</span>).</p>
+    </div>
+
+    <div class="note">
+      <h3>Консоль &mdash; те же поиск, значок и карточка</h3>
+      <p>На вебе <span class="mono">CalendarContactsPage</span> получает ту же поисковую строку и тот же
+        значок вместо двух бейджей-колонок, а строка таблицы начинает открывать <b>карточку клиента</b> с
+        теми же двумя переходами. Ведёт Android как звезда флоу; консоль повторяет один в один. Экран консоли
+        здесь не рисуем &mdash; это Android-сайт дизайна.</p>
+    </div>
+
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>

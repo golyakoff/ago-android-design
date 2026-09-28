@@ -54,6 +54,7 @@ COPY consent.html /usr/share/nginx/html/consent.html
 COPY modules-faq.html /usr/share/nginx/html/modules-faq.html
 COPY visitor-restrictions.html /usr/share/nginx/html/visitor-restrictions.html
 COPY manual-booking.html /usr/share/nginx/html/manual-booking.html
+COPY clients.html /usr/share/nginx/html/clients.html
 COPY common.css /usr/share/nginx/html/common.css
 COPY tokens.js /usr/share/nginx/html/tokens.js
 # `15-07`'s own pattern: the commit as a file the running container serves, so smoke.sh and
