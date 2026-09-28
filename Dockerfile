@@ -57,6 +57,7 @@ COPY manual-booking.html /usr/share/nginx/html/manual-booking.html
 COPY clients.html /usr/share/nginx/html/clients.html
 COPY common.css /usr/share/nginx/html/common.css
 COPY tokens.js /usr/share/nginx/html/tokens.js
+COPY favicon.svg /usr/share/nginx/html/favicon.svg
 # `15-07`'s own pattern: the commit as a file the running container serves, so smoke.sh and
 # deploy.sh have one question to ask and one answer to parse -
 # `curl https://android-design.reserve-me.ru/version.json`. Deliberately no build timestamp: two
