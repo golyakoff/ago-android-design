@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ручная запись оператором — гид-флоу в стиле записи посетителя: клиент, услуга, мастер, дата и слот, подтверждение.">
+<title>Ручная запись — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+  /* Кадры бок о бок с подписью снизу — тот же приём, что на team.html: growing-высота под контент
+     (гид-флоу у каждого шага своя высота), .framecap под каждым кадром. */
+  .showfull{width:392px; max-width:100%; height:auto; margin:0 auto}
+  .showfull .screen{height:auto; min-height:0; position:relative}
+  .frames{display:flex; gap:28px; flex-wrap:wrap; justify-content:center; align-items:flex-start}
+  .framecol{flex:0 1 392px; max-width:100%}
+  .framecap{text-align:center; font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-faint); margin:10px 0 0}
+  .framecap b{color:var(--ink-soft); font-weight:600}
+
+  /* одиночный выбор в списке (услуга / мастер): выбранная строка — бренд-галочка, остальные — пустое
+     кольцо. Кольцо нарисовано бордюром, а не глифом, чтобы не выдумывать иконку. */
+  .pick{display:flex; gap:13px; padding:13px 16px; align-items:center}
+  .pick + .pick{border-top:1px solid var(--line)}
+  .pick .rmain{flex:1; min-width:0}
+  .pick .sel{width:22px; height:22px; flex:0 0 22px; color:var(--brand)}
+  .pick .ring{width:22px; height:22px; flex:0 0 22px; border:2px solid var(--line-strong); border-radius:50%}
+  .pick.on{background:var(--brand-tint); margin:0; border-radius:0}
+
+  /* необязательное поле — приглушённая рамка и «Пропустить», чтобы почта читалась как второстепенная. */
+  .formrow .opt{float:right; font-size:11px; font-weight:700; color:var(--ink-faint); text-transform:none; letter-spacing:0}
+  .inp.soft{border-style:dashed; border-color:var(--line)}
+</style>
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav compact" aria-label="Разделы">
+      <a href="index.html">&larr; Обзор</a>
+      <span class="here">Ручная запись</span>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">записи · ручной ввод</p>
+  <section>
+    <div class="shead">
+      <span class="num">04+</span>
+      <h2>Ручная запись оператором &mdash; телефонная бронь, вписанная руками</h2>
+      <p>Новый тенант AGO Calendar приходит с уже назначенными по телефону визитами. Их надо вписать,
+        чтобы слот был занят и онлайн-посетитель не наложился поверх. Одна точка входа
+        &mdash; <b>«Добавить вручную»</b> на «Утверждены», и один <b>гид-флоу в стиле записи самого
+        посетителя</b>, но <b>с телефона</b>: телефон (узнаём клиента) &rarr; клиент &rarr; услуга
+        &rarr; мастер &rarr; дата &rarr; слот &rarr; проверка.
+        Это <b>прямая команда календарю</b>, а не диалог: переписка не создаётся. Точка входа доступна
+        только оператору с правом <span class="mono">booking:create</span> (26-268, ADR-0188).</p>
+    </div>
+
+    <div class="frames">
+
+      <!-- ── Точка входа: «Утверждены» + «+» в шапке слева от ⋮ ───────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-plus"/></svg></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div class="on">Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <div class="dstrip">
+            <div><span class="dw">Чт</span><span class="dd">1</span></div>
+            <div class="on"><span class="dw">Пт</span><span class="dd">2</span><span class="dot"></span></div>
+            <div><span class="dw">Сб</span><span class="dd">3</span><span class="dot"></span></div>
+            <div><span class="dw">Вс</span><span class="dd">4</span></div>
+            <div><span class="dw">Пн</span><span class="dd">5</span><span class="dot"></span></div>
+            <div><span class="dw">Вт</span><span class="dd">6</span></div>
+          </div>
+          <div style="padding:0 16px 40px">
+            <div class="slabel" style="padding-top:2px">Ирина Соколова · 2 записи</div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">10:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Анна Ковалёва</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">13:30</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Мария Орлова</div><div class="rsnip">Окрашивание · 120 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Точка входа.</b> «+» в шапке, слева от <span class="mono">⋮</span> &middot; только при <span class="mono">booking:create</span></p>
+      </div>
+
+      <!-- ── Шаг 1/6 · Телефон — ПЕРВЫМ, узнаём клиента по номеру ──────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 1 из 6 · Телефон</span></div>
+          </div>
+          <div class="steps"><div class="on"></div><div></div><div></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:12px">
+              <label>Телефон клиента</label>
+              <div class="inp" style="height:52px; font-size:16px">
+                <span class="mono">+7 921 000-00-00</span>
+                <svg class="i" style="color:var(--ink-soft)"><use href="#i-search"/></svg>
+              </div>
+              <div class="hint">Сначала номер &mdash; по нему покажем, есть ли уже такой клиент. Поиск
+                срабатывает сам, как только номер введён полностью.</div>
+            </div>
+            <div class="card flat" style="margin:8px 16px 0; text-align:center">
+              <div class="cmeta">Телефон обязателен всегда &mdash; это ключ и к слоту, и к узнаванию клиента.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Найти клиента</div></div>
+        </div></div>
+        <p class="framecap"><b>Шаг 1 · Телефон.</b> Номер — первым; по нему узнаём клиента</p>
+      </div>
+
+      <!-- ── Узнавание · найден один клиент ───────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 1 из 6 · Телефон</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div></div><div></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:12px">
+              <label>Телефон клиента</label>
+              <div class="inp"><span class="mono">+7 921 000-00-00</span><span class="linkish">Изменить</span></div>
+            </div>
+            <div class="slabel">Найден клиент</div>
+            <div class="card" style="margin:0 16px">
+              <div style="display:flex; gap:13px; align-items:center">
+                <span class="av" style="width:44px; height:44px; flex:0 0 44px; font-size:16px">АК</span>
+                <div style="flex:1; min-width:0">
+                  <div class="ctitle" style="font-size:16px">Анна Ковалёва</div>
+                  <div class="cmeta"><span class="mono">+7 921 000-00-00</span></div>
+                </div>
+              </div>
+              <div class="rmeta" style="margin-top:11px"><span class="pill ok">Постоянный клиент</span><span class="pill">3 записи</span></div>
+              <div class="cactions" style="margin-top:14px">
+                <div class="btn fill">Это он</div>
+                <div class="btn out">Новый клиент</div>
+              </div>
+            </div>
+            <div class="card flat" style="margin:12px 16px 0; text-align:center">
+              <div class="cmeta">Совпадение по телефону &mdash; подсказка, не доказательство. Кто это, подтверждает оператор.</div>
+            </div>
+          </div>
+        </div></div>
+        <p class="framecap"><b>Узнан один.</b> «Это он» (взять существующего, основное) · «Новый клиент»</p>
+      </div>
+
+      <!-- ── Узнавание · найдено несколько (общий номер) ──────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 1 из 6 · Телефон</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div></div><div></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:12px">
+              <label>Телефон клиента</label>
+              <div class="inp"><span class="mono">+7 921 000-00-00</span><span class="linkish">Изменить</span></div>
+            </div>
+            <div class="slabel">Несколько клиентов с этим номером</div>
+            <div class="pick on">
+              <span class="av" style="width:38px; height:38px; flex:0 0 38px; font-size:15px">АК</span>
+              <div class="rmain"><div class="rname">Анна Ковалёва</div><div class="rsnip">Постоянный · 3 записи</div></div>
+              <svg class="i sel"><use href="#i-check-circle"/></svg>
+            </div>
+            <div class="pick">
+              <span class="av" style="width:38px; height:38px; flex:0 0 38px; font-size:15px">МК</span>
+              <div class="rmain"><div class="rname">Мария Ковалёва</div><div class="rsnip">1 запись</div></div>
+              <span class="ring"></span>
+            </div>
+            <div class="pick">
+              <span class="av" style="width:38px; height:38px; flex:0 0 38px"><svg class="i"><use href="#i-user-plus"/></svg></span>
+              <div class="rmain"><div class="rname">Новый клиент</div><div class="rsnip">Создать нового с этим номером</div></div>
+              <span class="ring"></span>
+            </div>
+            <div class="card flat" style="margin:12px 16px 0; text-align:center">
+              <div class="cmeta">Один номер могут делить несколько человек (семья, общий телефон). Кто именно
+                &mdash; выбирает оператор; контакты не сливаются автоматически.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Далее</div></div>
+        </div></div>
+        <p class="framecap"><b>Узнано несколько.</b> Список совпадений + «Новый клиент» строкой внизу</p>
+      </div>
+
+      <!-- ── Узнавание · не найден ────────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 1 из 6 · Телефон</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div></div><div></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="formrow" style="padding-top:12px">
+              <label>Телефон клиента</label>
+              <div class="inp"><span class="mono">+7 921 000-00-00</span><span class="linkish">Изменить</span></div>
+            </div>
+            <div class="card flat" style="margin:14px 16px 0; text-align:center; padding:22px 16px">
+              <div class="ctitle">Клиентов с этим номером нет</div>
+              <div class="cmeta" style="margin-top:4px">Запишем как нового &mdash; имя укажете на следующем шаге.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Продолжить как нового</div></div>
+        </div></div>
+        <p class="framecap"><b>Не найден.</b> Сразу к вводу нового клиента</p>
+      </div>
+
+      <!-- ── Шаг 2/6 · Клиент — НОВЫЙ (имя обязательно, почта вторична/пропускаема) ─────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 2 из 6 · Клиент</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="card flat" style="margin:6px 16px 6px; display:flex; align-items:center; gap:9px; text-align:left">
+              <svg class="i sm" style="color:var(--ink-soft)"><use href="#i-call"/></svg>
+              <div class="cmeta"><span class="mono">+7 921 000-00-00</span> · новый клиент</div>
+            </div>
+            <div class="formrow" style="padding-top:6px">
+              <label>Имя клиента</label>
+              <div class="inp"><span>Ирина Мельникова</span></div>
+            </div>
+            <div class="formrow">
+              <label>Эл. почта <span class="opt">необязательно</span></label>
+              <div class="inp soft"><span class="ph">Можно не спрашивать на звонке</span></div>
+              <div class="hint">На телефонном звонке почту сложно продиктовать без ошибок &mdash; поле
+                можно пропустить. Клиента это не блокирует.</div>
+            </div>
+          </div>
+          <div class="stickybar" style="display:flex; gap:10px; align-items:center">
+            <span class="linkish" style="flex:0 0 auto; padding:0 6px">Пропустить почту</span>
+            <div class="btn fill" style="flex:1">Далее</div>
+          </div>
+        </div></div>
+        <p class="framecap"><b>Шаг 2 · Клиент (новый).</b> Имя обязательно, телефон уже есть; почта — второстепенная</p>
+      </div>
+
+      <!-- ── Шаг 2/6 · Клиент — УЗНАН (только чтение, без повторного ввода) ─────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 2 из 6 · Клиент</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:8px">Клиент</div>
+            <div class="card" style="margin:0 16px">
+              <div style="display:flex; gap:13px; align-items:center">
+                <span class="av" style="width:44px; height:44px; flex:0 0 44px; font-size:16px">АК</span>
+                <div style="flex:1; min-width:0">
+                  <div class="ctitle" style="font-size:16px">Анна Ковалёва</div>
+                  <div class="cmeta"><span class="mono">+7 921 000-00-00</span></div>
+                </div>
+              </div>
+              <div class="rmeta" style="margin-top:11px"><span class="pill ok">Постоянный клиент</span><span class="pill">3 записи</span></div>
+            </div>
+            <div class="card flat" style="margin:12px 16px 0; text-align:center">
+              <div class="cmeta">Существующий контакт &mdash; имя и почту заново не вводим. Дальше сразу услуга.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Далее</div></div>
+        </div></div>
+        <p class="framecap"><b>Шаг 2 · Клиент (узнан).</b> Только чтение, без повторного ввода — сразу к услуге</p>
+      </div>
+
+      <!-- ── Шаг 2/5 · Услуга ─────────────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 3 из 6 · Услуга</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div class="on"></div><div></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:8px">Услуги календаря</div>
+            <div class="pick on">
+              <div class="rmain"><div class="rname">Стрижка</div><div class="rsnip">60 мин</div></div>
+              <svg class="i sel"><use href="#i-check-circle"/></svg>
+            </div>
+            <div class="pick">
+              <div class="rmain"><div class="rname">Окрашивание</div><div class="rsnip">120 мин</div></div>
+              <span class="ring"></span>
+            </div>
+            <div class="pick">
+              <div class="rmain"><div class="rname">Укладка</div><div class="rsnip">40 мин</div></div>
+              <span class="ring"></span>
+            </div>
+            <div class="pick">
+              <div class="rmain"><div class="rname">Мужская стрижка</div><div class="rsnip">30 мин</div></div>
+              <span class="ring"></span>
+            </div>
+            <div class="card flat" style="margin:14px 16px 0; text-align:center">
+              <div class="cmeta">Длительность считает сервер в момент записи &mdash; она задаёт, сколько
+                слотов подряд нужно занять.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Далее</div></div>
+        </div></div>
+        <p class="framecap"><b>Шаг 3 · Услуга.</b> Из справочника услуг (<span class="mono">/console/configuration</span>)</p>
+      </div>
+
+      <!-- ── Шаг 3/5 · Мастер ─────────────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 4 из 6 · Мастер</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div></div><div></div></div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:8px">Кто оказывает «Стрижку»</div>
+            <div class="pick on">
+              <span class="av" style="width:38px;height:38px;flex:0 0 38px;font-size:15px">ИС</span>
+              <div class="rmain"><div class="rname">Ирина Соколова</div><div class="rsnip">4 услуги</div></div>
+              <svg class="i sel"><use href="#i-check-circle"/></svg>
+            </div>
+            <div class="pick">
+              <span class="av" style="width:38px;height:38px;flex:0 0 38px;font-size:15px">ПК</span>
+              <div class="rmain"><div class="rname">Пётр Ким</div><div class="rsnip">2 услуги</div></div>
+              <span class="ring"></span>
+            </div>
+            <div class="card flat" style="margin:14px 16px 0; text-align:center">
+              <div class="cmeta">Показаны только мастера, которые оказывают выбранную услугу и активны.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Далее</div></div>
+        </div></div>
+        <p class="framecap"><b>Шаг 4 · Мастер.</b> Только мастера выбранной услуги</p>
+      </div>
+
+      <!-- ── Шаг 4/5 · Дата и время (та же лента дат и сетка слотов, что у переноса) ────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 5 из 6 · Дата и время</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div></div></div>
+          <div class="scroll">
+            <div class="card flat" style="margin:6px 16px 12px">
+              <div class="cmeta">Ирина Соколова · Стрижка · 60 мин. Выберите день и свободное время.</div>
+            </div>
+            <div class="dstrip">
+              <div><span class="dw">Чт</span><span class="dd">1</span></div>
+              <div class="on"><span class="dw">Пт</span><span class="dd">2</span><span class="dot"></span></div>
+              <div><span class="dw">Сб</span><span class="dd">3</span></div>
+              <div><span class="dw">Вс</span><span class="dd">4</span><span class="dot"></span></div>
+              <div><span class="dw">Пн</span><span class="dd">5</span><span class="dot"></span></div>
+              <div><span class="dw">Вт</span><span class="dd">6</span><span class="dot"></span></div>
+            </div>
+            <div class="slabel" style="padding-top:8px">Пятница, 2 октября 2026 · свободно</div>
+            <div class="chips" style="padding-bottom:4px; flex-wrap:wrap; height:auto">
+              <div class="chip">09:00</div><div class="chip">09:30</div><div class="chip on">14:00</div>
+              <div class="chip">14:30</div><div class="chip">16:00</div><div class="chip">16:30</div>
+            </div>
+            <div class="card warnband" style="margin:12px 16px 0">
+              <div class="cmeta">Хватает ли подряд идущих слотов, решает сервер в момент записи &mdash;
+                тем же compare-and-set в транзакции (правило 8), а не предчтением.</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Выбрано 14:00 · далее</div></div>
+        </div></div>
+        <p class="framecap"><b>Шаг 5 · Дата и время.</b> Та же лента и сетка слотов, что у переноса (<span class="mono">getWorkerSlots</span>)</p>
+      </div>
+
+      <!-- ── Шаг 5/5 · Проверьте и создайте ───────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Новая запись<span class="sub">Шаг 6 из 6 · Проверьте</span></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-close"/></svg></div>
+          </div>
+          <div class="steps"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div></div>
+          <div class="scroll">
+            <div class="card" style="margin-top:2px">
+              <div class="ctitle" style="font-size:18px">Ирина Мельникова</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:4px">
+                <span class="cmeta">Пятница, 2 октября 2026</span>
+                <span style="font-size:13px; font-weight:700; color:var(--ink); white-space:nowrap">14:00&ndash;15:00</span>
+              </div>
+              <div class="kv" style="margin-top:12px; padding:11px 0"><span class="k">Клиент</span><span class="v"><span class="pill">Новый</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Услуга</span><span class="v">Стрижка · 60 мин</span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Мастер</span><span class="v">Ирина Соколова</span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Телефон</span><span class="v"><span class="mono">+7 921 000-00-00</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Эл. почта</span><span class="v" style="color:var(--ink-faint); font-weight:500">не указана</span></div>
+            </div>
+            <div class="card flat" style="margin-top:12px">
+              <div class="cmeta">Прямая запись в календарь &mdash; диалог и переписка не создаются.
+                Строка «Клиент» показывает «Новый» или «Постоянный» (для узнанного контакта).</div>
+            </div>
+          </div>
+          <div class="stickybar"><div class="btn fill wide">Создать запись</div></div>
+        </div></div>
+        <p class="framecap"><b>Шаг 6 · Проверьте.</b> Сводка + тип клиента (Новый/Постоянный); прямая запись без диалога</p>
+      </div>
+
+      <!-- ── Готово: запись создана, вернулись на «Утверждены» с новой строкой ─────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="ttl">Записи</div>
+            <div class="iconbtn"><svg class="i"><use href="#i-plus"/></svg></div>
+            <div class="iconbtn"><svg class="i"><use href="#i-more"/></svg></div>
+            <div class="avatar-chip">АГ<span class="presence"></span></div>
+          </div>
+          <div class="seg" style="margin-bottom:14px">
+            <div>Ожидают <span class="ct">2</span></div>
+            <div class="on">Утверждены</div>
+            <div>Клиенты</div>
+          </div>
+          <div style="margin:0 16px 12px; padding:10px 12px; border-radius:10px; background:var(--success-tint); color:var(--success); font-size:12.5px; font-weight:600; display:flex; align-items:center; gap:9px">
+            <svg class="i sm"><use href="#i-check-circle"/></svg>Запись создана · 2 октября, 14:00
+          </div>
+          <div class="dstrip">
+            <div><span class="dw">Чт</span><span class="dd">1</span></div>
+            <div class="on"><span class="dw">Пт</span><span class="dd">2</span><span class="dot"></span></div>
+            <div><span class="dw">Сб</span><span class="dd">3</span><span class="dot"></span></div>
+            <div><span class="dw">Вс</span><span class="dd">4</span></div>
+            <div><span class="dw">Пн</span><span class="dd">5</span><span class="dot"></span></div>
+            <div><span class="dw">Вт</span><span class="dd">6</span></div>
+          </div>
+          <div style="padding:0 16px 20px">
+            <div class="slabel" style="padding-top:2px">Ирина Соколова · 3 записи</div>
+            <div class="row" style="align-items:center">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">10:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Анна Ковалёва</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-chat"/></svg><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+            <div class="row" style="align-items:center; background:var(--brand-tint); margin:0 -16px; padding:12px 16px">
+              <div class="rtime" style="width:42px; font-size:13px; font-weight:700; color:var(--ink)">14:00</div>
+              <div class="rmain" style="flex:1; min-width:0"><div class="rname">Ирина Мельникова</div><div class="rsnip">Стрижка · 60 мин</div></div>
+              <div style="margin-left:auto; display:flex; gap:15px; align-items:center; color:var(--ink-soft)"><svg class="i"><use href="#i-call"/></svg></div>
+            </div>
+          </div>
+          <div data-bnav="booking"></div>
+        </div></div>
+        <p class="framecap"><b>Готово.</b> Слот занят · строка без значка чата — у ручной записи нет диалога</p>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <h3>Точка входа &mdash; действие в шапке, слева от <span class="mono">⋮</span></h3>
+      <p>«Добавить вручную» &mdash; круглая кнопка-иконка в шапке, <b>слева от <span class="mono">⋮</span></b>
+        (порядок: «Записи» … [+] [<span class="mono">⋮</span>] [аватар]), <b>того же диаметра, что и кружок
+        аватара</b>, с обычным тоном иконки, как у <span class="mono">⋮</span>. FAB в правом нижнем углу
+        отмели намеренно: он перекрывал бы содержимое нижней строки записи. Настроечное («Услуги/Часы»)
+        остаётся за <span class="mono">⋮</span>; создание записи &mdash; заметное операционное действие в
+        шапке рядом с ним. Кнопок-иконок внутри <span class="mono">.btn</span> во флоу нет &mdash; глиф
+        живёт только в этой кнопке шапки и в <span class="mono">⋮</span>.</p>
+    </div>
+
+    <div class="note">
+      <h3>Узнавание по телефону &mdash; подсказка, не доказательство</h3>
+      <p>Флоу начинается с телефона: по номеру продукт показывает, есть ли уже такой клиент, чтобы
+        оператор <b>переиспользовал контакт</b>, а не плодил дубли. Но <b>телефон &mdash; это подсказка,
+        не доказательство</b> (<span class="mono">adr/0147</span>): один номер может делить семья, у одного
+        человека бывает несколько. Поэтому продукт <b>никогда не сливает контакты автоматически</b> &mdash;
+        он показывает совпадения, а <b>кто именно это, подтверждает оператор</b>: «Это он» (один
+        найденный), выбор из списка (несколько на общем номере) или «Новый клиент». Ни одного совпадения
+        &mdash; заводим нового.</p>
+    </div>
+
+    <div class="note">
+      <h3>«Не в переписке» &mdash; по построению</h3>
+      <p>Ручная запись &mdash; прямая команда календарю (<span class="mono">POST /console/bookings/manual</span>),
+        а не разговор. У брони <span class="mono">originConversationId = null</span>; в чат уходит только
+        <span class="mono">PersonRegistered</span>, из которого создаётся посетитель с контактами
+        &mdash; <b>без диалога и без сообщений</b>. Поэтому на «Утверждены» у строки ручной записи нет
+        значка чата &mdash; открывать нечего, и это видно (последний кадр). Узнанный клиент
+        переиспользует существующий контакт, новый &mdash; заводится заново; в обоих случаях создаётся
+        только контакт, а не диалог.</p>
+    </div>
+
+    <div class="note">
+      <h3>Консоль &mdash; тот же гид, но модалкой</h3>
+      <p>На вебе «Добавить вручную» встаёт рядом с «Обновить» на «Утверждённых записях»
+        (<span class="mono">CalendarBookingsPage</span>), тоже под <span class="mono">booking:create</span>, и
+        открывает <b>тот же гид диалогом &mdash; телефоном первым, с узнаванием клиента</b> (по образцу
+        диалога переноса <span class="mono">RescheduleBookingButton</span>): телефон &rarr; клиент &rarr;
+        услуга &rarr; мастер &rarr; дата &rarr; слот &rarr; проверка, сетку времени берёт тот же
+        <span class="mono">getWorkerSlots</span>.
+        Android ведёт как звезда флоу; консоль повторяет его один в один. Экран здесь не рисуем &mdash;
+        это Android-сайт дизайна.</p>
+    </div>
+
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
