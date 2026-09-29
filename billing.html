@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ещё ▸ Тариф и оплата — биллинг v2 на телефоне: текущий тариф, докупка сейчас (пропорционально, по видам), состав следующего периода с живой суммой, и оплата нативным ЮKassa SDK.">
+<title>Тариф и оплата — AGO Android Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+  /* Кадры бок о бок с подписью снизу — тот же приём, что на clients.html/manual-booking.html:
+     growing-высота под контент (карточки биллинга длинные), .framecap под каждым кадром. */
+  .showfull{width:392px; max-width:100%; height:auto; margin:0 auto}
+  .showfull .screen{height:auto; min-height:0; position:relative}
+  .frames{display:flex; gap:28px; flex-wrap:wrap; justify-content:center; align-items:flex-start}
+  .framecol{flex:0 1 392px; max-width:100%}
+  .framecap{text-align:center; font-family:"JetBrains Mono",monospace; font-size:12px; color:var(--ink-faint); margin:10px 0 0}
+  .framecap b{color:var(--ink-soft); font-weight:600}
+
+  /* строка покупки в две строки (телефон узкий): имя+цена+степпер сверху, кнопка снизу */
+  .buy{padding:12px 16px; border-top:1px solid var(--line)}
+  .buy .bhead{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .bname{font-size:14px; font-weight:700; letter-spacing:-.01em}
+  .bsub{font-size:12px; color:var(--ink-faint); margin-top:2px}
+  .bact{margin-top:10px}
+  .buycap{padding:12px 16px; border-top:1px solid var(--line)}
+
+  /* компактный степпер −/N/+ вместо десктопного <select> */
+  .step{display:flex; align-items:center; height:38px; border:1px solid var(--line-strong); border-radius:9px; overflow:hidden; flex:0 0 auto}
+  .step span{display:grid; place-items:center; width:38px; height:100%; font-size:20px; font-weight:600; color:var(--ink-soft)}
+  .step .n{width:40px; font-size:14px; font-weight:700; color:var(--ink); font-variant-numeric:tabular-nums; border-left:1px solid var(--line); border-right:1px solid var(--line)}
+  .step .up{color:var(--brand-deep)}
+
+  /* строка канала — одной строкой: имя+цена слева, действие/статус справа */
+  .chn{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 16px; border-top:1px solid var(--line)}
+  .chn .done{font-size:13px; font-weight:700; color:var(--success); flex:0 0 auto}
+  .chn .btn{flex:0 0 auto; width:auto; padding:0 14px}
+
+  /* подпись группы внутри карточки-раздела */
+  .glabel{font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); padding:14px 16px 2px}
+
+  /* карточка «сохранять способ оплаты» — два состояния тумблера */
+  .savecard{margin:12px 16px 0; border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:var(--sunken)}
+  .savecard .top{display:flex; gap:11px; align-items:flex-start}
+  .savecard .lbl{font-size:13.5px; font-weight:700; letter-spacing:-.01em}
+  .savecard .h{font-size:12px; color:var(--ink-soft); margin-top:4px}
+
+  /* итог следующего периода + дельта */
+  .total{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:12px 16px 0; padding:14px; border:1px solid var(--lavender); background:var(--brand-tint); border-radius:12px; flex-wrap:wrap}
+  .total .tl{font-size:12.5px; font-weight:700; color:var(--brand-deep)}
+  .total .tv{font-size:21px; font-weight:800; color:var(--brand-deep); font-variant-numeric:tabular-nums}
+  .total .td{font-size:12.5px; font-weight:700; margin-left:8px}
+  .total .td.up{color:var(--warning)}
+  .total .td.down{color:var(--success)}
+
+  /* разбивка суммы */
+  .bd{margin:12px 16px 0}
+  .bd .li{display:flex; justify-content:space-between; gap:12px; font-size:13px; padding:5px 0; color:var(--ink-soft)}
+  .bd .li .amt{color:var(--ink); font-variant-numeric:tabular-nums; font-weight:600}
+  .bd .li.base .amt{color:var(--brand-deep)}
+
+  /* переход Соло → Бизнес */
+  .transition{display:flex; gap:11px; align-items:flex-start; margin:12px 16px 0; padding:12px 14px; border:1px solid var(--lavender); background:var(--brand-tint); border-radius:12px}
+  .transition .tt{font-size:13.5px; font-weight:700; color:var(--brand-deep)}
+  .transition .ts{font-size:12px; color:var(--ink-soft); margin-top:3px}
+
+  /* строка «Не продлевать» */
+  .cancelrow{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px}
+  .cancelrow .ct{flex:1; min-width:0}
+  .cancelrow .ctt{font-size:13.5px; font-weight:700}
+  .cancelrow .cts{font-size:12px; color:var(--ink-soft); margin-top:2px}
+  .cancelrow .btn{flex:0 0 auto; width:auto; padding:0 16px}
+  .divline{height:1px; background:var(--line); margin:14px 16px 0}
+</style>
+</head>
+<body>
+<div id="glyph-sprite"></div>
+
+<button class="themebtn" id="themeToggle" aria-label="Переключить светлую/тёмную тему" type="button">
+  <svg class="i" id="themeIcon"><use href="#i-sun"/></svg>
+</button>
+
+<header class="top">
+  <div class="topwrap">
+    <div class="topbar">
+      <a class="wordmark2" href="index.html"><span class="g">A</span>AGO Android Design</a>
+      <nav class="pagenav compact" aria-label="Разделы">
+      <a href="index.html">&larr; Обзор</a>
+      <span class="here">Тариф и оплата</span>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <p class="eyebrow">ещё · администрирование · тариф и оплата</p>
+  <section>
+    <div class="shead">
+      <span class="num">26-301</span>
+      <h2>Тариф и оплата &mdash; что оплачено, что докупить сейчас, что спишется дальше</h2>
+      <p>Сегодня «Тариф и оплата» в приложении &mdash; заглушка (<span class="mono">PlaceholderDestinationScreen</span>).
+        Этот экран строит на телефоне ту же модель биллинга&nbsp;v2, что и консоль
+        (<span class="mono">26-290</span>): три раздела &mdash; <b>Текущий тариф</b>, <b>Докупить сейчас</b>
+        (сразу, пропорционально остатку периода, по видам) и <b>Следующий период</b> (состав с живой суммой).
+        Оплата &mdash; <b>нативным ЮKassa SDK</b> (<span class="mono">26-289</span>), а не редиректом в браузер:
+        карту, СБП или SberPay посетитель вводит в окне SDK, приложение своей формы оплаты не рисует. Экран &mdash;
+        чистый рендер цифр бэкенда (<span class="mono">26-299</span>&nbsp;+&nbsp;<span class="mono">26-291</span>):
+        суммы <b>приходят готовыми</b> из preview-эндпоинта, приложение их не считает
+        (правило&nbsp;8 &mdash; «не кэшируй и не выводи то, от чего зависит решение о списании»). Данные на макете &mdash;
+        образец: тариф Бизнес, 3&nbsp;оператора / 3&nbsp;администратора / канал Telegram, оплачено до 29&nbsp;окт&nbsp;2026.
+        Разбивка по срезам: <span class="mono">docs/backlog/26-301</span>.</p>
+    </div>
+
+    <div class="frames">
+
+      <!-- ── Текущий тариф (Card C) ─────────────────────────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Текущий тариф</div>
+            <div class="card" style="margin-top:0">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:11px; border-bottom:1px solid var(--line)">
+                <div style="font-family:'Unbounded','Manrope',sans-serif; font-weight:500; font-size:18px; letter-spacing:-.01em">Business</div>
+                <span class="pill ok">Активна</span>
+              </div>
+              <div class="kv" style="padding:11px 0"><span class="k">Операторы</span><span class="v">3 <span style="color:var(--ink-soft); font-weight:500">из 3 · до 3 включено</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Администраторы</span><span class="v">3 <span style="color:var(--ink-soft); font-weight:500">из 3 · до 2 включено</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Каналы</span><span class="v">Сайт <span style="color:var(--ink-soft); font-weight:500">+ Telegram</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Текущее списание</span><span class="v">1&nbsp;590&nbsp;₽ <span style="color:var(--ink-soft); font-weight:500">/ мес</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Оплачено до</span><span class="v">29&nbsp;окт&nbsp;2026</span></div>
+              <div class="kv" style="padding:11px 0 2px"><span class="k">Способ оплаты</span><span class="v">Карта&nbsp;·&#8226;&#8226;&nbsp;4242</span></div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Текущий тариф (Card&nbsp;C).</b> Читается с одного взгляда · каналы по видам, не числом</p>
+      </div>
+
+      <!-- ── Докупить сейчас · карту сохраняем (save-card ON) ────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Докупить сейчас</div>
+            <div class="savecard">
+              <div class="top">
+                <div class="cbox on" style="margin-top:1px"><svg class="i sm"><use href="#i-check"/></svg></div>
+                <div>
+                  <div class="lbl">Сохранять способ оплаты для автосписаний</div>
+                  <div class="h">Включено: мгновенная докупка списывается с сохранённой карты, подписка продлевается автоматически.</div>
+                </div>
+              </div>
+            </div>
+            <div class="card warnband" style="margin:10px 16px 0">
+              <div style="display:flex; gap:9px; align-items:flex-start">
+                <svg class="i" style="color:var(--warning); flex:0 0 auto"><use href="#i-excl"/></svg>
+                <div class="cmeta">Списание с сохранённой карты произойдёт сразу &mdash; без перехода в&nbsp;ЮKassa.</div>
+              </div>
+            </div>
+
+            <div class="buy" style="border-top:none; padding-top:14px">
+              <div class="bhead">
+                <div><div class="bname">Операторы</div><div class="bsub">до 3 включено, далее 200&nbsp;₽ за место</div></div>
+                <div class="step"><span>&minus;</span><span class="n">+1</span><span class="up">+</span></div>
+              </div>
+              <div class="bact"><div class="btn fill wide">Докупить за 133.33&nbsp;₽</div></div>
+            </div>
+            <div class="buy">
+              <div class="bhead">
+                <div><div class="bname">Администраторы</div><div class="bsub">до 2 включено, далее 1&nbsp;000&nbsp;₽ за место</div></div>
+                <div class="step"><span>&minus;</span><span class="n">+1</span><span class="up">+</span></div>
+              </div>
+              <div class="bact"><div class="btn fill wide">Докупить за 666.67&nbsp;₽</div></div>
+            </div>
+
+            <div class="glabel">Каналы · 100&nbsp;₽ / мес за каждый</div>
+            <div class="chn"><div><div class="bname">Сайт</div><div class="bsub">канал по умолчанию</div></div><span class="done">✓ включён в тариф</span></div>
+            <div class="chn"><div><div class="bname">Telegram</div><div class="bsub">100&nbsp;₽ / мес</div></div><span class="done">✓ Подключён</span></div>
+            <div class="chn"><div><div class="bname">MAX</div><div class="bsub">100&nbsp;₽ / мес</div></div><div class="btn fill">Подключить за 66.67&nbsp;₽</div></div>
+
+            <div class="subnote" style="padding:12px 16px 14px">Оплата пропорционально остатку периода: осталось 20 из 30 дней (текущий неполный день оплачивается полностью).</div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Докупить сейчас (Card&nbsp;A) · карту сохраняем.</b> Мгновенная докупка, пропорционально, по видам</p>
+      </div>
+
+      <!-- ── Докупить сейчас · без сохранения карты (save-card OFF → ЮKassa) ─────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Докупить сейчас</div>
+            <div class="savecard">
+              <div class="top">
+                <div class="cbox" style="margin-top:1px"></div>
+                <div>
+                  <div class="lbl">Сохранять способ оплаты для автосписаний</div>
+                  <div class="h">Выключено: каждая оплата &mdash; через ЮKassa, автопродление отключено, способ оплаты не хранится.</div>
+                </div>
+              </div>
+            </div>
+            <div class="card flat" style="margin:10px 16px 0">
+              <div style="display:flex; gap:9px; align-items:flex-start">
+                <svg class="i" style="color:var(--ink-soft); flex:0 0 auto"><use href="#i-info"/></svg>
+                <div class="cmeta">Способ оплаты не сохраняется: каждая покупка проходит отдельной оплатой в&nbsp;ЮKassa. Мгновенная докупка с карты и автосписание недоступны.</div>
+              </div>
+            </div>
+
+            <div class="buy" style="border-top:none; padding-top:14px">
+              <div class="bhead">
+                <div><div class="bname">Операторы</div><div class="bsub">до 3 включено, далее 200&nbsp;₽ за место</div></div>
+                <div class="step"><span>&minus;</span><span class="n">+1</span><span class="up">+</span></div>
+              </div>
+              <div class="bact"><div class="btn fill wide">Докупить за 133.33&nbsp;₽ · ЮKassa</div></div>
+            </div>
+
+            <div class="glabel">Каналы · 100&nbsp;₽ / мес за каждый</div>
+            <div class="chn"><div><div class="bname">Сайт</div><div class="bsub">канал по умолчанию</div></div><span class="done">✓ включён в тариф</span></div>
+            <div class="chn"><div><div class="bname">MAX</div><div class="bsub">100&nbsp;₽ / мес</div></div><div class="btn fill">Подключить · ЮKassa</div></div>
+
+            <div class="subnote" style="padding:12px 16px 14px">Кнопки помечены «· ЮKassa»: каждая ведёт в окно оплаты SDK. Автосписания в следующем периоде не будет.</div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Тот&nbsp;же раздел · карту не сохраняем.</b> Два состояния тумблера: без карты &mdash; каждая покупка через ЮKassa</p>
+      </div>
+
+      <!-- ── Следующий период · текущий состав (Card B) ─────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Следующий период</div>
+            <div class="subnote" style="padding:0 16px 4px">Состав, который продлится 29&nbsp;окт&nbsp;2026. Меняйте &mdash; сумма пересчитается ниже.</div>
+
+            <div class="buy" style="border-top:none; padding-top:8px">
+              <div class="bhead">
+                <div><div class="bname">Операторы</div><div class="bsub">до 3 включено, далее 200&nbsp;₽ за место</div></div>
+                <div class="step"><span>&minus;</span><span class="n">3</span><span class="up">+</span></div>
+              </div>
+            </div>
+            <div class="buy">
+              <div class="bhead">
+                <div><div class="bname">Администраторы</div><div class="bsub">до 2 включено, далее 1&nbsp;000&nbsp;₽ за место</div></div>
+                <div class="step"><span>&minus;</span><span class="n">3</span><span class="up">+</span></div>
+              </div>
+            </div>
+
+            <div class="glabel">Какие каналы продлевать · 100&nbsp;₽ / мес за каждый</div>
+            <div class="chn"><div><div class="bname">Сайт</div><div class="bsub">канал по умолчанию</div></div><span class="done">✓ включён</span></div>
+            <div class="chn"><div><div class="bname">Telegram</div><div class="bsub">100&nbsp;₽ / мес</div></div><span class="sw on"><i></i></span></div>
+            <div class="chn"><div><div class="bname">MAX</div><div class="bsub">100&nbsp;₽ / мес</div></div><span class="sw"><i></i></span></div>
+
+            <ul class="bd" style="list-style:none; padding:0">
+              <li class="li base"><span>Тариф Бизнес (база)</span><span class="amt">490&nbsp;₽</span></li>
+              <li class="li"><span>Доп. администраторы ×1</span><span class="amt">1&nbsp;000&nbsp;₽</span></li>
+              <li class="li"><span>Каналы: Telegram</span><span class="amt">100&nbsp;₽</span></li>
+            </ul>
+            <div class="total">
+              <span class="tl">Сумма следующего списания</span>
+              <span class="tv">1&nbsp;590&nbsp;₽</span>
+            </div>
+            <div class="subnote" style="padding:10px 16px 0">Изменения вступают в силу со следующего периода. Сейчас деньги не списываются; при уменьшении возврат не производится.</div>
+
+            <div class="formrow" style="padding-top:12px"><div class="btn out wide">Сохранить состав</div></div>
+            <div class="divline"></div>
+            <div class="cancelrow">
+              <div class="ct"><div class="ctt">Не продлевать подписку</div><div class="cts">Доступ &mdash; до 29&nbsp;окт&nbsp;2026, затем бесплатный Соло.</div></div>
+              <div class="btn warnout">Не продлевать</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Следующий период (Card&nbsp;B) · текущий состав.</b> Состав + разбивка + сумма; «Сохранить состав» пишет весь состав разом</p>
+      </div>
+
+      <!-- ── Следующий период · состав изменён (живой пересчёт + дельта) ─────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Следующий период</div>
+            <div class="subnote" style="padding:0 16px 4px">Состав, который продлится 29&nbsp;окт&nbsp;2026. Меняйте &mdash; сумма пересчитается ниже.</div>
+
+            <div class="buy" style="border-top:none; padding-top:8px">
+              <div class="bhead">
+                <div><div class="bname">Операторы</div><div class="bsub">до 3 включено, далее 200&nbsp;₽ за место</div></div>
+                <div class="step" style="border-color:var(--brand)"><span>&minus;</span><span class="n" style="color:var(--brand-deep)">4</span><span class="up">+</span></div>
+              </div>
+            </div>
+            <div class="buy">
+              <div class="bhead">
+                <div><div class="bname">Администраторы</div><div class="bsub">до 2 включено, далее 1&nbsp;000&nbsp;₽ за место</div></div>
+                <div class="step"><span>&minus;</span><span class="n">3</span><span class="up">+</span></div>
+              </div>
+            </div>
+
+            <div class="glabel">Какие каналы продлевать · 100&nbsp;₽ / мес за каждый</div>
+            <div class="chn"><div><div class="bname">Сайт</div><div class="bsub">канал по умолчанию</div></div><span class="done">✓ включён</span></div>
+            <div class="chn"><div><div class="bname">Telegram</div><div class="bsub">100&nbsp;₽ / мес</div></div><span class="sw on"><i></i></span></div>
+            <div class="chn"><div><div class="bname">MAX</div><div class="bsub">100&nbsp;₽ / мес</div></div><span class="sw"><i></i></span></div>
+
+            <ul class="bd" style="list-style:none; padding:0">
+              <li class="li base"><span>Тариф Бизнес (база)</span><span class="amt">490&nbsp;₽</span></li>
+              <li class="li"><span>Доп. операторы ×1</span><span class="amt">200&nbsp;₽</span></li>
+              <li class="li"><span>Доп. администраторы ×1</span><span class="amt">1&nbsp;000&nbsp;₽</span></li>
+              <li class="li"><span>Каналы: Telegram</span><span class="amt">100&nbsp;₽</span></li>
+            </ul>
+            <div class="total">
+              <span class="tl">Сумма следующего списания</span>
+              <span><span class="tv">1&nbsp;790&nbsp;₽</span><span class="td up">+200&nbsp;₽ к текущему</span></span>
+            </div>
+            <div class="subnote" style="padding:10px 16px 0">Изменения вступают в силу со следующего периода. Сейчас деньги не списываются; при уменьшении возврат не производится.</div>
+
+            <div class="formrow" style="padding-top:12px"><div class="btn fill wide">Сохранить состав</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Тот&nbsp;же раздел · состав изменён.</b> +1 оператор &rarr; живая сумма и дельта «+200&nbsp;₽ к текущему»; «Сохранить состав» стал активным</p>
+      </div>
+
+      <!-- ── Не продлевать · подтверждение (нижний лист) ────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen" style="min-height:560px">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar" style="opacity:.4">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll" style="opacity:.4">
+            <div class="slabel" style="padding-top:14px">Следующий период</div>
+            <div class="total" style="margin-top:6px"><span class="tl">Сумма следующего списания</span><span class="tv">1&nbsp;590&nbsp;₽</span></div>
+          </div>
+          <div class="scrim"></div>
+          <div class="sheet">
+            <div class="handle"><i></i></div>
+            <div class="sh-head" style="display:block; padding:2px 24px 4px">
+              <div class="ctitle" style="font-size:17px">Не продлевать подписку?</div>
+            </div>
+            <div style="padding:0 24px">
+              <p style="font-size:13.5px; color:var(--ink-soft); margin:0">Доступ сохранится до 29&nbsp;окт&nbsp;2026, затем аккаунт перейдёт на бесплатный тариф Соло. Отменить решение можно в любой момент до этой даты.</p>
+            </div>
+            <div class="cactions" style="margin:18px 24px 22px">
+              <div class="btn out">Оставить</div>
+              <div class="btn dangerfill">Не продлевать</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>«Не продлевать» &rarr; подтверждение.</b> Нижний лист, как у отключения канала; отмена в силе до даты</p>
+      </div>
+
+      <!-- ── Бесплатный тариф Соло · докупка недоступна ─────────────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Текущий тариф</div>
+            <div class="card" style="margin-top:0">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding-bottom:11px; border-bottom:1px solid var(--line)">
+                <div style="font-family:'Unbounded','Manrope',sans-serif; font-weight:500; font-size:18px; letter-spacing:-.01em">Соло</div>
+                <span class="pill">Бесплатный</span>
+              </div>
+              <div class="kv" style="padding:11px 0"><span class="k">Операторы</span><span class="v">2 <span style="color:var(--ink-soft); font-weight:500">из 2 · до 2 включено</span></span></div>
+              <div class="kv" style="padding:11px 0"><span class="k">Текущее списание</span><span class="v">Бесплатно</span></div>
+              <div class="kv" style="padding:11px 0 2px"><span class="k">Способ оплаты</span><span class="v" style="font-weight:500; color:var(--ink-soft)">не привязана</span></div>
+            </div>
+
+            <div class="slabel">Докупить сейчас</div>
+            <div class="card flat" style="margin-top:0">
+              <div style="display:flex; gap:9px; align-items:flex-start">
+                <svg class="i" style="color:var(--ink-soft); flex:0 0 auto"><use href="#i-info"/></svg>
+                <div class="cmeta">На бесплатном тарифе разовая докупка недоступна. Расширьте состав в блоке «Следующий период» &mdash; при выходе за лимиты Соло подключится тариф Бизнес.</div>
+              </div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Бесплатный Соло.</b> Докупка &mdash; только на Бизнес; расширять состав ведут в «Следующий период»</p>
+      </div>
+
+      <!-- ── Соло → Бизнес · следующий период (панель перехода) ─────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="slabel" style="padding-top:14px">Следующий период</div>
+            <div class="subnote" style="padding:0 16px 4px">Расширьте состав, чтобы подключить тариф Бизнес. Продление &mdash; через 30 дней после оплаты.</div>
+
+            <div class="buy" style="border-top:none; padding-top:8px">
+              <div class="bhead">
+                <div><div class="bname">Операторы</div><div class="bsub">до 2 в Соло; 3-й включает Бизнес</div></div>
+                <div class="step" style="border-color:var(--brand)"><span>&minus;</span><span class="n" style="color:var(--brand-deep)">3</span><span class="up">+</span></div>
+              </div>
+            </div>
+            <div class="buy">
+              <div class="bhead">
+                <div><div class="bname">Администраторы</div><div class="bsub">до 1 в Соло, до 2 в Бизнесе включено</div></div>
+                <div class="step"><span>&minus;</span><span class="n">1</span><span class="up">+</span></div>
+              </div>
+            </div>
+
+            <div class="transition">
+              <span class="pill brand" style="flex:0 0 auto">Бизнес</span>
+              <div>
+                <div class="tt">Переход на тариф Бизнес &mdash; 490&nbsp;₽/мес</div>
+                <div class="ts">Включает до 3 операторов, до 2 администраторов и канал «Сайт». Всё сверх этого &mdash; доплаты.</div>
+              </div>
+            </div>
+
+            <ul class="bd" style="list-style:none; padding:0">
+              <li class="li base"><span>Тариф Бизнес (база)</span><span class="amt">490&nbsp;₽</span></li>
+            </ul>
+            <div class="total">
+              <span class="tl">Сумма следующего списания</span>
+              <span class="tv">490&nbsp;₽</span>
+            </div>
+            <div class="subnote" style="padding:10px 16px 0">Сейчас деньги не списываются: первое списание &mdash; в начале следующего периода.</div>
+
+            <div class="formrow" style="padding-top:12px"><div class="btn fill wide">Сохранить состав</div></div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Соло &rarr; Бизнес.</b> Состав вышел за лимиты Соло &rarr; панель перехода и сумма базы Бизнес</p>
+      </div>
+
+      <!-- ── Оплата через ЮKassa SDK · ожидание подтверждения ───────────────────────────── -->
+      <div class="framecol">
+        <div class="phone showfull"><div class="screen">
+          <div class="status"><span>9:41</span><span class="ic"><svg class="i sm"><use href="#i-wifi"/></svg><svg class="i sm"><use href="#i-batt"/></svg></span></div>
+          <div class="appbar">
+            <div class="iconbtn"><svg class="i"><use href="#i-back"/></svg></div>
+            <div class="ttl sm">Тариф и оплата</div>
+          </div>
+          <div class="scroll">
+            <div class="card" style="margin-top:14px">
+              <div class="chk" style="padding:2px 0"><span class="statglyph info"><svg class="i"><use href="#i-info"/></svg></span><span class="ctext"><b>Оплата обрабатывается</b><span>Ждём подтверждение от ЮKassa&hellip;</span></span></div>
+            </div>
+            <div class="card flat">
+              <div class="cmeta">Экран оплаты открыла ЮKassa &mdash; карту, СБП или SberPay вводят в её окне, не в приложении. Доступ откроется, как только оплата подтвердится. Окно можно закрыть &mdash; списание не потеряется.</div>
+            </div>
+          </div>
+          <div class="gesture"><i></i></div>
+        </div></div>
+        <p class="framecap"><b>Оплата в ЮKassa SDK.</b> Форму оплаты рисует SDK; успех подтверждает <b>только</b> опрос статуса, а не возврат из окна</p>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <h3>Форму оплаты рисует SDK, не приложение</h3>
+      <p>Нажатие «Докупить за&nbsp;₽X» открывает <b>собственное окно ЮKassa</b> (<span class="mono">Checkout.createTokenizeIntent</span>):
+        карта, СБП, SberPay вводятся там &mdash; приложение платёжной формы не строит и данных карты не видит. Это и есть
+        смысл нативного SDK против редиректа в браузер (<span class="mono">26-289</span>). Возврат из окна означает
+        «форма закрыта», а <b>не</b> «оплачено»: успех подтверждает только опрос <span class="mono">GET&nbsp;…/billing/status</span>,
+        когда придёт грант от вебхука (<span class="mono">adr/0190</span>). До тех пор &mdash; «Оплата обрабатывается», и
+        никогда преждевременное «готово». Отмена окна &mdash; это не ошибка, а возврат к экрану.</p>
+    </div>
+
+    <div class="note">
+      <h3>Суммы приходят готовыми &mdash; приложение их не считает</h3>
+      <p>Каждая цена на кнопке «Докупить» &mdash; это цифра из preview-эндпоинта
+        (<span class="mono">GET&nbsp;…/billing/purchase-preview</span>), а не умножение на клиенте: формула мест
+        &mdash; полосовая доменная логика, а дельта администратора зависит от <b>сохранённой</b> старой цены
+        (<span class="mono">26-290</span>&nbsp;§7). Пропорция «осталось&nbsp;20 из&nbsp;30 дней» тоже приходит с сервера:
+        полные прошедшие дни считает бэкенд (текущий неполный день оплачивается полностью). Так требует правило&nbsp;8 &mdash;
+        «не кэшируй и не выводи то, от чего зависит решение о списании». В следующем периоде живая сумма пересчитывается
+        на клиенте <b>только для показа</b>; авторитетную <span class="mono">nextChargeRub</span> возвращает бэкенд при сохранении.</p>
+    </div>
+
+    <div class="note">
+      <h3>«Сохранить состав» пишет весь состав разом</h3>
+      <p>«Следующий период» &mdash; это редактор с живым итогом, поэтому изменения <b>не</b> пишутся на каждое нажатие
+        степпера. Внизу &mdash; одна кнопка «Сохранить состав», отправляющая <b>весь</b> целевой состав одной командой
+        (<span class="mono">SetNextPeriodComposition</span> &mdash; операторы, администраторы, список каналов), а бэкенд
+        сам сравнивает его с текущим. Так проще и идемпотентнее, чем N отдельных вызовов «добавить/убрать», и то&nbsp;же
+        мысленное представление, что у макета консоли. Сохранение &mdash; явное и повторяемое (<span class="mono">26-299</span>).</p>
+    </div>
+
+    <div class="note">
+      <h3>Два состояния «сохранять карту» &mdash; ровно тумблер SDK</h3>
+      <p>Флажок «Сохранять способ оплаты» &mdash; это <span class="mono">savePaymentMethod</span> у SDK.
+        <b>Включён</b>: списание мгновенное, с сохранённой карты, подписка продлевается автоматически.
+        <b>Выключен</b>: каждая покупка &mdash; отдельная оплата в ЮKassa, способ оплаты не хранится, автопродления нет &mdash;
+        и тогда кнопки помечены «· ЮKassa», а «Текущий тариф» показывает «не сохраняется&nbsp;· ЮKassa» вместо номера карты.
+        Это одно решение, отражённое во всех трёх разделах согласованно, а не три отдельных настройки.</p>
+    </div>
+
+    <div class="note">
+      <h3>Консоль &mdash; та же модель, десктопная раскладка</h3>
+      <p>На вебе (<span class="mono">26-290</span>) те же три раздела лежат иначе: «Текущий тариф» широкой полосой сверху,
+        «Докупить сейчас» и «Следующий период» &mdash; двумя колонками рядом. На телефоне одна колонка, поэтому разделы
+        <b>стопкой</b>, строки покупки в две строки, а вместо <span class="mono">&lt;select&gt;</span> &mdash; компактный
+        степпер &minus;/N/+. Модель, копирайт и цены &mdash; те&nbsp;же; отличается только раскладка. Экран консоли здесь не
+        рисуем &mdash; это Android-сайт дизайна.</p>
+    </div>
+
+  </section>
+
+</div>
+
+<script src="tokens.js"></script>
+</body>
+</html>
