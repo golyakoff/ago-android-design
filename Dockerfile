@@ -55,6 +55,7 @@ COPY modules-faq.html /usr/share/nginx/html/modules-faq.html
 COPY visitor-restrictions.html /usr/share/nginx/html/visitor-restrictions.html
 COPY manual-booking.html /usr/share/nginx/html/manual-booking.html
 COPY clients.html /usr/share/nginx/html/clients.html
+COPY billing.html /usr/share/nginx/html/billing.html
 COPY common.css /usr/share/nginx/html/common.css
 COPY tokens.js /usr/share/nginx/html/tokens.js
 COPY favicon.svg /usr/share/nginx/html/favicon.svg
